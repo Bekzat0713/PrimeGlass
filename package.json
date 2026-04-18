@@ -1,0 +1,20 @@
+{
+  "name": "prime-glass-site",
+  "version": "1.0.0",
+  "description": "Корпоративный сайт Prime Glass Technologies на HTML/CSS/JS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.4",
+    "express-rate-limit": "^7.0.0",
+    "express-validator": "^7.0.1",
+    "helmet": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prime Glass | Стеклянные конструкции от производителя</title>
+  <meta
+    name="description"
+    content="Prime Glass — производитель стеклянных конструкций для офисов, душевых, фасадов и архитектурных объектов по всему Казахстану."
+  >
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header" id="top">
+      <div class="container header-layout">
+        <a class="brand" href="#hero" aria-label="Prime Glass — на главную">
+          <img class="brand__logo" src="logo.png" alt="Логотип Prime Glass">
+        </a>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-navigation"
+          aria-label="Открыть меню"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="site-navigation" id="site-navigation" aria-label="Основная навигация">
+          <div class="site-navigation__links" id="navLinks"></div>
+          <a class="button button--ghost site-navigation__cta" href="#contacts">Связаться</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-section section" id="hero">
+        <div class="container hero-layout">
+          <div id="heroContent"></div>
+          <div id="heroSlider"></div>
+        </div>
+      </section>
+
+      <section class="benefits-section section section--light" id="benefits">
+        <div class="container" id="shortBenefits"></div>
+      </section>
+
+      <section class="about-section section" id="about">
+        <div class="container" id="aboutSection"></div>
+      </section>
+
+      <section class="approach-section section section--light" id="approach">
+        <div class="container" id="approachSection"></div>
+      </section>
+
+      <section class="products-section section" id="products">
+        <div class="container" id="productsSection"></div>
+      </section>
+
+      <section class="application-section section section--light" id="request">
+        <div class="container" id="applicationSection"></div>
+      </section>
+
+      <section class="extended-benefits-section section" id="advantages">
+        <div class="container" id="extendedBenefitsSection"></div>
+      </section>
+
+      <section class="contacts-section section section--light" id="contacts">
+        <div class="container" id="contactsSection"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container" id="footerContent"></div>
+    </footer>
+  </div>
+
+  <a
+    class="whatsapp-float"
+    id="whatsAppFloat"
+    href="#contacts"
+    aria-label="Связаться через WhatsApp"
+  >
+    <span class="whatsapp-float__icon" aria-hidden="true"></span>
+    <span class="whatsapp-float__label">WhatsApp</span>
+  </a>
+</body>
+</html>
