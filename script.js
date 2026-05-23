@@ -326,14 +326,9 @@ const siteContent = {
   ],
   about: {
     eyebrow: "О нашей компании",
-    title: "Prime Glass",
+    title: "Prime Glass Technologies",
     description:
-      "Prime Glass — завод по производству закаленного стекла. Мы создаем продукцию, отвечающую строгим требованиям к прочности и безопасности. Стекло, которому доверяют компании и частные клиенты.",
-    facts: [
-      { value: "206", text: "Клиентов выбрали Prime Glass и получили надежные решения из закаленного стекла." },
-      { value: "1500", text: "Максимальная мощность закалки и обработки стекла в сутки." },
-      { value: "35", text: "Высококвалифицированных специалистов" }
-    ],
+      "Prime Glass Technologies — производственная компания, которая создает стеклянные решения для фасадов, интерьеров и коммерческих объектов. Мы работаем с закаленным стеклом, стеклопакетами, перегородками, ограждениями и душевыми конструкциями, соединяя точную обработку, прочность и чистый внешний вид.",
     points: [
       {
         icon: "factory",
@@ -725,15 +720,6 @@ function renderAboutSection() {
   dom.aboutSection.innerHTML = `
     <div class="about-simple">
       ${renderSectionHeading(siteContent.about)}
-      <p class="about-copy reveal">${siteContent.about.description}</p>
-      <div class="about-facts">
-        ${siteContent.about.facts.map((fact) => `
-          <article class="about-fact reveal">
-            <strong>${fact.value}</strong>
-            <span>${fact.text}</span>
-          </article>
-        `).join("")}
-      </div>
     </div>
   `;
 }
