@@ -237,15 +237,14 @@ const siteContent = {
     tagline: "Завод закаленного стекла"
   },
   navigation: [
-    { label: "О нас", href: "#about" },
-    { label: "Услуги", href: "#products" },
+    { label: "О НАС", href: "#about" },
     { label: "Контакты", href: "#contacts" }
   ],
   hero: {
-    eyebrow: "Завод по производству закаленного стекла",
+    eyebrow: "",
     title: "PRIME GLASS",
-    subtitle: "Цены напрямую с завода. Быстро. Четко. В срок.",
-    description: "Защита, красота и надежность для вашего пространства.",
+    subtitle: "",
+    description: "",
     primaryAction: {
       label: "Перезвонить",
       href: "#contacts"
@@ -329,10 +328,10 @@ const siteContent = {
     eyebrow: "О нашей компании",
     title: "Prime Glass",
     description:
-      "Завод по производству закаленного стекла. Мы создаем продукцию, отвечающую строгим требованиям к прочности и безопасности.",
+      "Prime Glass — завод по производству закаленного стекла. Мы создаем продукцию, отвечающую строгим требованиям к прочности и безопасности. Стекло, которому доверяют компании и частные клиенты.",
     facts: [
-      { value: "206+", text: "Клиентов выбрали Prime Glass" },
-      { value: "1500 м²", text: "Закалки и обработки стекла в сутки" },
+      { value: "206", text: "Клиентов выбрали Prime Glass и получили надежные решения из закаленного стекла." },
+      { value: "1500", text: "Максимальная мощность закалки и обработки стекла в сутки." },
       { value: "35", text: "Высококвалифицированных специалистов" }
     ],
     points: [
@@ -523,8 +522,8 @@ const siteContent = {
   ],
   application: {
     eyebrow: "Остались вопросы?",
-    title: "Оставьте номер, мы вам перезвоним",
-    description: "Проконсультируем по стоимости и срокам.",
+    title: "Можете оставить свой номер! Мы вам перезвоним:",
+    description: "Цены напрямую с завода. Быстро. Четко. В срок.",
     logoSrc: "logo-candidate.png",
     logoAlt: "Логотип Prime Glass",
     points: [
@@ -551,7 +550,7 @@ const siteContent = {
     { icon: "map", title: "Работа по всему Казахстану", text: "Поставка по регионам." }
   ],
   contacts: {
-    eyebrow: "Контакты",
+    eyebrow: "",
     title: "Местоположение и контакты",
     description: "",
     phone: "+7 (777) 091-08-88",
@@ -598,7 +597,7 @@ function iconMarkup(name) {
 function renderSectionHeading({ eyebrow, title, description, tag = "h2", compact = false }) {
   return `
     <div class="section-heading ${compact ? "section-heading--compact" : ""} reveal">
-      <span class="section-heading__eyebrow">${eyebrow}</span>
+      ${eyebrow ? `<span class="section-heading__eyebrow">${eyebrow}</span>` : ""}
       <${tag}>${title}</${tag}>
       ${description ? `<p>${description}</p>` : ""}
     </div>
@@ -641,8 +640,10 @@ function renderNavigation() {
   dom.navLinks.innerHTML = siteContent.navigation.map((item) => `<a href="${item.href}">${item.label}</a>`).join("");
 
   const headerCta = document.querySelector(".site-navigation__cta");
-  headerCta.textContent = siteContent.application.buttonLabel;
-  headerCta.setAttribute("href", siteContent.application.buttonHref);
+  headerCta.textContent = "WhatsApp";
+  headerCta.setAttribute("href", siteContent.contacts.whatsappLink);
+  headerCta.setAttribute("target", "_blank");
+  headerCta.setAttribute("rel", "noreferrer");
 }
 
 function renderHeroSlider() {
@@ -702,19 +703,6 @@ function renderHeroSection() {
   dom.heroContent.innerHTML = `
     <div class="hero-copy reveal">
       ${renderSectionHeading({ eyebrow: siteContent.hero.eyebrow, title: siteContent.hero.title, description: siteContent.hero.subtitle, tag: "h1" })}
-      <p class="hero-copy__description">${siteContent.hero.description}</p>
-      <div class="hero-copy__actions">
-        <a class="button button--primary" href="${siteContent.hero.primaryAction.href}">${siteContent.hero.primaryAction.label}</a>
-        <a class="button button--secondary" href="${siteContent.hero.secondaryAction.href}">${siteContent.hero.secondaryAction.label}</a>
-      </div>
-      <div class="hero-metrics">
-        ${siteContent.hero.metrics.map((metric) => `
-          <div class="hero-metric card reveal">
-            <strong>${metric.value}</strong>
-            <span>${metric.label}</span>
-          </div>
-        `).join("")}
-      </div>
     </div>
   `;
 }
@@ -739,31 +727,17 @@ function renderShortBenefits() {
 
 function renderAboutSection() {
   dom.aboutSection.innerHTML = `
-    ${renderSectionHeading(siteContent.about)}
-    <div class="about-layout">
-      <div class="about-panel">
-        <p class="about-copy reveal">${siteContent.about.description}</p>
-        <div class="about-facts">
-          ${siteContent.about.facts.map((fact) => `
-            <article class="about-fact card reveal">
-              <strong>${fact.value}</strong>
-              <span>${fact.text}</span>
-            </article>
-          `).join("")}
-        </div>
+    <div class="about-simple">
+      ${renderSectionHeading(siteContent.about)}
+      <p class="about-copy reveal">${siteContent.about.description}</p>
+      <div class="about-facts">
+        ${siteContent.about.facts.map((fact) => `
+          <article class="about-fact reveal">
+            <strong>${fact.value}</strong>
+            <span>${fact.text}</span>
+          </article>
+        `).join("")}
       </div>
-      <aside class="media-card card reveal">
-        <img
-          class="media-card__visual"
-          src="${siteContent.about.media.src}"
-          alt="${siteContent.about.media.alt}"
-          loading="lazy"
-        >
-        <div class="media-card__caption">
-          <strong>${siteContent.about.media.title}</strong>
-          <span>${siteContent.about.media.caption}</span>
-        </div>
-      </aside>
     </div>
   `;
 }
@@ -860,7 +834,7 @@ function initProductsCarousel() {
 
 function renderApplicationSection() {
   dom.applicationSection.innerHTML = `
-    <div class="application-shell card reveal" style="--application-backdrop:${siteContent.application.visual};">
+    <div class="application-shell reveal" style="--application-backdrop:${siteContent.application.visual};">
       <div class="application-layout">
         <div class="application-copy">
           ${renderSectionHeading({
@@ -868,9 +842,20 @@ function renderApplicationSection() {
             title: siteContent.application.title,
             description: siteContent.application.description
           })}
-          <a class="button button--primary" href="${siteContent.application.buttonHref}">
-            ${siteContent.application.buttonLabel}
-          </a>
+          <form class="callback-form" id="contactForm" novalidate>
+            <div class="form-field" data-form-field>
+              <label for="contactName">${siteContent.contacts.form.fields.name}</label>
+              <input id="contactName" name="name" type="text" autocomplete="name" placeholder="Имя" required>
+              <span class="form-field__error" data-field-error="name"></span>
+            </div>
+            <div class="form-field" data-form-field>
+              <label for="contactPhone">${siteContent.contacts.form.fields.phone}</label>
+              <input id="contactPhone" name="phone" type="tel" autocomplete="tel" placeholder="+7 (700) 000-00-00" required>
+              <span class="form-field__error" data-field-error="phone"></span>
+            </div>
+            <button class="button button--primary" type="submit">${siteContent.contacts.form.submitLabel}</button>
+            <div class="form-status" id="formStatus" aria-live="polite"></div>
+          </form>
         </div>
       </div>
     </div>
@@ -897,8 +882,8 @@ function renderExtendedBenefits() {
 function renderContacts() {
   dom.contactsSection.innerHTML = `
     ${renderSectionHeading(siteContent.contacts)}
-    <div class="contacts-layout">
-      <div class="contacts-panel card reveal">
+    <div class="contacts-layout contacts-layout--simple">
+      <div class="contacts-panel reveal">
         <div class="contacts-list">
           ${siteContent.contacts.details.map((detail) => `
             <article class="contact-item">
@@ -915,24 +900,6 @@ function renderContacts() {
           <a class="button button--ghost" href="${siteContent.contacts.whatsappLink}" target="_blank" rel="noreferrer">WhatsApp</a>
         </div>
       </div>
-      <aside class="contact-form-card card reveal">
-        <h3>${siteContent.contacts.form.title}</h3>
-        <p>${siteContent.contacts.form.description}</p>
-        <form class="contact-form" id="contactForm" novalidate>
-          <div class="form-field" data-form-field>
-            <label for="contactName">${siteContent.contacts.form.fields.name}</label>
-            <input id="contactName" name="name" type="text" autocomplete="name" placeholder="Введите имя" required>
-            <span class="form-field__error" data-field-error="name"></span>
-          </div>
-          <div class="form-field" data-form-field>
-            <label for="contactPhone">${siteContent.contacts.form.fields.phone}</label>
-            <input id="contactPhone" name="phone" type="tel" autocomplete="tel" placeholder="+7 (700) 000-00-00" required>
-            <span class="form-field__error" data-field-error="phone"></span>
-          </div>
-          <button class="button button--primary" type="submit">${siteContent.contacts.form.submitLabel}</button>
-          <div class="form-status" id="formStatus" aria-live="polite"></div>
-        </form>
-      </aside>
     </div>
   `;
 }
