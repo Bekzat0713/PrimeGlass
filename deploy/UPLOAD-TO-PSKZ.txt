@@ -1,0 +1,35 @@
+Что загружать:
+- архив `primeglass-kz-upload.zip`
+или
+- содержимое папки `primeglass-kz`
+
+Куда загружать:
+- в папку `httpdocs` в панели Plesk
+- не в `Домашняя папка/deploy`
+- не во вложенную папку `primeglass-kz`
+
+Что не загружать:
+- `node_modules`
+- `server.js`
+- `package.json`
+- `package-lock.json`
+- `.chrome-headless`
+
+Порядок действий:
+1. Открой Plesk.
+2. Зайди в `Сайты и домены`.
+3. Открой домен `primeglass.kz`.
+4. Перейди в `Файлы`.
+5. Открой папку `httpdocs`.
+6. Удали стандартный файл `index.html`, если он там есть.
+7. Загрузи `primeglass-kz-upload.zip`.
+8. Распакуй архив прямо внутри `httpdocs`.
+9. Убедись, что файл `index.html` лежит сразу в `httpdocs`, а не во вложенной папке.
+10. Включи SSL Let's Encrypt и редирект на HTTPS.
+
+Если уже загрузил в `Домашняя папка/deploy/primeglass-kz` и сайт показывает 404:
+1. Открой папку `deploy/primeglass-kz`.
+2. Выдели все внутри: `index.html`, `style.css`, `script.js`, картинки и папку `photos`.
+3. Нажми `Переместить`.
+4. В качестве папки назначения выбери `httpdocs`.
+5. После переноса `index.html` должен лежать прямо в `httpdocs`.

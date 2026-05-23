@@ -220,246 +220,206 @@ function createArchitecturalVisual({ palette, accent, lineColor, variant, label,
       </g>
       ${shapes[variant] || shapes.hero}
       <text x="120" y="806" fill="#edf5fb" fill-opacity="0.9" font-size="42" font-family="Georgia, serif">${label}</text>
-      <text x="120" y="850" fill="#cfe1ef" fill-opacity="0.76" font-size="24" font-family="Segoe UI, sans-serif" letter-spacing="2">${subtitle}</text>
+      <text x="120" y="850" fill="#cfe1ef" fill-opacity="0.76" font-size="24" font-family="Segoe UI, sans-serif" letter-spacing="0">${subtitle}</text>
     </svg>
   `;
 
   return `url('data:image/svg+xml,${encodeURIComponent(svg)}')`;
 }
 
+const whatsappMessage = encodeURIComponent(
+  "Здравствуйте! Меня интересуют стеклянные конструкции. Подскажите, пожалуйста, по стоимости, срокам изготовления и доступным вариантам."
+);
+
 const siteContent = {
   brand: {
     name: "Prime Glass",
-    tagline: "Architectural Glass Manufacturing"
+    tagline: "Завод закаленного стекла"
   },
   navigation: [
-    { label: "О компании", href: "#about" },
-    { label: "Подход", href: "#approach" },
-    { label: "Продукция", href: "#products" },
-    { label: "Заявка", href: "#request" },
-    { label: "Преимущества", href: "#advantages" },
+    { label: "О нас", href: "#about" },
+    { label: "Услуги", href: "#products" },
     { label: "Контакты", href: "#contacts" }
   ],
   hero: {
-    eyebrow: "Prime Glass Technologies",
-    title: "Стеклянные конструкции от производителя",
-    subtitle: "Быстрое изготовление. Гарантия качества. Работаем по всему Казахстану",
-    description:
-      "Перегородки, душевые, фасады и стеклопакеты для частных и коммерческих объектов.",
+    eyebrow: "Завод по производству закаленного стекла",
+    title: "PRIME GLASS",
+    subtitle: "Цены напрямую с завода. Быстро. Четко. В срок.",
+    description: "Защита, красота и надежность для вашего пространства.",
     primaryAction: {
-      label: "Оставить заявку",
+      label: "Перезвонить",
       href: "#contacts"
     },
     secondaryAction: {
-      label: "Смотреть продукцию",
+      label: "Смотреть услуги",
       href: "#products"
     },
     metrics: [
-      { value: "с 2019", label: "На рынке стекольного производства" },
-      { value: "1 млн м²", label: "Реализованных проектов по Казахстану" },
-      { value: "Полный цикл", label: "Производство и комплектация" },
-      { value: "B2B / B2C", label: "Для частных и коммерческих объектов" }
+      { value: "206+", label: "Клиентов выбрали Prime Glass" },
+      { value: "1500 м²", label: "Производственная мощность в сутки" },
+      { value: "35", label: "Квалифицированных специалистов" }
     ],
     background: "url('background.png')"
   },
   heroSlides: [
     {
-      series: "Слайд 01",
-      category: "Интерьерные системы",
-      title: "Стеклянные перегородки",
+      series: "01",
+      category: "Закалка",
+      title: "Закаленное стекло",
       description:
-        "Офисные и интерьерные системы с точной геометрией и аккуратной посадкой.",
-      footerTitle: "Для офисов и общественных пространств",
-      footerText: "Строгий внешний вид и удобная эксплуатация",
-      visual: "url('photos/image10.png')"
+        "Прочная и безопасная основа для перегородок, фасадов, душевых и ограждений.",
+      footerTitle: "Производство",
+      footerText: "Контроль геометрии и качества обработки",
+      visual: "url('photos/image1.jpg')"
     },
     {
-      series: "Слайд 02",
-      category: "Санитарные зоны",
-      title: "Душевые перегородки",
+      series: "02",
+      category: "Интерьер",
+      title: "Душевые кабины",
       description:
-        "Практичные конструкции из закаленного стекла для современных интерьеров.",
-      footerTitle: "Для квартир, апартаментов и отелей",
-      footerText: "Минимализм и надежность в ежедневной эксплуатации",
-      visual: "url('photos/image9.png')"
+        "Душевые кабины, двери-купе и перегородки из закаленного стекла.",
+      footerTitle: "Для дома и отелей",
+      footerText: "Чистый внешний вид и надежная фурнитура",
+      visual: "url('photos/image9.jpg')"
     },
     {
-      series: "Слайд 03",
-      category: "Архитектурные оболочки",
-      title: "Фасадные решения",
+      series: "03",
+      category: "Архитектура",
+      title: "Фасады и витрины",
       description:
-        "Фасадное остекление для объектов, где важны статус, свет и точность исполнения.",
-      footerTitle: "Для бизнес-центров и входных групп",
-      footerText: "Статусный внешний вид без лишнего шума",
-      visual: "url('photos/image2.png')"
+        "Остекление для объектов, где важны свет, статус и точность монтажа.",
+      footerTitle: "Коммерческие объекты",
+      footerText: "Входные группы, витрины и фасады",
+      visual: "url('photos/image2.jpg')"
     },
     {
-      series: "Слайд 04",
-      category: "Энергоэффективные решения",
-      title: "Стеклопакеты",
+      series: "04",
+      category: "Перегородки",
+      title: "Офисные решения",
       description:
-        "Стеклопакеты с контролем сборки, стабильной геометрией и надежной теплоизоляцией.",
-      footerTitle: "Для оконных и фасадных систем",
-      footerText: "Точная сборка и контроль качества",
-      visual: "url('photos/image1.png')"
+        "Стеклянные перегородки для переговорных, кабинетов и open space.",
+      footerTitle: "Рабочие пространства",
+      footerText: "Зонирование без потери света",
+      visual: "url('photos/image10.jpg')"
     }
   ],
   shortBenefits: [
     {
-      icon: "shield",
-      title: "Гарантия до 4 лет",
-      text: "Понятные гарантийные обязательства."
+      icon: "factory",
+      title: "Закалка стекла",
+      text: "Идеальная обработка стекла для любого проекта."
+    },
+    {
+      icon: "quality",
+      title: "Еврокромка",
+      text: "Точная обработка торца в трех плоскостях."
     },
     {
       icon: "wallet",
-      title: "Низкие цены от производителя",
-      text: "Собственное производство без лишних наценок."
-    },
-    {
-      icon: "map",
-      title: "Работаем по всему Казахстану",
-      text: "Поставка и сопровождение по регионам."
+      title: "Цена от завода",
+      text: "Без лишних посредников и скрытых наценок."
     },
     {
       icon: "delivery",
-      title: "Быстрые сроки и доставка",
-      text: "Четкий график производства и логистики."
+      title: "В срок",
+      text: "Понятный график изготовления и доставки."
     }
   ],
   about: {
-    eyebrow: "О компании",
-    title: "Производство стеклянных конструкций с понятным подходом",
+    eyebrow: "О нашей компании",
+    title: "Prime Glass",
     description:
-      "Современный цех, опытная команда и полный контроль качества на каждом этапе.",
+      "Завод по производству закаленного стекла. Мы создаем продукцию, отвечающую строгим требованиям к прочности и безопасности.",
     facts: [
-      { value: "2019", text: "На рынке стекольного производства" },
-      { value: "1 млн м²", text: "Реализованных проектов" },
-      { value: "Полный цикл", text: "От подготовки до выпуска изделий" },
-      { value: "Современный цех", text: "Оборудование и специалисты под одной системой качества" }
+      { value: "206+", text: "Клиентов выбрали Prime Glass" },
+      { value: "1500 м²", text: "Закалки и обработки стекла в сутки" },
+      { value: "35", text: "Высококвалифицированных специалистов" }
     ],
     points: [
       {
         icon: "factory",
         title: "Собственное производство",
-        text: "Контроль качества и сроков внутри одной системы."
+        text: "Быстрее считаем, производим и контролируем результат."
       },
       {
         icon: "quality",
-        title: "Стандарты исполнения",
-        text: "Точность геометрии, кромки и сборки."
+        title: "Точная обработка",
+        text: "Закалка, кромка, отверстия и подготовка под фурнитуру."
       },
       {
         icon: "solutions",
-        title: "Проектный подход",
-        text: "Решение под задачу объекта."
+        title: "Решение под объект",
+        text: "Подбираем конструкцию под задачу, интерьер и сроки."
       }
     ],
     media: {
       title: "Производственный цех",
-      caption: "Оборудование и процессы, ориентированные на стабильный результат.",
-      src: "photos/image1.png",
+      caption: "Оборудование и команда под стабильный результат.",
+      src: "photos/image1.jpg",
       alt: "Prime Glass production floor with insulating glass units and machinery"
     }
   },
   approach: {
-    eyebrow: "Опыт и подход",
-    title: "Опыт, качество и надежность",
+    eyebrow: "Подход",
+    title: "Быстро, понятно и без лишней бюрократии",
     description: "",
     cards: [
       {
         icon: "experience",
-        title: "Опыт",
-        text: "Работаем с объектами, где важны точность и сроки."
+        title: "Замер и расчет",
+        text: "Быстро уточняем задачу и готовим понятное предложение."
       },
       {
         icon: "quality",
-        title: "Качество",
-        text: "Контролируем материалы, обработку и сборку."
+        title: "Производство",
+        text: "Изготавливаем стекло и конструкции на собственных мощностях."
       },
       {
-        icon: "solutions",
-        title: "Индивидуальные решения",
-        text: "Подбираем конструкцию под архитектуру и задачу."
+        icon: "delivery",
+        title: "Доставка и монтаж",
+        text: "Согласуем сроки и доводим изделие до готового результата."
       }
     ]
   },
   productsSection: {
-    eyebrow: "Продукция",
-    title: "Линейка решений для интерьеров, фасадов и общественных пространств",
+    eyebrow: "Услуги",
+    title: "Что мы производим",
     description: ""
   },
   products: [
     {
-      icon: "shower",
-      label: "Интерьеры",
-      title: "Душевые перегородки",
-      description: "Легкие и надежные решения для частных и коммерческих интерьеров.",
-      tags: ["Закаленное стекло", "Фурнитура premium", "Современный интерьер"],
+      icon: "factory",
+      label: "Производство",
+      title: "Закалка стекла",
+      description: "Идеальная обработка стекла для любого проекта.",
+      tags: ["Закалка", "Безопасность", "Точный размер"],
       photos: [
         {
-          src: "photos/image9.png",
-          alt: "Стеклянная душевая перегородка в современном интерьере",
-          note: "Душевая зона"
-        },
-        {
-          src: "photos/image8.png",
-          alt: "Листы прозрачного стекла для изготовления интерьерных конструкций",
-          note: "Качество стекла"
-        }
-      ]
-    },
-    {
-      icon: "office",
-      label: "Офисы",
-      title: "Офисные перегородки",
-      description: "Системы для переговорных, кабинетов и open space.",
-      tags: ["Зонирование", "Шумоизоляция", "B2B-объекты"],
-      photos: [
-        {
-          src: "photos/image10.png",
-          alt: "Офисные стеклянные перегородки с черным профилем",
-          note: "Переговорные"
-        },
-        {
-          src: "photos/image5.png",
-          alt: "Светлое коммерческое пространство с масштабным стеклянным перекрытием",
-          note: "Деловая среда"
-        }
-      ]
-    },
-    {
-      icon: "loft",
-      label: "Архитектура",
-      title: "Лофт перегородки",
-      description: "Графичные конструкции для выразительных интерьеров.",
-      tags: ["Графитовый профиль", "Дизайн-объекты", "Индивидуальный размер"],
-      photos: [
-        {
-          src: "photos/image3.png",
-          alt: "Стеклянные листы с чистой кромкой на производстве",
-          note: "Подготовка стекла"
-        },
-        {
-          src: "photos/image1.png",
-          alt: "Стеклопакеты и стеклянные элементы на производственной линии",
+          src: "photos/image1.jpg",
+          alt: "Производственная линия с готовыми стеклопакетами",
           note: "Производство"
+        },
+        {
+          src: "photos/image8.jpg",
+          alt: "Листы прозрачного стекла для изготовления интерьерных конструкций",
+          note: "Подготовка"
         }
       ]
     },
     {
-      icon: "railing",
-      label: "Безопасность",
-      title: "Перила и ограждения",
-      description: "Ограждения для лестниц, террас и общественных пространств.",
-      tags: ["Триплекс", "Надежная фиксация", "Чистая геометрия"],
+      icon: "quality",
+      label: "Обработка",
+      title: "Еврокромка",
+      description: "Точная обработка торца в трех плоскостях.",
+      tags: ["Три плоскости", "Чистый торец", "Готово к монтажу"],
       photos: [
         {
-          src: "photos/image7.png",
-          alt: "Стеклянный козырек и внешняя стеклянная конструкция с точечным креплением",
-          note: "Крепления"
+          src: "photos/image3.jpg",
+          alt: "Стеклянные листы с чистой кромкой на производстве",
+          note: "Кромка"
         },
         {
-          src: "photos/image6.png",
+          src: "photos/image6.jpg",
           alt: "Современный стекольный цех с крупноформатными листами стекла",
           note: "Цех"
         }
@@ -467,46 +427,116 @@ const siteContent = {
     },
     {
       icon: "facade",
-      label: "Фасады",
-      title: "Фасадные решения",
-      description: "Остекление фасадов, входных групп и витрин.",
-      tags: ["Коммерческие объекты", "Входные группы", "Статусный внешний вид"],
+      label: "Экстерьер",
+      title: "Стеклянные козырьки",
+      description: "Прочные и стильные конструкции любой сложности.",
+      tags: ["Триплекс", "Точечный крепеж", "Входные группы"],
       photos: [
         {
-          src: "photos/image2.png",
-          alt: "Современный коммерческий фасад с панорамным остеклением",
-          note: "Фасад"
+          src: "photos/image7.jpg",
+          alt: "Стеклянный козырек и внешняя стеклянная конструкция с точечным креплением",
+          note: "Козырек"
         },
         {
-          src: "photos/image4.png",
+          src: "photos/image4.jpg",
           alt: "Стеклянный фасад здания на фоне неба",
-          note: "Витраж"
+          note: "Объект"
+        }
+      ]
+    },
+    {
+      icon: "railing",
+      label: "Безопасность",
+      title: "Перила и ограждения",
+      description: "Безопасность и эстетика для лестниц, балконов и террас.",
+      tags: ["Триплекс", "Надежная фиксация", "Чистая геометрия"],
+      photos: [
+        {
+          src: "photos/image5.jpg",
+          alt: "Светлое коммерческое пространство с масштабным стеклянным перекрытием",
+          note: "Ограждения"
+        },
+        {
+          src: "photos/image7.jpg",
+          alt: "Стеклянный козырек и внешняя стеклянная конструкция с точечным креплением",
+          note: "Крепеж"
+        }
+      ]
+    },
+    {
+      icon: "catalog",
+      label: "Окна",
+      title: "Стеклопакеты",
+      description: "Надежные решения для застройщиков и подрядчиков.",
+      tags: ["Сборка", "Теплоизоляция", "Для подрядчиков"],
+      photos: [
+        {
+          src: "photos/image1.jpg",
+          alt: "Стеклопакеты и стеклянные элементы на производственной линии",
+          note: "Стеклопакеты"
+        },
+        {
+          src: "photos/image8.jpg",
+          alt: "Листы прозрачного стекла для изготовления интерьерных конструкций",
+          note: "Стекло"
+        }
+      ]
+    },
+    {
+      icon: "office",
+      label: "Интерьер",
+      title: "Стеклянные перегородки",
+      description: "Элегантные решения для офиса и дома.",
+      tags: ["Зонирование", "Свет", "B2B / B2C"],
+      photos: [
+        {
+          src: "photos/image10.jpg",
+          alt: "Офисные стеклянные перегородки с черным профилем",
+          note: "Офис"
+        },
+        {
+          src: "photos/image5.jpg",
+          alt: "Светлое коммерческое пространство с масштабным стеклянным перекрытием",
+          note: "Пространство"
+        }
+      ]
+    },
+    {
+      icon: "shower",
+      label: "Санузлы",
+      title: "Душевые кабины и перегородки",
+      description: "Душевые кабины, двери-купе и перегородки.",
+      tags: ["Ванные", "Отели", "Фурнитура"],
+      photos: [
+        {
+          src: "photos/image9.jpg",
+          alt: "Стеклянная душевая перегородка в современном интерьере",
+          note: "Душевая"
+        },
+        {
+          src: "photos/image10.jpg",
+          alt: "Офисные стеклянные перегородки с черным профилем",
+          note: "Перегородки"
         }
       ]
     }
   ],
   application: {
-    eyebrow: "Заявка",
-    title: "Оставьте заявку",
-    description: "Менеджер свяжется с вами для расчета стоимости.",
+    eyebrow: "Остались вопросы?",
+    title: "Оставьте номер, мы вам перезвоним",
+    description: "Проконсультируем по стоимости и срокам.",
+    logoSrc: "logo-candidate.png",
+    logoAlt: "Логотип Prime Glass",
     points: [
-      "Быстрая консультация",
-      "Расчет стоимости",
-      "Понимание сроков"
+      "Цены напрямую с завода",
+      "Быстро. Четко. В срок."
     ],
-    buttonLabel: "Оставить заявку",
+    buttonLabel: "Перезвонить",
     buttonHref: "#contacts",
-    visual: createArchitecturalVisual({
-      palette: ["#08182a", "#12314f", "#d8edf9", "#82b3d7"],
-      accent: "#77acd2",
-      lineColor: "#d7e9f5",
-      variant: "handrail",
-      label: "Signature Structures",
-      subtitle: "engineered for premium spaces"
-    })
+    visual: "url('photos/image6.jpg')"
   },
   extendedBenefitsSection: {
-    eyebrow: "Расширенные преимущества",
+    eyebrow: "Преимущества",
     title: "Почему Prime Glass выбирают для ответственных объектов",
     description: ""
   },
@@ -522,33 +552,31 @@ const siteContent = {
   ],
   contacts: {
     eyebrow: "Контакты",
-    title: "Обсудим проект и подготовим расчет",
-    description: "Свяжитесь с нами удобным способом.",
-    phone: "+7 (700) 000-00-00",
-    phoneLink: "tel:+77000000000",
-    whatsapp: "+7 (700) 000-00-00",
-    whatsappLink: "https://wa.me/77000000000",
+    title: "Местоположение и контакты",
+    description: "",
+    phone: "+7 (777) 091-08-88",
+    phoneLink: "tel:+77770910888",
+    whatsappNumber: "77770910888",
+    whatsapp: "+7 (777) 091-08-88",
+    whatsappLink: `https://wa.me/77770910888?text=${whatsappMessage}`,
     email: "info@primeglass.kz",
     emailLink: "mailto:info@primeglass.kz",
     address: "Актау, промышленная зона, производственный блок Prime Glass",
     schedule: "Пн-Пт: 09:00-18:00",
     details: [
-      { icon: "phone", title: "Телефон", value: "+7 (700) 000-00-00", href: "tel:+77000000000" },
-      { icon: "whatsapp", title: "WhatsApp", value: "Написать в WhatsApp", href: "https://wa.me/77000000000" },
-      { icon: "email", title: "Email", value: "info@primeglass.kz", href: "mailto:info@primeglass.kz" },
-      { icon: "location", title: "Адрес", value: "Актау, промышленная зона, производственный блок Prime Glass" }
+      { icon: "phone", title: "Телефон", value: "+7 (777) 091-08-88", href: "tel:+77770910888" },
+      { icon: "whatsapp", title: "WhatsApp", value: "+7 (777) 091-08-88", href: `https://wa.me/77770910888?text=${whatsappMessage}` },
+      { icon: "location", title: "Адрес", value: "Актау, промышленная зона" }
     ],
     form: {
-      title: "Оставить заявку",
-      description: "Заполните форму, и мы свяжемся с вами.",
+      title: "Перезвонить",
+      description: "Оставьте контакты, и мы вас проконсультируем.",
       fields: { name: "Имя", phone: "Телефон" },
-      submitLabel: "Отправить заявку",
-      successMessage:
-        "Заявка принята. Данные не отправляются на сервер: форма работает в демонстрационном режиме."
+      submitLabel: "Отправить"
     }
   },
   footer: {
-    copy: "Prime Glass Technologies. Все права защищены.",
+    copy: "Prime Glass. Все права защищены.",
     note: ""
   }
 };
@@ -623,7 +651,7 @@ function renderHeroSlider() {
       <div class="hero-slider__shell">
         <div class="hero-slider__label">
           <span>Продуктовые направления</span>
-          <span>${siteContent.heroSlides.length} слайда</span>
+          <span>${siteContent.heroSlides.length} направления</span>
         </div>
         <div class="hero-slider__viewport" id="heroSliderViewport">
           ${siteContent.heroSlides.map((slide, index) => `
@@ -689,7 +717,6 @@ function renderHeroSection() {
       </div>
     </div>
   `;
-  renderHeroSlider();
 }
 
 function renderShortBenefits() {
@@ -721,17 +748,6 @@ function renderAboutSection() {
             <article class="about-fact card reveal">
               <strong>${fact.value}</strong>
               <span>${fact.text}</span>
-            </article>
-          `).join("")}
-        </div>
-        <div class="about-points">
-          ${siteContent.about.points.map((point) => `
-            <article class="about-point reveal">
-              <span class="about-point__icon">${iconMarkup(point.icon)}</span>
-              <div class="about-point__body">
-                <strong>${point.title}</strong>
-                <span>${point.text}</span>
-              </div>
             </article>
           `).join("")}
         </div>
@@ -770,31 +786,76 @@ function renderApproachCards() {
 function renderProducts() {
   dom.productsSection.innerHTML = `
     ${renderSectionHeading(siteContent.productsSection)}
-    <div class="products-grid">
-      ${siteContent.products.map((product, index) => `
-        <article class="product-card card reveal">
-          <div class="product-card__gallery" data-product-gallery>
-            ${product.photos.map((photo, photoIndex) => `
-              <figure class="product-card__media ${photoIndex === 0 ? "product-card__media--primary" : "product-card__media--secondary"}" data-product-photo>
-                <img src="${photo.src}" alt="${photo.alt}" loading="lazy">
-                <figcaption>${photo.note}</figcaption>
+    <div class="products-carousel reveal">
+      <div class="products-carousel__controls" aria-label="Навигация по продукции">
+        <button class="products-carousel__arrow" type="button" data-products-prev aria-label="Предыдущая услуга">${iconMarkup("arrowLeft")}</button>
+        <button class="products-carousel__arrow" type="button" data-products-next aria-label="Следующая услуга">${iconMarkup("arrowRight")}</button>
+      </div>
+      <div class="products-carousel__viewport" data-products-viewport>
+        <div class="products-grid">
+          ${siteContent.products.map((product, index) => `
+            <article class="product-card card reveal">
+              <figure class="product-card__media product-card__media--primary" data-product-photo>
+                <img src="${product.photos[0].src}" alt="${product.photos[0].alt}" loading="lazy">
               </figure>
-            `).join("")}
-          </div>
-          <div class="product-card__top">
-            <span class="icon-badge">${iconMarkup(product.icon)}</span>
-            <span class="product-card__label">${product.label}</span>
-          </div>
-          <span class="product-card__index">0${index + 1}</span>
-          <h3>${product.title}</h3>
-          <p>${product.description}</p>
-          <div class="chip-list">
-            ${product.tags.map((tag) => `<span class="chip">${tag}</span>`).join("")}
-          </div>
-        </article>
-      `).join("")}
+              <div class="product-card__content">
+                <div class="product-card__top">
+                  <span class="icon-badge">${iconMarkup(product.icon)}</span>
+                  <span class="product-card__index">0${index + 1}</span>
+                </div>
+                <h3>${product.title}</h3>
+                <p>${product.description}</p>
+              </div>
+            </article>
+          `).join("")}
+        </div>
+      </div>
     </div>
   `;
+}
+
+function initProductsCarousel() {
+  const viewport = document.querySelector("[data-products-viewport]");
+  const prevButton = document.querySelector("[data-products-prev]");
+  const nextButton = document.querySelector("[data-products-next]");
+
+  if (!viewport || !prevButton || !nextButton) {
+    return;
+  }
+
+  const getStep = () => {
+    const card = viewport.querySelector(".product-card");
+    const track = viewport.querySelector(".products-grid");
+
+    if (!card || !track) {
+      return viewport.clientWidth;
+    }
+
+    const gapValue = Number.parseFloat(window.getComputedStyle(track).columnGap || "0");
+    const gap = Number.isFinite(gapValue) ? gapValue : 0;
+    return card.getBoundingClientRect().width + gap;
+  };
+
+  const moveProducts = (direction) => {
+    const maxScroll = viewport.scrollWidth - viewport.clientWidth;
+    const atStart = viewport.scrollLeft <= 2;
+    const atEnd = viewport.scrollLeft >= maxScroll - 2;
+
+    if (direction > 0 && atEnd) {
+      viewport.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (direction < 0 && atStart) {
+      viewport.scrollTo({ left: maxScroll, behavior: "smooth" });
+      return;
+    }
+
+    viewport.scrollBy({ left: getStep() * direction, behavior: "smooth" });
+  };
+
+  prevButton.addEventListener("click", () => moveProducts(-1));
+  nextButton.addEventListener("click", () => moveProducts(1));
 }
 
 function renderApplicationSection() {
@@ -807,19 +868,10 @@ function renderApplicationSection() {
             title: siteContent.application.title,
             description: siteContent.application.description
           })}
-          <ul class="application-copy__list">
-            ${siteContent.application.points.map((item) => `
-              <li class="application-copy__item">
-                <span></span>
-                <span>${item}</span>
-              </li>
-            `).join("")}
-          </ul>
           <a class="button button--primary" href="${siteContent.application.buttonHref}">
             ${siteContent.application.buttonLabel}
           </a>
         </div>
-        <div class="application-visual" style="--application-image:${siteContent.application.visual};"></div>
       </div>
     </div>
   `;
@@ -890,9 +942,9 @@ function renderFooter() {
     <div class="site-footer__layout">
       <div class="site-footer__copy">
         <strong>${siteContent.brand.name}</strong><br>
-        <span>${siteContent.footer.copy.replace("Prime Glass Technologies.", "")}</span><br>
+        <span>${siteContent.footer.copy.replace("Prime Glass.", "").trim()}</span><br>
         ${siteContent.footer.note ? `<span>${siteContent.footer.note}</span><br>` : ""}
-        <span>&copy; <span data-current-year></span> Prime Glass Technologies.</span>
+        <span>&copy; <span data-current-year></span> Prime Glass.</span>
       </div>
       <nav class="site-footer__nav" aria-label="Дополнительная навигация">
         ${siteContent.navigation.map((item) => `<a href="${item.href}">${item.label}</a>`).join("")}
@@ -904,12 +956,9 @@ function renderFooter() {
 function renderSite() {
   renderNavigation();
   renderHeroSection();
-  renderShortBenefits();
   renderAboutSection();
-  renderApproachCards();
   renderProducts();
   renderApplicationSection();
-  renderExtendedBenefits();
   renderContacts();
   renderFooter();
 
@@ -1100,6 +1149,10 @@ function validateField(field) {
   return !message;
 }
 
+function buildWhatsAppLink(message) {
+  return `https://wa.me/${siteContent.contacts.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
 function initFormValidation() {
   const form = document.getElementById("contactForm");
   const phoneInput = document.getElementById("contactPhone");
@@ -1131,9 +1184,18 @@ function initFormValidation() {
       return;
     }
 
-    statusNode.classList.add("is-success");
-    statusNode.textContent = siteContent.contacts.form.successMessage;
+    statusNode.classList.remove("is-success");
+    statusNode.textContent = "";
+
+    const whatsappRequestMessage = [
+      "Здравствуйте! Хочу оставить заявку.",
+      `Имя: ${nameInput.value.trim()}.`,
+      `Телефон: ${phoneInput.value.trim()}.`,
+      "Подскажите, пожалуйста, по стоимости и срокам."
+    ].join("\n");
+
     form.reset();
+    window.open(buildWhatsAppLink(whatsappRequestMessage), "_blank", "noopener,noreferrer");
   });
 }
 
@@ -1255,6 +1317,7 @@ function initSite() {
   cacheDom();
   renderSite();
   initHeroSlider();
+  initProductsCarousel();
   initMobileMenu();
   initSmoothScroll();
   initFormValidation();
