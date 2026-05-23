@@ -553,13 +553,14 @@ const siteContent = {
     whatsappNumber: "77770910888",
     whatsapp: "+7 (777) 091-08-88",
     whatsappLink: `https://wa.me/77770910888?text=${whatsappMessage}`,
-    email: "info@primeglass.kz",
-    emailLink: "mailto:info@primeglass.kz",
+    email: "primeglasstech@outlook.com",
+    emailLink: "mailto:primeglasstech@outlook.com",
     address: "Актау, промышленная зона, производственный блок Prime Glass",
     schedule: "Пн-Пт: 09:00-18:00",
     details: [
       { icon: "phone", title: "Телефон", value: "+7 (777) 091-08-88", href: "tel:+77770910888" },
       { icon: "whatsapp", title: "WhatsApp", value: "+7 (777) 091-08-88", href: `https://wa.me/77770910888?text=${whatsappMessage}` },
+      { icon: "email", title: "Email", value: "primeglasstech@outlook.com", href: "mailto:primeglasstech@outlook.com" },
       { icon: "location", title: "Адрес", value: "Актау, промышленная зона" }
     ],
     form: {
