@@ -700,11 +700,7 @@ function renderHeroSlider() {
 
 function renderHeroSection() {
   dom.heroSection.style.setProperty("--hero-backdrop", siteContent.hero.background);
-  dom.heroContent.innerHTML = `
-    <div class="hero-copy reveal">
-      ${renderSectionHeading({ eyebrow: siteContent.hero.eyebrow, title: siteContent.hero.title, description: siteContent.hero.subtitle, tag: "h1" })}
-    </div>
-  `;
+  dom.heroContent.innerHTML = "";
 }
 
 function renderShortBenefits() {
