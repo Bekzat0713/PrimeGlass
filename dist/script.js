@@ -232,13 +232,18 @@
       if (!item.dataset.depth) item.dataset.depth = String(14 + (index % 3) * 7);
     });
     const heroVisuals = document.querySelectorAll('.page-home .hero-picture img, .page-home .hero-video');
+    const hero = document.querySelector('.page-home .home-hero');
     const tiltButtons = document.querySelectorAll('.page-home .hero-actions .button');
     let frame = 0;
     const renderDepth = () => {
       frame = 0;
       const viewportHeight = window.innerHeight || 1;
       const scrollTop = window.scrollY;
-      heroVisuals.forEach(visual => visual.style.setProperty('--hero-parallax', `${Math.min(scrollTop * 0.12, 90).toFixed(2)}px`));
+      const heroProgress = Math.max(0, Math.min(1, scrollTop / Math.max(hero?.offsetHeight || viewportHeight, 1)));
+      heroVisuals.forEach(visual => {
+        visual.style.setProperty('--hero-parallax', `${Math.min(scrollTop * 0.035, 32).toFixed(2)}px`);
+        visual.style.setProperty('--hero-zoom', (1.08 + heroProgress * 0.42).toFixed(3));
+      });
       depthItems.forEach(item => {
         const rect = item.getBoundingClientRect();
         const relative = Math.max(-1.15, Math.min(1.15, (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight));
@@ -267,41 +272,21 @@
   }
   function initHeroVideo() {
     const video = document.querySelector('[data-hero-video]');
-    const toggle = document.querySelector('[data-video-toggle]');
     const source = video?.querySelector('source[data-src]');
-    if (!video || !toggle || !source) return;
+    if (!video || !source) return;
     const clientNavigator = window.navigator || {};
     const connection = clientNavigator.connection || clientNavigator.mozConnection || clientNavigator.webkitConnection;
     const constrainedNetwork = connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '');
     if (window.innerWidth < 768 || constrainedNetwork || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     source.src = source.dataset.src;
     video.load();
-    let userPaused = false;
     video.addEventListener('loadeddata', () => {
       video.classList.add('is-ready');
-      toggle.hidden = false;
-      video.play().catch(() => {
-        toggle.querySelector('span').textContent = '▶';
-        toggle.setAttribute('aria-label', 'Запустить фоновое видео');
-      });
+      video.play().catch(() => {});
     }, { once: true });
-    toggle.addEventListener('click', () => {
-      if (video.paused) {
-        userPaused = false;
-        video.play().then(() => {
-          toggle.querySelector('span').textContent = 'Ⅱ';
-          toggle.setAttribute('aria-label', 'Поставить фоновое видео на паузу');
-        }).catch(() => {});
-      } else {
-        userPaused = true;
-        video.pause();
-        toggle.querySelector('span').textContent = '▶';
-        toggle.setAttribute('aria-label', 'Запустить фоновое видео');
-      }
-    });
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && !video.paused) video.pause();
-      else if (!document.hidden && !userPaused) video.play().catch(() => {});
+      else if (!document.hidden) video.play().catch(() => {});
     });
   }
   initHeroVideo();

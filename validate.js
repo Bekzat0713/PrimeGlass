@@ -107,6 +107,8 @@ assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/
 assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть дальше<\/span>/, 'Home page needs a visible centered scroll cue');
 assert.match(renderHome(), /data-hero-video/, 'Home page needs the animated hero video');
 assert.match(renderHome(), /data-src="\/photos\/prime-glass-intro\.mp4"/, 'Hero video must load from the prepared web asset');
+assert.match(renderHome(), /<video[^>]*\bloop\b/, 'Hero video must loop continuously');
+assert.doesNotMatch(renderHome(), /data-video-toggle/, 'Hero video must not show pause controls');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-intro.mp4')), 'Hero video asset is missing');
 for (const html of servicePages) {
   assert.match(html, /Завод-изготовитель · 4 000 м²/, 'Service pages must reinforce the manufacturing position');
