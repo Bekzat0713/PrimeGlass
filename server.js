@@ -1,90 +1,61 @@
 const express = require('express');
 const path = require('path');
 const helmet = require('helmet');
-const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-const { body, validationResult } = require('express-validator');
+const { serviceBySlug } = require('./services');
+const { renderHome, renderService, renderContacts, render404 } = require('./render');
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = Number(process.env.PORT) || 3002;
 
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        'script-src': ["'self'", 'https://cdn.jsdelivr.net'],
-        'img-src': ["'self'", 'data:']
-      }
-    }
-  })
-);
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
-app.use(cors({ origin: true, credentials: true }));
+app.disable('x-powered-by');
 app.set('trust proxy', 1);
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:'],
+      connectSrc: ["'self'"],
+      frameAncestors: ["'none'"]
+    }
+  },
+  crossOriginResourcePolicy: { policy: 'same-origin' }
+}));
+app.use(express.json({ limit: '12kb' }));
 
-const apiLimiter = rateLimit({
+app.use('/api', rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 60,
+  limit: 60,
   standardHeaders: true,
-  legacyHeaders: false,
-  message: 'Слишком много запросов. Попробуйте позже.'
+  legacyHeaders: false
+}));
+
+app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
+
+const staticOptions = { maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0, index: false };
+app.use(express.static(path.join(__dirname), staticOptions));
+
+app.get('/', (_req, res) => res.type('html').send(renderHome()));
+app.get('/contacts', (_req, res) => res.type('html').send(renderContacts()));
+app.get('/404', (_req, res) => res.status(404).type('html').send(render404()));
+app.get('/:slug', (req, res, next) => {
+  const service = serviceBySlug[req.params.slug];
+  if (!service) return next();
+  return res.type('html').send(renderService(service));
+});
+app.use((_req, res) => res.status(404).type('html').send(render404()));
+
+const server = app.listen(PORT, () => {
+  console.log(`Prime Glass: http://localhost:${PORT}`);
 });
 
-app.use('/api/', apiLimiter);
-
-app.use(express.static(path.join(__dirname)));
-
-app.post(
-  '/api/contact',
-  [
-    body('name').trim().notEmpty().withMessage('Имя обязательно').escape(),
-    body('phone').trim().notEmpty().withMessage('Телефон обязателен').escape(),
-    body('email').trim().isEmail().withMessage('Неверный Email').normalizeEmail(),
-    body('company').optional({ checkFalsy: true }).trim().escape(),
-    body('message').optional({ checkFalsy: true }).trim().escape()
-  ],
-  (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        message: 'Некорректные данные формы',
-        errors: errors.array()
-      });
-    }
-
-    const { name, company, phone, email, message } = req.body;
-
-    console.log('New contact request:', {
-      name,
-      company,
-      phone,
-      email,
-      message
-    });
-
-    return res.json({ message: 'Заявка успешно принята. Мы скоро свяжемся с вами.' });
+server.on('error', error => {
+  if (error.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use.`);
+    process.exitCode = 1;
+    return;
   }
-);
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  throw error;
 });
-
-const startServer = (port) => {
-  const server = app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
-
-  server.on('error', (error) => {
-    if (error.code === 'EADDRINUSE') {
-      const nextPort = port + 1;
-      console.warn(`Port ${port} is in use, trying ${nextPort}...`);
-      startServer(nextPort);
-      return;
-    }
-    throw error;
-  });
-};
-
-startServer(PORT);

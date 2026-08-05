@@ -1,67 +1,50 @@
-# Prime Glass Technologies - Корпоративный сайт
+# Prime Glass Technologies
 
-Премиальный корпоративный сайт для Prime Glass Technologies на чистом HTML/CSS/JS.
+Многостраничный коммерческий сайт Prime Glass на существующем стеке: серверный HTML, CSS, JavaScript и Express.
 
-## Особенности
+## Что реализовано
 
-- **Статическая страница**: HTML + CSS + JavaScript
-- **Анимация загрузки**: Стильное появление контента на первом экране
-- **Node.js Backend**: Express сервер с защитой (helmet, cors, rate-limit)
-- **Контактная форма**: Обработка данных через `POST /api/contact`
-
-## Структура проекта
-
-```
-├── src/
-│   ├── index.js          # Точка входа React приложения
-│   ├── styles.css        # Tailwind CSS стили
-│   └── SplashScreen.jsx  # Компонент анимированного splash screen
-├── dist/                 # Production сборка
-├── server.js             # Node.js Express сервер
-├── webpack.config.js     # Конфигурация webpack
-├── tailwind.config.js    # Конфигурация Tailwind CSS
-├── postcss.config.js     # Конфигурация PostCSS
-└── package.json          # Зависимости и скрипты
-```
+- 12 прямых маршрутов: главная, 10 услуг и контакты;
+- единый шаблон услуг и централизованный контент в `services.js`;
+- адаптивная архитектурно-индустриальная визуальная система;
+- фильтруемая галерея с увеличением, FAQ, мобильное меню и фиксированные действия;
+- конфигурируемый калькулятор без вымышленных цен;
+- формы расчёта, замера, проекта, коммерческого предложения и звонка;
+- честная отправка через WhatsApp: сайт формирует сообщение, пользователь подтверждает отправку в чате;
+- сохранение UTM-меток и централизованные события аналитики через `window.dataLayer` и `primeglass:analytics`;
+- уникальные metadata, canonical, Open Graph, Twitter Card и JSON-LD;
+- `robots.txt`, `sitemap.xml`, favicon, social preview и страница 404;
+- статическая production-сборка в `dist/`, пригодная для обычного хостинга.
 
 ## Запуск
 
-### Backend (порт 3002)
 ```bash
-npm start          # Production режим
-npm run dev        # Development режим с nodemon
+npm start
 ```
 
-### Frontend (порт 3000)
+Сайт будет доступен по адресу `http://localhost:3002`.
+
+Проверка и сборка:
+
 ```bash
-npm run client     # Webpack dev server
-npm run build      # Production сборка
+npm run check
 ```
 
-## Анимации Splash Screen
+Готовые файлы появятся в `dist/`. Для статического хостинга сервер должен либо поддерживать каталоги с `index.html`, либо быть настроен на выдачу соответствующего файла маршрута.
 
-- **Логотип**: 5 стеклянных панелей с эффектом "построения"
-- **Время**: 3 секунды на построение + 1 секунда пауза
-- **Переход**: Плавное исчезновение с масштабированием
-- **Цвета**: Градиент от синего к фиолетовому
-- **Easing**: cubic-bezier(0.25, 0.1, 0.25, 1) для премиального вида
+## Конфигурация
 
-## Технологии
+Контакты и неподтверждённые данные находятся в `site-config.js`. До публикации нужно подтвердить:
 
-- **Frontend**: React 18.2.0, Framer Motion 12.38.0, Tailwind CSS 3.3.3
-- **Backend**: Node.js, Express 4.18.4
-- **Build**: Webpack 5.106.1, Babel, PostCSS
-- **Security**: Helmet, CORS, Rate Limiting
+- точный адрес;
+- публичный Telegram;
+- координаты карты;
+- утверждённый каталог;
+- реальные кейсы, отзывы, сертификаты и показатели компании;
+- происхождение изображений, если их планируется называть портфолио или фото производства.
 
-## Развертывание
+ID аналитики задаются переменными окружения `GTM_ID`, `GA4_ID`, `YM_ID`, `META_PIXEL_ID`. Пустые ID не подменяются вымышленными значениями.
 
-1. Соберите frontend: `npm run build`
-2. Запустите backend: `npm start`
-3. Откройте http://localhost:3002
+## События аналитики
 
-## API Endpoints
-
-- `GET /` - Главная страница с React splash screen
-- `POST /api/contact` - Обработка контактной формы
-- `GET /api/health` - Проверка состояния сервера</content>
-<parameter name="filePath">c:\Users\mufta\Desktop\Glass\README.md
+Подготовлены события `click_phone`, `click_whatsapp`, `click_telegram`, `open_calculator`, `submit_calculation`, `submit_callback`, `submit_measurement`, `submit_project`, `request_commercial_offer`, `download_catalog`, `view_service` и `view_case`. События передают страницу, услугу и сохранённые UTM-метки.
