@@ -86,6 +86,7 @@ assert.match(stylesheet, /\.benefit-card\{[^}]*grid-template-columns:32px minmax
 assert.match(stylesheet, /@media \(max-width:900px\)[\s\S]*?\.reveal\{opacity:1;transform:none;transition:none\}/, 'Mobile text must not float in with scroll animations');
 assert.match(stylesheet, /@media \(hover:none\)/, 'Touch devices need stable non-hover positioning');
 assert.match(stylesheet, /\.home-hero\{position:relative;min-height:100svh/, 'Home page needs a full-viewport architectural hero');
+assert.match(stylesheet, /\.home-hero-grid\{[^}]*width:100%;max-width:none;margin-inline:0/, 'Home hero image must extend edge to edge');
 assert.match(stylesheet, /\.page-home \.site-header\{position:fixed/, 'Home page navigation must overlay the hero');
 const combinedHtml = pages.join('\n');
 assert.doesNotMatch(combinedHtml, /Актау/i, 'Old city name must not remain in generated pages');

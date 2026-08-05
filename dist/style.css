@@ -289,7 +289,7 @@ h3{line-height:1.12}
 
 .home-hero{position:relative;min-height:100svh;padding:0;background:#4d9db1;color:#fff;overflow:hidden}
 .home-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,34,45,.3) 0%,rgba(8,34,45,.05) 45%,rgba(8,34,45,.54) 100%);pointer-events:none}
-.home-hero-grid{position:relative;z-index:2;min-height:100svh;display:flex;align-items:flex-start;justify-content:center;padding-top:clamp(145px,16vh,210px);padding-bottom:210px;text-align:center}
+.home-hero-grid{position:relative;z-index:2;width:100%;max-width:none;margin-inline:0;min-height:100svh;display:flex;align-items:flex-start;justify-content:center;padding:clamp(145px,16vh,210px) max(28px,calc((100vw - 1380px)/2)) 210px;text-align:center}
 .home-hero .hero-copy{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;width:min(950px,100%)}
 .home-hero .eyebrow{justify-content:center;color:rgba(255,255,255,.9)}
 .home-hero h1{max-width:1000px;text-transform:none;font-size:clamp(3.6rem,7vw,7.5rem);font-weight:500;line-height:.98;text-shadow:0 3px 24px rgba(8,34,45,.18)}
@@ -364,7 +364,7 @@ h3{line-height:1.12}
   :root{--container:min(100% - 36px,860px)}
   .section{padding:88px 0}
   .page-home .site-header{height:70px}
-  .home-hero-grid{min-height:860px;padding-top:140px;padding-bottom:260px}
+  .home-hero-grid{min-height:860px;padding:140px 28px 260px}
   .home-hero .fact-strip{bottom:22px;grid-template-columns:1fr 1fr}
   .home-hero .fact-strip>div{min-height:94px;padding:18px}
   .home-hero .fact-strip>div:nth-child(2){border-right:0}
@@ -382,7 +382,7 @@ h3{line-height:1.12}
   .section{padding:70px 0}
   .page-home .site-header,.page-home .site-header.is-scrolled{height:68px}
   .home-hero{min-height:820px}
-  .home-hero-grid{min-height:820px;display:flex;gap:0;padding-top:116px;padding-bottom:250px}
+  .home-hero-grid{width:100%;min-height:820px;display:flex;gap:0;padding:116px 14px 250px}
   .home-hero h1{font-size:clamp(3rem,14.5vw,4.4rem);line-height:.98}
   .home-hero .eyebrow{font-size:9px;letter-spacing:.11em}
   .home-hero .hero-lead{max-width:340px;margin-top:20px;font-size:.95rem}
