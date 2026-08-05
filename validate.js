@@ -83,6 +83,8 @@ assert.match(stylesheet, /\.gallery-grid\{[^}]*grid-auto-flow:column/, 'Mobile g
 assert.match(stylesheet, /\.spec-table,.spec-table tbody[^\n]*display:block/, 'Mobile specification table needs a stacked layout');
 assert.match(stylesheet, /\.field input,[^\n]*font-size:16px/, 'Mobile form controls need a zoom-safe font size');
 assert.match(stylesheet, /\.benefit-card\{[^}]*grid-template-columns:32px minmax\(0,1fr\)/, 'Mobile benefit cards need aligned index and content columns');
+assert.match(stylesheet, /@media \(max-width:900px\)[\s\S]*?\.reveal\{opacity:1;transform:none;transition:none\}/, 'Mobile text must not float in with scroll animations');
+assert.match(stylesheet, /@media \(hover:none\)/, 'Touch devices need stable non-hover positioning');
 const combinedHtml = pages.join('\n');
 assert.doesNotMatch(combinedHtml, /Актау/i, 'Old city name must not remain in generated pages');
 assert.match(renderHome(), /Алматы/, 'Home page must use the current city');
