@@ -52,7 +52,7 @@ function header(currentPath = '/') {
         </div>
         <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle><span></span><span></span><span></span><b class="sr-only">Меню</b></button>
       </div>
-      <div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+      <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
         <div class="container">
           <p class="menu-label">Направления</p>
           <div class="mobile-service-links">${serviceLinks}</div>

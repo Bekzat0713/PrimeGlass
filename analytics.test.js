@@ -9,14 +9,44 @@ function runAnalytics(analytics = {}) {
   const storage = new Map();
   const appendedScripts = [];
   const servicePage = { dataset: { servicePage: 'steklopakety' } };
+  const makeInteractiveElement = attributes => {
+    const attributeMap = new Map(Object.entries(attributes || {}));
+    const classes = new Set();
+    const listeners = {};
+    return {
+      listeners,
+      classList: {
+        add: name => classes.add(name),
+        remove: name => classes.delete(name),
+        contains: name => classes.has(name),
+        toggle: (name, force) => {
+          const next = force === undefined ? !classes.has(name) : force;
+          if (next) classes.add(name); else classes.delete(name);
+          return next;
+        }
+      },
+      addEventListener: (name, handler) => { listeners[name] = handler; },
+      getAttribute: name => attributeMap.get(name) ?? null,
+      setAttribute: (name, value) => attributeMap.set(name, String(value))
+    };
+  };
+  const menuToggle = makeInteractiveElement({ 'aria-expanded': 'false' });
+  const mobileMenu = makeInteractiveElement({ 'aria-hidden': 'true' });
+  const header = makeInteractiveElement();
+  const body = makeInteractiveElement();
   const document = {
     title: 'Стеклопакеты Prime Glass',
     referrer: 'https://www.google.com/search?q=glass',
     head: { appendChild: node => appendedScripts.push(node) },
-    body: { classList: { add() {}, remove() {}, toggle() {} } },
+    body,
     createElement: tagName => ({ tagName, id: '', async: false, src: '' }),
     getElementById: () => null,
-    querySelector: selector => selector === '[data-service-page]' ? servicePage : null,
+    querySelector: selector => ({
+      '[data-service-page]': servicePage,
+      '[data-header]': header,
+      '[data-menu-toggle]': menuToggle,
+      '[data-mobile-menu]': mobileMenu
+    })[selector] || null,
     querySelectorAll: () => [],
     addEventListener() {}
   };
@@ -50,7 +80,7 @@ function runAnalytics(analytics = {}) {
     console
   };
   vm.runInNewContext(source, context, { filename: 'script.js' });
-  return { window, storage, appendedScripts };
+  return { window, storage, appendedScripts, menuToggle, mobileMenu, body };
 }
 
 const base = runAnalytics();
@@ -70,6 +100,15 @@ assert.strictEqual(base.window.PrimeGlassAnalytics.track('click_phone', {}, { de
 assert.strictEqual(base.window.PrimeGlassAnalytics.track('click_phone', {}, { dedupeKey: 'phone', dedupeMs: 5000 }), false);
 assert.strictEqual(base.window.dataLayer.filter(item => item.event === 'click_phone').length, 1);
 assert.strictEqual(base.appendedScripts.length, 0, 'No external analytics scripts should load without IDs');
+base.menuToggle.listeners.click();
+assert.strictEqual(base.menuToggle.getAttribute('aria-expanded'), 'true');
+assert.strictEqual(base.mobileMenu.getAttribute('aria-hidden'), 'false');
+assert(base.mobileMenu.classList.contains('is-open'), 'Mobile navigation must open from the menu button');
+assert(base.body.classList.contains('menu-open'), 'Page scrolling must lock while mobile navigation is open');
+base.menuToggle.listeners.click();
+assert.strictEqual(base.menuToggle.getAttribute('aria-expanded'), 'false');
+assert.strictEqual(base.mobileMenu.getAttribute('aria-hidden'), 'true');
+assert(!base.mobileMenu.classList.contains('is-open'), 'Mobile navigation must close on a second click');
 
 const connected = runAnalytics({
   googleTagManagerId: 'GTM-TEST123',

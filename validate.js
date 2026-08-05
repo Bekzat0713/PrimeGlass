@@ -77,6 +77,8 @@ for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.f
 const stylesheet = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
 assert(stylesheet.includes('@media (max-width:390px)'), 'Small mobile breakpoint is required');
 assert(stylesheet.includes('env(safe-area-inset-bottom)'), 'Mobile fixed actions need safe-area spacing');
+assert.match(stylesheet, /\.mobile-menu\{position:absolute;top:82px[^}]*height:calc\(100dvh - 82px\)/, 'Tablet navigation must have an explicit viewport height');
+assert.match(stylesheet, /\.mobile-menu,.site-header\.is-scrolled \.mobile-menu\{top:68px[^}]*height:calc\(100dvh - 68px\)/, 'Phone navigation must not use the filtered header as its height reference');
 assert.match(stylesheet, /\.gallery-grid\{[^}]*grid-auto-flow:column/, 'Mobile gallery needs a horizontal touch layout');
 assert.match(stylesheet, /\.spec-table,.spec-table tbody[^\n]*display:block/, 'Mobile specification table needs a stacked layout');
 assert.match(stylesheet, /\.field input,[^\n]*font-size:16px/, 'Mobile form controls need a zoom-safe font size');
