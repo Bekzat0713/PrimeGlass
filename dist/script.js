@@ -38,16 +38,6 @@
   ]);
   window.PrimeGlassAnalytics = { track, events: analyticsEvents };
 
-  const toast = document.querySelector('[data-toast]');
-  let toastTimer;
-  function showToast(message) {
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add('is-visible');
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 3600);
-  }
-
   const header = document.querySelector('[data-header]');
   const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 16);
   updateHeader();
@@ -67,7 +57,12 @@
     document.body.classList.toggle('menu-open', open);
   });
   mobileMenu?.addEventListener('click', event => { if (event.target.closest('a,button')) closeMenu(); });
-  document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    closeMenu();
+    document.querySelector('.nav-dropdown')?.classList.remove('is-open');
+    servicesToggle?.setAttribute('aria-expanded', 'false');
+  });
 
   const servicesToggle = document.querySelector('[data-services-toggle]');
   servicesToggle?.addEventListener('click', event => {
@@ -186,16 +181,30 @@
 
   function validateForm(form) {
     let valid = true;
+    let validationMessage = 'Проверьте обязательные поля и номер телефона.';
     form.querySelectorAll('.has-error').forEach(field => field.classList.remove('has-error'));
     for (const input of form.querySelectorAll('[required]')) {
       const filled = input.type === 'checkbox' ? input.checked : input.value.trim();
       const phoneValid = input.matches('[data-phone]') ? input.value.replace(/\D/g, '').length === 11 : true;
-      if (!filled || !phoneValid) {
+      if (!filled || !phoneValid || !input.checkValidity()) {
         input.closest('.field')?.classList.add('has-error');
         valid = false;
       }
     }
-    if (!valid) setFormStatus(form, 'Проверьте обязательные поля и номер телефона.', 'error');
+    const files = form.querySelector('input[type="file"]')?.files;
+    if (files?.length) {
+      const maxFileSize = 10 * 1024 * 1024;
+      const maxTotalSize = 25 * 1024 * 1024;
+      const allowedExtensions = new Set(['pdf','jpg','jpeg','png','webp','dwg','dxf','doc','docx','xls','xlsx']);
+      const totalSize = Array.from(files).reduce((sum, file) => sum + file.size, 0);
+      const invalidType = Array.from(files).some(file => !allowedExtensions.has(file.name.split('.').pop()?.toLowerCase()));
+      if (invalidType || Array.from(files).some(file => file.size > maxFileSize) || totalSize > maxTotalSize) {
+        form.querySelector('input[type="file"]')?.closest('.field')?.classList.add('has-error');
+        validationMessage = invalidType ? 'Недопустимый формат файла. Используйте PDF, изображения или указанные проектные форматы.' : 'Файл должен быть не больше 10 МБ, общий объём — не больше 25 МБ.';
+        valid = false;
+      }
+    }
+    if (!valid) setFormStatus(form, validationMessage, 'error');
     return valid;
   }
 
@@ -243,10 +252,6 @@
     event.preventDefault();
     if (!validateForm(form)) return;
     openWhatsApp(form, buildLeadMessage(form, true), 'submit_calculation');
-  }));
-
-  document.querySelectorAll('[data-disabled-channel]').forEach(button => button.addEventListener('click', () => {
-    showToast('Telegram пока не подключён: публичный контакт ожидает подтверждения. Используйте WhatsApp или телефон.');
   }));
 
   if (document.querySelector('[data-service-page]')) {

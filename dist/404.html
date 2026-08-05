@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Страница не найдена | Prime Glass</title>
   <meta name="description" content="Запрошенная страница не найдена.">
+  <meta name="robots" content="noindex,follow">
   <link rel="canonical" href="https://primeglass.kz/404">
   <meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><meta property="og:site_name" content="Prime Glass Technologies"><meta property="og:title" content="Страница не найдена | Prime Glass"><meta property="og:description" content="Запрошенная страница не найдена."><meta property="og:url" content="https://primeglass.kz/404"><meta property="og:image" content="https://primeglass.kz/og.png">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Страница не найдена | Prime Glass"><meta name="twitter:description" content="Запрошенная страница не найдена."><meta name="twitter:image" content="https://primeglass.kz/og.png">
@@ -23,8 +24,8 @@
         </a>
         <nav class="desktop-nav" aria-label="Основная навигация">
           <div class="nav-dropdown">
-            <button type="button" aria-expanded="false" data-services-toggle>Услуги <span aria-hidden="true">⌄</span></button>
-            <div class="services-menu"><a href="/steklopakety">Стеклопакеты</a><a href="/osteklenie-zdaniy">Остекление зданий</a><a href="/alyuminievye-vitrazhi">Алюминиевые витражи</a><a href="/plastikovye-okna">Пластиковые окна</a><a href="/ofisnye-peregorodki">Офисные перегородки</a><a href="/loft-peregorodki">Лофт-перегородки</a><a href="/dushevye-peregorodki">Душевые перегородки</a><a href="/steklyannye-perila">Стеклянные перила</a><a href="/steklyannye-kozyrki">Стеклянные козырьки</a><a href="/zakalka-stekla">Закалка и обработка</a></div>
+            <button type="button" aria-expanded="false" aria-controls="services-menu" data-services-toggle>Услуги <span aria-hidden="true">⌄</span></button>
+            <div class="services-menu" id="services-menu"><a href="/steklopakety">Стеклопакеты</a><a href="/osteklenie-zdaniy">Остекление зданий</a><a href="/alyuminievye-vitrazhi">Алюминиевые витражи</a><a href="/plastikovye-okna">Пластиковые окна</a><a href="/ofisnye-peregorodki">Офисные перегородки</a><a href="/loft-peregorodki">Лофт-перегородки</a><a href="/dushevye-peregorodki">Душевые перегородки</a><a href="/steklyannye-perila">Стеклянные перила</a><a href="/steklyannye-kozyrki">Стеклянные козырьки</a><a href="/zakalka-stekla">Закалка и обработка</a></div>
           </div>
           <a href="/#production">Производство</a>
           <a href="/#gallery">Проекты</a>
@@ -51,22 +52,21 @@
   
     <div class="floating-actions" aria-label="Быстрые способы связи">
       <a class="floating-button whatsapp" href="https://wa.me/77770910888" data-track="click_whatsapp" aria-label="Написать в WhatsApp"><span class="floating-logo"><img src="/icons/whatsapp.svg" alt="" width="24" height="24"></span><span class="floating-label"><strong>WhatsApp</strong><small>Написать сейчас</small></span></a>
-      <button class="floating-button telegram is-disabled" type="button" data-disabled-channel="telegram" aria-label="Telegram ожидает подтверждения"><span class="floating-logo"><img src="/icons/telegram.svg" alt="" width="24" height="24"></span><span class="floating-label"><strong>Telegram</strong><small>Ссылка уточняется</small></span></button>
+      
     </div>
     <div class="mobile-cta"><a href="tel:+77770910888" data-track="click_phone"><span class="mobile-action-symbol">↗</span><span>Позвонить</span></a><a href="https://wa.me/77770910888" data-track="click_whatsapp"><img src="/icons/whatsapp.svg" alt="" width="19" height="19"><span>WhatsApp</span></a><button type="button" data-open-form="calculation"><span class="mobile-action-symbol">+</span><span>Расчёт</span></button></div>
-    <dialog class="form-dialog" data-form-dialog>
+    <dialog class="form-dialog" data-form-dialog aria-labelledby="dialog-title">
       <div class="dialog-shell">
         <button class="dialog-close" type="button" data-dialog-close aria-label="Закрыть">×</button>
-        <div class="dialog-intro"><p class="eyebrow">Запрос Prime Glass</p><h2 data-dialog-title>Получить расчёт</h2><p data-dialog-copy>Заполните исходные данные — мы сформируем сообщение для WhatsApp.</p></div>
+        <div class="dialog-intro"><p class="eyebrow">Запрос Prime Glass</p><h2 id="dialog-title" data-dialog-title>Получить расчёт</h2><p data-dialog-copy>Заполните исходные данные — мы сформируем сообщение для WhatsApp.</p></div>
         <form class="lead-form" data-lead-form data-form-kind="calculation" novalidate>
           <input type="hidden" name="kind" value="calculation"><input type="hidden" name="page" value="">
-          <div class="form-grid"><label class="field"><span>Имя</span><input name="name" autocomplete="name" required></label><label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone></label><label class="field"><span>Услуга</span><select name="service"><option value="">Нужна консультация</option><option>Стеклопакеты</option><option>Остекление зданий</option><option>Алюминиевые витражи</option><option>Пластиковые окна</option><option>Офисные перегородки</option><option>Лофт-перегородки</option><option>Душевые перегородки</option><option>Стеклянные перила</option><option>Стеклянные козырьки</option><option>Закалка и обработка</option></select></label><label class="field"><span>Способ связи</span><select name="contactMethod"><option>WhatsApp</option><option>Телефон</option><option>Email</option></select></label><label class="field field-wide"><span>Комментарий</span><textarea name="comment" rows="3" placeholder="Размеры, количество, сроки или особенности объекта"></textarea></label><label class="field field-wide file-field" data-file-field hidden><span>Файлы проекта</span><input name="files" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.dwg,.dxf,.doc,.docx,.xls,.xlsx"><small>PDF, изображения и проектные форматы. Файлы нужно будет прикрепить вручную в WhatsApp.</small></label></div>
+          <div class="form-grid"><label class="field"><span>Имя</span><input name="name" autocomplete="name" required></label><label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone></label><label class="field"><span>Услуга</span><select name="service"><option value="">Нужна консультация</option><option>Стеклопакеты</option><option>Остекление зданий</option><option>Алюминиевые витражи</option><option>Пластиковые окна</option><option>Офисные перегородки</option><option>Лофт-перегородки</option><option>Душевые перегородки</option><option>Стеклянные перила</option><option>Стеклянные козырьки</option><option>Закалка и обработка</option></select></label><label class="field"><span>Желаемый способ ответа</span><select name="contactMethod"><option>WhatsApp</option><option>Телефон</option><option>Email</option></select></label><label class="field field-wide"><span>Комментарий</span><textarea name="comment" rows="3" placeholder="Размеры, количество, сроки или особенности объекта"></textarea></label><label class="field field-wide file-field" data-file-field hidden><span>Файлы проекта</span><input name="files" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.dwg,.dxf,.doc,.docx,.xls,.xlsx"><small>PDF, изображения и проектные форматы — до 10 МБ каждый и до 25 МБ суммарно. Файлы нужно будет прикрепить вручную в WhatsApp.</small></label></div>
           <label class="consent"><input type="checkbox" name="consent" required><span>Согласен на обработку данных для ответа на обращение</span></label><button class="button button-primary" type="submit">Отправить в WhatsApp</button><p class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </dialog>
-    <dialog class="lightbox" data-lightbox-dialog><button class="lightbox-close" type="button" data-lightbox-close aria-label="Закрыть">×</button><img src="" alt="" width="1280" height="853"></dialog>
-    <div class="toast" role="status" aria-live="polite" data-toast></div>
+    <dialog class="lightbox" data-lightbox-dialog><button class="lightbox-close" type="button" data-lightbox-close aria-label="Закрыть">×</button><img alt="" width="1280" height="853"></dialog>
   <script>window.PRIME_GLASS={"whatsapp":"77770910888","phone":"+77770910888","analytics":{"googleTagManagerId":"","googleAnalyticsId":"","yandexMetrikaId":"","metaPixelId":""}};</script>
   <script src="/script.js" defer></script>
 </body>

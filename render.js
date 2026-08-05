@@ -25,25 +25,26 @@ const picture = (image, className = '', eager = false) => {
 
 const trackedLink = (href, label, event, className = '') => `<a class="${className}" href="${href}" data-track="${event}">${label}</a>`;
 
-function header() {
-  const serviceLinks = services.map(item => `<a href="${routeFor(item)}">${item.title}</a>`).join('');
+function header(currentPath = '/') {
+  const active = path => currentPath === path ? ' class="is-current" aria-current="page"' : '';
+  const serviceLinks = services.map(item => `<a href="${routeFor(item)}"${active(routeFor(item))}>${item.title}</a>`).join('');
   return `
     <a class="skip-link" href="#content">К содержанию</a>
     <header class="site-header" data-header>
       <div class="container header-inner">
-        <a class="brand" href="/" aria-label="Prime Glass — главная">
+        <a class="brand" href="/" aria-label="Prime Glass — главная"${currentPath === '/' ? ' aria-current="page"' : ''}>
           <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
           <span><strong>Prime Glass</strong><small>Technologies</small></span>
         </a>
         <nav class="desktop-nav" aria-label="Основная навигация">
           <div class="nav-dropdown">
-            <button type="button" aria-expanded="false" data-services-toggle>Услуги <span aria-hidden="true">⌄</span></button>
-            <div class="services-menu">${serviceLinks}</div>
+            <button type="button" aria-expanded="false" aria-controls="services-menu" data-services-toggle>Услуги <span aria-hidden="true">⌄</span></button>
+            <div class="services-menu" id="services-menu">${serviceLinks}</div>
           </div>
           <a href="/#production">Производство</a>
           <a href="/#gallery">Проекты</a>
           <a href="/#about">О компании</a>
-          <a href="/contacts">Контакты</a>
+          <a href="/contacts"${active('/contacts')}>Контакты</a>
         </nav>
         <div class="header-actions">
           ${trackedLink(`tel:${config.phoneHref}`, config.phoneDisplay, 'click_phone', 'header-phone')}
@@ -55,7 +56,7 @@ function header() {
         <div class="container">
           <p class="menu-label">Направления</p>
           <div class="mobile-service-links">${serviceLinks}</div>
-          <div class="mobile-main-links"><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/#about">О компании</a><a href="/contacts">Контакты</a></div>
+          <div class="mobile-main-links"><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/#about">О компании</a><a href="/contacts"${active('/contacts')}>Контакты</a></div>
           <div class="mobile-menu-actions">${trackedLink(`tel:${config.phoneHref}`, 'Позвонить', 'click_phone', 'button button-secondary')}<button class="button button-primary" type="button" data-open-form="calculation">Получить расчёт</button></div>
         </div>
       </div>
@@ -111,7 +112,7 @@ function homePage() {
         <div class="container">
           <div class="section-intro reveal"><p class="eyebrow">Направления</p><h2>Инженерные решения<br>из стекла</h2><p>От отдельного стеклопакета до комплексного фасадного или интерьерного решения.</p></div>
           <div class="service-grid">
-            ${services.map((service, index) => `<a class="service-card reveal" href="${routeFor(service)}" data-track="view_service" data-service="${service.slug}"><span class="service-index">${String(index + 1).padStart(2, '0')}</span><h3>${service.title}</h3><p>${service.lead}</p><span class="text-link">Подробнее <b>↗</b></span></a>`).join('')}
+            ${services.map((service, index) => `<a class="service-card reveal" href="${routeFor(service)}"><span class="service-index">${String(index + 1).padStart(2, '0')}</span><h3>${service.title}</h3><p>${service.lead}</p><span class="text-link">Подробнее <b>↗</b></span></a>`).join('')}
           </div>
         </div>
       </section>
@@ -153,8 +154,8 @@ function processSection() {
 }
 
 function calculatorField(field) {
-  const attributes = `${field.min ? `min="${field.min}"` : ''} ${field.value !== undefined ? `value="${field.value}"` : ''} ${field.placeholder ? `placeholder="${field.placeholder}"` : ''}`;
-  return `<label class="field"><span>${field.label}</span>${field.type === 'select' ? `<select name="${field.name}">${field.options.map(option => `<option>${option}</option>`).join('')}</select>` : `<input type="${field.type}" name="${field.name}" ${attributes}>`}</label>`;
+  const attributes = `${field.min ? `min="${field.min}"` : ''} ${field.value !== undefined ? `value="${field.value}"` : ''} ${field.placeholder ? `placeholder="${field.placeholder}"` : ''} ${field.required ? 'required' : ''}`;
+  return `<label class="field"><span>${field.label}${field.required ? ' *' : ''}</span>${field.type === 'select' ? `<select name="${field.name}" ${field.required ? 'required' : ''}>${field.options.map(option => `<option>${option}</option>`).join('')}</select>` : `<input type="${field.type}" name="${field.name}" ${attributes}>`}</label>`;
 }
 
 function servicePage(service) {
@@ -181,10 +182,11 @@ function servicePage(service) {
 
       <section class="section specs-section"><div class="container specs-grid"><div class="reveal"><p class="eyebrow">Комплектация</p><h2>Что учитываем<br>в предложении</h2><ol class="package-list">${service.extras.map((item,index)=>`<li><span>${String(index+1).padStart(2,'0')}</span>${item}</li>`).join('')}</ol></div><div class="spec-table-wrap reveal"><table class="spec-table"><caption>Ориентиры для подбора решения</caption><tbody>${service.specs.map(row=>`<tr><th scope="row">${row[0]}</th><td>${row[1]}</td></tr>`).join('')}</tbody></table><p class="table-note">Допустимые размеры, толщины и нагрузки не публикуются без подтверждённых технических данных. Их проверяет специалист по проекту.</p></div></div></section>
 
+      ${serviceProductionSection(service)}
       ${processSection()}
       <section class="section trust-placeholder"><div class="container trust-panel reveal"><div><p class="eyebrow">Материалы к публикации</p><h2>Доверие должно подтверждаться</h2></div><div><p>Реальные кейсы, отзывы, сертификаты, мощности, годы работы и показатели команды будут размещены после получения подтверждающих материалов от Prime Glass.</p><p class="placeholder-tag">Не опубликовано — данные ожидают подтверждения</p><button class="button button-secondary" type="button" data-open-form="commercial" data-service="${service.title}">Получить коммерческое предложение</button></div></div></section>
       ${faqSection(service)}
-      ${ctaSection(`Нужен расчёт: ${service.title.toLowerCase()}?`, 'Оставьте размеры и контакт — подготовим индивидуальное предложение без вымышленных цен.')}
+      ${ctaSection(`Нужен расчёт: ${service.title.toLowerCase()}?`, 'Оставьте контакт — подготовим индивидуальное предложение без вымышленных цен.', service.title)}
       ${contactSection()}
     </main>`;
 }
@@ -193,8 +195,12 @@ function faqSection(service) {
   return `<section class="section faq-section"><div class="container faq-grid"><div class="section-intro reveal"><p class="eyebrow">FAQ</p><h2>Частые вопросы</h2><p>Если вопрос связан с нестандартным узлом, лучше сразу приложить чертёж или фото.</p></div><div class="accordion">${service.faq.map((item,index)=>`<details class="faq-item reveal" ${index===0?'open':''}><summary>${item[0]}<span aria-hidden="true">+</span></summary><div><p>${item[1]}</p></div></details>`).join('')}</div></div></section>`;
 }
 
-function ctaSection(title, copy) {
-  return `<section class="section cta-section"><div class="container cta-panel reveal"><div><p class="eyebrow eyebrow-light">Следующий шаг</p><h2>${title}</h2><p>${copy}</p></div><div class="cta-buttons"><button class="button button-light" type="button" data-open-form="calculation">Получить расчёт</button><button class="button button-outline-light" type="button" data-open-form="measurement">Заказать замер</button></div></div></section>`;
+function serviceProductionSection(service) {
+  return `<section class="section service-production"><div class="container production-grid"><div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:`Производственная обработка стекла для направления «${service.title}»`},'production-picture')}<p class="media-disclaimer">Фото взято из исходных материалов сайта; принадлежность производству Prime Glass требует подтверждения.</p></div><div class="production-copy reveal"><p class="eyebrow">Производственный контур</p><h2>От чертежа<br>к готовому изделию</h2><p>Для направления «${service.title}» до запуска проверяются размеры, выбранные материалы, обработка, крепления и условия монтажа. Перечень оборудования и подтверждённые технологические возможности будут добавлены после получения данных производства.</p><ul class="line-list"><li><span>01</span>Проверка размеров и чертежей</li><li><span>02</span>Согласование материалов и обработки</li><li><span>03</span>Изготовление по утверждённому заданию</li><li><span>04</span>Комплектация к доставке и монтажу</li></ul></div></div></section>`;
+}
+
+function ctaSection(title, copy, service = '') {
+  return `<section class="section cta-section"><div class="container cta-panel reveal"><div><p class="eyebrow eyebrow-light">Следующий шаг</p><h2>${title}</h2><p>${copy}</p></div><form class="mini-lead-form" data-lead-form data-form-kind="calculation" novalidate><input type="hidden" name="service" value="${escapeHtml(service)}"><label><span>Имя</span><input name="name" autocomplete="name" required></label><label><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone></label><label class="mini-consent"><input type="checkbox" name="consent" required><span>Согласен на обработку данных</span></label><button class="button button-light" type="submit">Отправить в WhatsApp</button><button class="mini-secondary" type="button" data-open-form="measurement" data-service="${escapeHtml(service)}">Или заказать замер</button><p class="form-status" role="status" aria-live="polite"></p></form></div></section>`;
 }
 
 function contactSection() {
@@ -202,11 +208,11 @@ function contactSection() {
 }
 
 function contactsPage() {
-  return `<main id="content">${breadcrumbs([{href:'/',label:'Главная'},{label:'Контакты'}])}<section class="contacts-hero"><div class="container contacts-hero-grid"><div class="reveal"><p class="eyebrow">Связаться с нами</p><h1>Обсудим задачу<br>на языке проекта</h1><p class="hero-lead">Позвоните, напишите в WhatsApp или отправьте исходные данные для индивидуального расчёта.</p>${heroActions()}</div><div class="contact-card reveal"><a href="tel:${config.phoneHref}" data-track="click_phone"><small>Телефон</small><strong>${config.phoneDisplay}</strong></a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp"><small>WhatsApp</small><strong>${config.phoneDisplay}</strong></a><a href="mailto:${config.email}"><small>Email</small><strong>${config.email}</strong></a><div><small>Город</small><strong>${config.city}</strong></div><div><small>График</small><strong>${config.schedule}</strong></div><div class="pending-contact"><small>Адрес и карта</small><strong>Ожидают подтверждения</strong></div></div></div></section><section class="section section-soft"><div class="container contacts-form-grid"><div class="section-intro reveal"><p class="eyebrow">Оставить запрос</p><h2>Как вам удобнее?</h2><p>Форма сформирует сообщение и откроет WhatsApp. Данные не будут скрытно отправлены в сторонний сервис.</p></div>${inlineLeadForm()}</div></section>${contactSection()}</main>`;
+  return `<main id="content">${breadcrumbs([{href:'/',label:'Главная'},{label:'Контакты'}])}<section class="contacts-hero"><div class="container contacts-hero-grid"><div class="reveal"><p class="eyebrow">Связаться с нами</p><h1>Обсудим задачу<br>на языке проекта</h1><p class="hero-lead">Позвоните, напишите в WhatsApp или отправьте исходные данные для индивидуального расчёта.</p>${heroActions()}</div><div class="contact-card reveal"><a href="tel:${config.phoneHref}" data-track="click_phone"><small>Телефон</small><strong>${config.phoneDisplay}</strong></a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp"><small>WhatsApp</small><strong>${config.phoneDisplay}</strong></a><a href="mailto:${config.email}"><small>Email</small><strong>${config.email}</strong></a><div><small>Город</small><strong>${config.city}</strong></div><div><small>График</small><strong>${config.schedule}</strong></div><div class="pending-contact"><small>Адрес и карта</small><strong>Ожидают подтверждения</strong></div></div></div><div class="container map-placeholder reveal" role="note"><div><span>Место для карты</span><strong>Карта будет подключена после подтверждения точного адреса и координат</strong></div></div></section><section class="section section-soft"><div class="container contacts-form-grid"><div class="section-intro reveal"><p class="eyebrow">Оставить запрос</p><h2>Как вам удобнее?</h2><p>Форма сформирует сообщение и откроет WhatsApp. Данные не будут скрытно отправлены в сторонний сервис.</p></div>${inlineLeadForm()}</div></section>${contactSection()}</main>`;
 }
 
 function inlineLeadForm() {
-  return `<form class="lead-form reveal" data-lead-form data-form-kind="callback" novalidate><div class="form-grid"><label class="field"><span>Имя</span><input name="name" autocomplete="name" required></label><label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone></label><label class="field"><span>Услуга</span><select name="service"><option value="">Нужна консультация</option>${services.map(item=>`<option>${item.title}</option>`).join('')}</select></label><label class="field"><span>Способ связи</span><select name="contactMethod"><option>WhatsApp</option><option>Телефон</option><option>Email</option></select></label><label class="field field-wide"><span>Комментарий</span><textarea name="comment" rows="4" placeholder="Кратко опишите задачу"></textarea></label></div><label class="consent"><input type="checkbox" name="consent" required><span>Согласен на обработку данных для ответа на обращение</span></label><button class="button button-primary" type="submit">Отправить в WhatsApp</button><p class="form-status" role="status" aria-live="polite"></p></form>`;
+  return `<form class="lead-form reveal" data-lead-form data-form-kind="callback" novalidate><div class="form-grid"><label class="field"><span>Имя</span><input name="name" autocomplete="name" required></label><label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone></label><label class="field"><span>Услуга</span><select name="service"><option value="">Нужна консультация</option>${services.map(item=>`<option>${item.title}</option>`).join('')}</select></label><label class="field"><span>Желаемый способ ответа</span><select name="contactMethod"><option>WhatsApp</option><option>Телефон</option><option>Email</option></select></label><label class="field field-wide"><span>Комментарий</span><textarea name="comment" rows="4" placeholder="Кратко опишите задачу"></textarea></label></div><label class="consent"><input type="checkbox" name="consent" required><span>Согласен на обработку данных для ответа на обращение</span></label><button class="button button-primary" type="submit">Отправить в WhatsApp</button><p class="form-status" role="status" aria-live="polite"></p></form>`;
 }
 
 function footer() {
@@ -215,25 +221,25 @@ function footer() {
 }
 
 function modalAndFloating() {
+  const telegramButton = config.telegram ? `<a class="floating-button telegram" href="https://t.me/${String(config.telegram).replace('@','')}" data-track="click_telegram" aria-label="Написать в Telegram"><span class="floating-logo"><img src="/icons/telegram.svg" alt="" width="24" height="24"></span><span class="floating-label"><strong>Telegram</strong><small>Написать сейчас</small></span></a>` : '';
   return `
     <div class="floating-actions" aria-label="Быстрые способы связи">
       <a class="floating-button whatsapp" href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp" aria-label="Написать в WhatsApp"><span class="floating-logo"><img src="/icons/whatsapp.svg" alt="" width="24" height="24"></span><span class="floating-label"><strong>WhatsApp</strong><small>Написать сейчас</small></span></a>
-      <button class="floating-button telegram is-disabled" type="button" data-disabled-channel="telegram" aria-label="Telegram ожидает подтверждения"><span class="floating-logo"><img src="/icons/telegram.svg" alt="" width="24" height="24"></span><span class="floating-label"><strong>Telegram</strong><small>Ссылка уточняется</small></span></button>
+      ${telegramButton}
     </div>
     <div class="mobile-cta"><a href="tel:${config.phoneHref}" data-track="click_phone"><span class="mobile-action-symbol">↗</span><span>Позвонить</span></a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp"><img src="/icons/whatsapp.svg" alt="" width="19" height="19"><span>WhatsApp</span></a><button type="button" data-open-form="calculation"><span class="mobile-action-symbol">+</span><span>Расчёт</span></button></div>
-    <dialog class="form-dialog" data-form-dialog>
+    <dialog class="form-dialog" data-form-dialog aria-labelledby="dialog-title">
       <div class="dialog-shell">
         <button class="dialog-close" type="button" data-dialog-close aria-label="Закрыть">×</button>
-        <div class="dialog-intro"><p class="eyebrow">Запрос Prime Glass</p><h2 data-dialog-title>Получить расчёт</h2><p data-dialog-copy>Заполните исходные данные — мы сформируем сообщение для WhatsApp.</p></div>
+        <div class="dialog-intro"><p class="eyebrow">Запрос Prime Glass</p><h2 id="dialog-title" data-dialog-title>Получить расчёт</h2><p data-dialog-copy>Заполните исходные данные — мы сформируем сообщение для WhatsApp.</p></div>
         <form class="lead-form" data-lead-form data-form-kind="calculation" novalidate>
           <input type="hidden" name="kind" value="calculation"><input type="hidden" name="page" value="">
-          <div class="form-grid"><label class="field"><span>Имя</span><input name="name" autocomplete="name" required></label><label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone></label><label class="field"><span>Услуга</span><select name="service"><option value="">Нужна консультация</option>${services.map(item=>`<option>${item.title}</option>`).join('')}</select></label><label class="field"><span>Способ связи</span><select name="contactMethod"><option>WhatsApp</option><option>Телефон</option><option>Email</option></select></label><label class="field field-wide"><span>Комментарий</span><textarea name="comment" rows="3" placeholder="Размеры, количество, сроки или особенности объекта"></textarea></label><label class="field field-wide file-field" data-file-field hidden><span>Файлы проекта</span><input name="files" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.dwg,.dxf,.doc,.docx,.xls,.xlsx"><small>PDF, изображения и проектные форматы. Файлы нужно будет прикрепить вручную в WhatsApp.</small></label></div>
+          <div class="form-grid"><label class="field"><span>Имя</span><input name="name" autocomplete="name" required></label><label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone></label><label class="field"><span>Услуга</span><select name="service"><option value="">Нужна консультация</option>${services.map(item=>`<option>${item.title}</option>`).join('')}</select></label><label class="field"><span>Желаемый способ ответа</span><select name="contactMethod"><option>WhatsApp</option><option>Телефон</option><option>Email</option></select></label><label class="field field-wide"><span>Комментарий</span><textarea name="comment" rows="3" placeholder="Размеры, количество, сроки или особенности объекта"></textarea></label><label class="field field-wide file-field" data-file-field hidden><span>Файлы проекта</span><input name="files" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.dwg,.dxf,.doc,.docx,.xls,.xlsx"><small>PDF, изображения и проектные форматы — до 10 МБ каждый и до 25 МБ суммарно. Файлы нужно будет прикрепить вручную в WhatsApp.</small></label></div>
           <label class="consent"><input type="checkbox" name="consent" required><span>Согласен на обработку данных для ответа на обращение</span></label><button class="button button-primary" type="submit">Отправить в WhatsApp</button><p class="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
     </dialog>
-    <dialog class="lightbox" data-lightbox-dialog><button class="lightbox-close" type="button" data-lightbox-close aria-label="Закрыть">×</button><img src="" alt="" width="1280" height="853"></dialog>
-    <div class="toast" role="status" aria-live="polite" data-toast></div>`;
+    <dialog class="lightbox" data-lightbox-dialog><button class="lightbox-close" type="button" data-lightbox-close aria-label="Закрыть">×</button><img alt="" width="1280" height="853"></dialog>`;
 }
 
 function organizationSchema() {
@@ -268,6 +274,7 @@ function documentTemplate(page) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
+  ${page.kind === '404' ? '<meta name="robots" content="noindex,follow">' : ''}
   <link rel="canonical" href="${canonical}">
   <meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><meta property="og:site_name" content="Prime Glass Technologies"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${socialImage}">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${socialImage}">
@@ -276,7 +283,7 @@ function documentTemplate(page) {
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
 </head>
 <body>
-  ${header()}
+  ${header(page.path)}
   ${page.content}
   ${footer()}
   ${modalAndFloating()}

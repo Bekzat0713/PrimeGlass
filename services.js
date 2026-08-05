@@ -1,12 +1,3 @@
-const sharedBenefits = [
-  ['Производство и монтаж', 'Один подрядчик координирует изготовление, доставку и монтаж.'],
-  ['По проекту заказчика', 'Работаем по размерам, чертежам и требованиям конкретного объекта.'],
-  ['Для частных и B2B-задач', 'Подбираем решение для дома, офиса, строительства и коммерческого объекта.'],
-  ['Работа по Казахстану', 'Проектируем логистику и монтаж за пределами Актау индивидуально.'],
-  ['Техническая консультация', 'Уточняем нагрузки, узлы примыкания, стекло, профиль и фурнитуру.'],
-  ['Прозрачная комплектация', 'Фиксируем состав решения в коммерческом предложении до производства.']
-];
-
 const commonFaq = [
   ['Как получить расчёт?', 'Укажите примерные размеры, количество, тип конструкции и необходимость монтажа. Менеджер уточнит детали и подготовит индивидуальное предложение.'],
   ['Можно ли заказать замер?', 'Да. Оставьте номер телефона и выберите «Нужен замер». Возможность и условия выезда зависят от адреса объекта.'],
@@ -17,10 +8,10 @@ const commonFaq = [
 ];
 
 const commonCalculator = [
-  { name: 'width', label: 'Ширина, мм', type: 'number', min: 100, placeholder: 'Например, 1200' },
-  { name: 'height', label: 'Высота, мм', type: 'number', min: 100, placeholder: 'Например, 2200' },
-  { name: 'quantity', label: 'Количество', type: 'number', min: 1, value: 1 },
-  { name: 'installation', label: 'Что требуется', type: 'select', options: ['Только изготовление', 'Изготовление и доставка', 'Замер, изготовление и монтаж'] }
+  { name: 'width', label: 'Ширина, мм', type: 'number', min: 100, placeholder: 'Например, 1200', required: true },
+  { name: 'height', label: 'Высота, мм', type: 'number', min: 100, placeholder: 'Например, 2200', required: true },
+  { name: 'quantity', label: 'Количество', type: 'number', min: 1, value: 1, required: true },
+  { name: 'installation', label: 'Что требуется', type: 'select', options: ['Только изготовление', 'Изготовление и доставка', 'Замер, изготовление и монтаж'], required: true }
 ];
 
 const serviceDefs = [
@@ -149,13 +140,33 @@ const imageAlts = [
   'Стеклянные и лофт-перегородки в офисе'
 ];
 
+function buildBenefits(service) {
+  return [
+    [`Варианты: ${service.types.slice(0, 2).join(' и ').toLowerCase()}`, `Сравниваем подходящие варианты конструкции для задачи «${service.title.toLowerCase()}».`],
+    [`Для объектов: ${service.applications.slice(0, 2).join(' и ').toLowerCase()}`, 'Учитываем назначение помещения, геометрию и условия эксплуатации.'],
+    [`${service.specs[0][0]} — по проекту`, service.specs[0][1]],
+    ['Комплектация без скрытых допущений', `В предложении отдельно фиксируем: ${service.extras.slice(0, 3).join(', ').toLowerCase()}.`],
+    ['Изготовление и монтаж', 'Согласовываем исходные данные до производства и организуем монтаж как отдельный этап.'],
+    ['Расчёт по исходным данным', 'Не используем универсальную цену: итог зависит от размеров, материалов, доставки и монтажа.']
+  ];
+}
+
+function buildFaq(service) {
+  const specific = [
+    [`Какие варианты ${service.title.toLowerCase()} можно заказать?`, `Рассматриваем ${service.types.join(', ').toLowerCase()}. Точная конфигурация определяется после проверки размеров и условий объекта.`],
+    [`Где применяются ${service.title.toLowerCase()}?`, `Основные сферы применения: ${service.applications.join(', ').toLowerCase()}. Для нестандартного объекта нужна техническая проверка.`],
+    [`Что входит в решение по направлению «${service.title}»?`, `Комплектация может включать ${service.extras.join(', ').toLowerCase()}. Точный состав фиксируется в коммерческом предложении.`]
+  ];
+  return [...specific, ...commonFaq.slice(0, 3)];
+}
+
 const services = serviceDefs.map((service, index) => ({
   ...service,
   titleShort: service.title,
   metaTitle: `${service.title} в Актау — изготовление и монтаж | Prime Glass`,
   metaDescription: `${service.lead} Индивидуальный расчёт Prime Glass для частных и коммерческих объектов в Актау и Казахстане.`,
-  benefits: sharedBenefits,
-  faq: commonFaq,
+  benefits: buildBenefits(service),
+  faq: buildFaq(service),
   calculator: [...commonCalculator, ...service.calculator],
   gallery: Array.from({ length: 10 }, (_, galleryIndex) => {
     const photoIndex = ((galleryIndex + index + service.image - 1) % 10) + 1;
