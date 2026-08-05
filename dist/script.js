@@ -222,7 +222,7 @@
   }
 
   function initDepthScroll() {
-    if (!document.body.classList.contains('page-home') || window.innerWidth <= 620 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!document.body.classList.contains('page-home') || window.innerWidth <= 900 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const depthItems = [
       ...document.querySelectorAll('[data-depth]'),
       ...document.querySelectorAll('.page-home .service-grid, .page-home .production-grid, .page-home .home-gallery, .page-home .process-list, .page-home .cta-panel')
@@ -233,17 +233,28 @@
     });
     const heroVisuals = document.querySelectorAll('.page-home .hero-picture img, .page-home .hero-video');
     const hero = document.querySelector('.page-home .home-hero');
+    const heroCopy = document.querySelector('.page-home .hero-copy');
+    const heroFacts = document.querySelector('.page-home .fact-strip');
+    const heroCue = document.querySelector('.page-home .hero-scroll-cue');
     const tiltButtons = document.querySelectorAll('.page-home .hero-actions .button');
     let frame = 0;
     const renderDepth = () => {
       frame = 0;
       const viewportHeight = window.innerHeight || 1;
       const scrollTop = window.scrollY;
-      const heroProgress = Math.max(0, Math.min(1, scrollTop / Math.max(hero?.offsetHeight || viewportHeight, 1)));
+      const heroTop = hero?.offsetTop || 0;
+      const heroTravel = Math.max((hero?.offsetHeight || viewportHeight) - viewportHeight, 1);
+      const heroProgress = Math.max(0, Math.min(1, (scrollTop - heroTop) / heroTravel));
+      const easedHeroProgress = heroProgress * heroProgress * (3 - 2 * heroProgress);
+      const contentFade = Math.max(0, Math.min(1, (heroProgress - 0.62) / 0.32));
       heroVisuals.forEach(visual => {
-        visual.style.setProperty('--hero-parallax', `${Math.min(scrollTop * 0.035, 32).toFixed(2)}px`);
-        visual.style.setProperty('--hero-zoom', (1.08 + heroProgress * 0.42).toFixed(3));
+        visual.style.setProperty('--hero-parallax', `${(easedHeroProgress * 24).toFixed(2)}px`);
+        visual.style.setProperty('--hero-zoom', (1.08 + easedHeroProgress * 0.48).toFixed(3));
       });
+      heroCopy?.style.setProperty('--hero-content-zoom', (1 + easedHeroProgress * 0.12).toFixed(3));
+      heroCopy?.style.setProperty('--hero-content-opacity', (1 - contentFade).toFixed(3));
+      heroFacts?.style.setProperty('--hero-facts-opacity', (1 - contentFade).toFixed(3));
+      heroCue?.style.setProperty('--hero-cue-opacity', Math.max(0, 1 - heroProgress * 2.1).toFixed(3));
       depthItems.forEach(item => {
         const rect = item.getBoundingClientRect();
         const relative = Math.max(-1.15, Math.min(1.15, (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight));

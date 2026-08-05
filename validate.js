@@ -91,7 +91,8 @@ assert.match(stylesheet, /\.field input,[^\n]*font-size:16px/, 'Mobile form cont
 assert.match(stylesheet, /\.benefit-card\{[^}]*grid-template-columns:32px minmax\(0,1fr\)/, 'Mobile benefit cards need aligned index and content columns');
 assert.match(stylesheet, /@media \(max-width:900px\)[\s\S]*?\.reveal\{opacity:1;transform:none;transition:none\}/, 'Mobile text must not float in with scroll animations');
 assert.match(stylesheet, /@media \(hover:none\)/, 'Touch devices need stable non-hover positioning');
-assert.match(stylesheet, /\.home-hero\{position:relative;min-height:100svh/, 'Home page needs a full-viewport architectural hero');
+assert.match(stylesheet, /\.home-hero\{position:relative;height:210svh/, 'Home page needs an extended architectural scroll scene');
+assert.match(stylesheet, /\.home-hero-stage\{position:sticky;top:0;height:100svh/, 'Home page needs a sticky full-viewport hero stage');
 assert.match(stylesheet, /\.home-hero-grid\{[^}]*width:100%;max-width:none;margin-inline:0/, 'Home hero image must extend edge to edge');
 assert.match(stylesheet, /\.page-home \.site-header\{position:fixed/, 'Home page navigation must overlay the hero');
 const combinedHtml = pages.join('\n');
@@ -106,9 +107,11 @@ assert.match(renderHome(), /\/photos\/image4\.webp/, 'Home hero must use a singl
 assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/image2\.webp/, 'Composite image must not be used in the hero');
 assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть дальше<\/span>/, 'Home page needs a visible centered scroll cue');
 assert.match(renderHome(), /data-hero-video/, 'Home page needs the animated hero video');
+assert.match(renderHome(), /class="home-hero-stage"/, 'Home page needs an extended sticky hero stage');
 assert.match(renderHome(), /data-src="\/photos\/prime-glass-intro\.mp4"/, 'Hero video must load from the prepared web asset');
 assert.match(renderHome(), /<video[^>]*\bloop\b/, 'Hero video must loop continuously');
 assert.doesNotMatch(renderHome(), /data-video-toggle/, 'Hero video must not show pause controls');
+assert.match(script, /const heroTravel = Math\.max\(\(hero\?\.offsetHeight \|\| viewportHeight\) - viewportHeight, 1\)/, 'Hero zoom must use the full sticky scroll distance');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-intro.mp4')), 'Hero video asset is missing');
 for (const html of servicePages) {
   assert.match(html, /Завод-изготовитель · 4 000 м²/, 'Service pages must reinforce the manufacturing position');
