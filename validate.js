@@ -75,6 +75,7 @@ assert.match(script, /function initDepthScroll\(\)/, 'Home page needs the reques
 assert.match(script, /requestAnimationFrame\(renderDepth\)/, '3D scroll updates must be animation-frame throttled');
 assert.match(script, /function initHeroVideo\(\)/, 'Home page needs responsive background-video loading');
 assert.match(script, /connection\?\.saveData/, 'Background video must respect reduced-data connections');
+assert.match(script, /window\.matchMedia\('\(max-width: 767px\)'\)/, 'Mobile screens must select the portrait hero video');
 assert.match(buildScript, /webp\|mp4/, 'Build must copy the MP4 hero asset');
 const server = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
 for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.facebook.net','www.google-analytics.com']) {
@@ -93,6 +94,7 @@ assert.match(stylesheet, /@media \(max-width:900px\)[\s\S]*?\.reveal\{opacity:1;
 assert.match(stylesheet, /@media \(hover:none\)/, 'Touch devices need stable non-hover positioning');
 assert.match(stylesheet, /\.home-hero\{position:relative;height:210svh/, 'Home page needs an extended architectural scroll scene');
 assert.match(stylesheet, /\.home-hero-stage\{position:sticky;top:0;height:100svh/, 'Home page needs a sticky full-viewport hero stage');
+assert.doesNotMatch(stylesheet, /\.home-hero \.hero-video\{display:none!important\}/, 'Mobile hero video must remain visible');
 assert.match(stylesheet, /\.home-hero-grid\{[^}]*width:100%;max-width:none;margin-inline:0/, 'Home hero image must extend edge to edge');
 assert.match(stylesheet, /\.page-home \.site-header\{position:fixed/, 'Home page navigation must overlay the hero');
 const combinedHtml = pages.join('\n');
@@ -108,11 +110,13 @@ assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/
 assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть дальше<\/span>/, 'Home page needs a visible centered scroll cue');
 assert.match(renderHome(), /data-hero-video/, 'Home page needs the animated hero video');
 assert.match(renderHome(), /class="home-hero-stage"/, 'Home page needs an extended sticky hero stage');
-assert.match(renderHome(), /data-src="\/photos\/prime-glass-intro\.mp4"/, 'Hero video must load from the prepared web asset');
+assert.match(renderHome(), /data-desktop-src="\/photos\/prime-glass-intro\.mp4"/, 'Desktop hero video must load from the prepared landscape asset');
+assert.match(renderHome(), /data-mobile-src="\/photos\/prime-glass-mobile\.mp4"/, 'Mobile hero video must load from the prepared portrait asset');
 assert.match(renderHome(), /<video[^>]*\bloop\b/, 'Hero video must loop continuously');
 assert.doesNotMatch(renderHome(), /data-video-toggle/, 'Hero video must not show pause controls');
 assert.match(script, /const heroTravel = Math\.max\(\(hero\?\.offsetHeight \|\| viewportHeight\) - viewportHeight, 1\)/, 'Hero zoom must use the full sticky scroll distance');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-intro.mp4')), 'Hero video asset is missing');
+assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-mobile.mp4')), 'Mobile hero video asset is missing');
 for (const html of servicePages) {
   assert.match(html, /Завод-изготовитель · 4 000 м²/, 'Service pages must reinforce the manufacturing position');
 }

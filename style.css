@@ -431,7 +431,7 @@ h3{line-height:1.12}
   .process-list h3{font-size:1.45rem}
   .cta-section{padding-bottom:55px}
   .home-hero .hero-picture img{transform:scale(1.03);will-change:auto}
-  .home-hero .hero-video{display:none!important}
+  .home-hero .hero-video{display:block;object-position:center}
 }
 
 @media (prefers-reduced-motion:reduce){

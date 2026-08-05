@@ -99,7 +99,7 @@ function homePage() {
           </div>
           <div class="hero-media reveal">
             ${picture(primary, 'hero-picture', true)}
-            <video class="hero-video" muted loop playsinline preload="none" poster="/photos/image4.jpg" data-hero-video aria-hidden="true" tabindex="-1"><source data-src="/photos/prime-glass-intro.mp4" type="video/mp4"></video>
+            <video class="hero-video" muted loop playsinline preload="none" poster="/photos/image4.jpg" data-hero-video aria-hidden="true" tabindex="-1"><source data-desktop-src="/photos/prime-glass-intro.mp4" data-mobile-src="/photos/prime-glass-mobile.mp4" type="video/mp4"></video>
             <div class="hero-media-caption"><span>01</span><p>Стеклянные конструкции<br>по индивидуальному проекту</p></div>
           </div>
           </div>

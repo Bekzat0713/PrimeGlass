@@ -283,18 +283,26 @@
   }
   function initHeroVideo() {
     const video = document.querySelector('[data-hero-video]');
-    const source = video?.querySelector('source[data-src]');
+    const source = video?.querySelector('source[data-desktop-src][data-mobile-src]');
     if (!video || !source) return;
     const clientNavigator = window.navigator || {};
     const connection = clientNavigator.connection || clientNavigator.mozConnection || clientNavigator.webkitConnection;
     const constrainedNetwork = connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '');
-    if (window.innerWidth < 768 || constrainedNetwork || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    source.src = source.dataset.src;
-    video.load();
-    video.addEventListener('loadeddata', () => {
-      video.classList.add('is-ready');
-      video.play().catch(() => {});
-    }, { once: true });
+    if (constrainedNetwork || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const mobileVideoQuery = window.matchMedia('(max-width: 767px)');
+    const loadVideoVariant = () => {
+      const selectedSource = mobileVideoQuery.matches ? source.dataset.mobileSrc : source.dataset.desktopSrc;
+      if (!selectedSource || source.getAttribute('src') === selectedSource) return;
+      video.classList.remove('is-ready');
+      video.addEventListener('loadeddata', () => {
+        video.classList.add('is-ready');
+        video.play().catch(() => {});
+      }, { once: true });
+      source.src = selectedSource;
+      video.load();
+    };
+    loadVideoVariant();
+    mobileVideoQuery.addEventListener?.('change', loadVideoVariant);
     document.addEventListener('visibilitychange', () => {
       if (document.hidden && !video.paused) video.pause();
       else if (!document.hidden) video.play().catch(() => {});
