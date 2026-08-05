@@ -43,8 +43,8 @@ npm run check
 - реальные кейсы, отзывы, сертификаты и показатели компании;
 - происхождение изображений, если их планируется называть портфолио или фото производства.
 
-ID аналитики задаются переменными окружения `GTM_ID`, `GA4_ID`, `YM_ID`, `META_PIXEL_ID`. Пустые ID не подменяются вымышленными значениями.
+ID аналитики задаются переменными окружения `GTM_ID`, `GA4_ID`, `YM_ID`, `META_PIXEL_ID` перед production-сборкой. Пустые или некорректные ID не подменяются вымышленными значениями и не вызывают загрузку внешних скриптов. Если указан GTM, события поступают в его `dataLayer`; прямой GA4 загружается только при отсутствии GTM, что предотвращает двойной учёт Google-событий. Яндекс Метрика и Meta Pixel подключаются напрямую по своим ID — не добавляйте те же счётчики повторно внутрь GTM.
 
 ## События аналитики
 
-Подготовлены события `click_phone`, `click_whatsapp`, `click_telegram`, `open_calculator`, `submit_calculation`, `submit_callback`, `submit_measurement`, `submit_project`, `request_commercial_offer`, `download_catalog`, `view_service` и `view_case`. События передают страницу, услугу и сохранённые UTM-метки.
+Подготовлены события `click_phone`, `click_whatsapp`, `click_telegram`, `open_calculator`, `submit_calculation`, `submit_callback`, `submit_measurement`, `submit_project`, `request_commercial_offer`, `download_catalog`, `view_service` и `view_case`. События передают страницу, URL, заголовок, услугу, источник, first-touch/last-touch атрибуцию и сохранённые UTM/click ID. Рекламные параметры сохраняются локально между страницами, а кратковременная дедупликация не даёт одному клику или submit сработать дважды.

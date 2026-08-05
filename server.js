@@ -14,10 +14,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'https://www.googletagmanager.com', 'https://mc.yandex.ru', 'https://connect.facebook.net'],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", 'data:'],
-      connectSrc: ["'self'"],
+      imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://mc.yandex.ru', 'https://www.facebook.com'],
+      connectSrc: ["'self'", 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://region1.google-analytics.com', 'https://mc.yandex.ru', 'https://www.facebook.com'],
       frameAncestors: ["'none'"]
     }
   },

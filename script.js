@@ -2,41 +2,160 @@
   'use strict';
 
   const site = window.PRIME_GLASS || {};
-  const utmKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'yclid'];
+  const analyticsConfig = site.analytics || {};
+  const campaignKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'yclid', 'fbclid', 'msclkid'];
   const params = new URLSearchParams(window.location.search);
-  const currentUtm = Object.fromEntries(utmKeys.map(key => [key, params.get(key)]).filter(([, value]) => value));
+  const currentCampaign = Object.fromEntries(campaignKeys.map(key => [key, params.get(key)]).filter(([, value]) => value));
+  const storageKeys = {
+    firstTouch: 'prime_glass_first_touch',
+    lastTouch: 'prime_glass_last_touch',
+    legacyUtm: 'prime_glass_utm'
+  };
 
-  if (Object.keys(currentUtm).length) {
-    try { localStorage.setItem('prime_glass_utm', JSON.stringify(currentUtm)); } catch (_) { /* storage can be unavailable */ }
+  function readStorage(key) {
+    try { return JSON.parse(localStorage.getItem(key) || '{}'); }
+    catch (_) { return {}; }
+  }
+
+  function writeStorage(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); }
+    catch (_) { /* storage can be unavailable */ }
+  }
+
+  function inferTrafficSource(campaign = {}) {
+    if (campaign.utm_source) return campaign.utm_source;
+    if (campaign.gclid) return 'google';
+    if (campaign.yclid) return 'yandex';
+    if (campaign.fbclid) return 'meta';
+    if (campaign.msclkid) return 'microsoft';
+    if (document.referrer) {
+      try { return new URL(document.referrer).hostname.replace(/^www\./, ''); }
+      catch (_) { return 'referral'; }
+    }
+    return 'direct';
+  }
+
+  const touch = {
+    ...currentCampaign,
+    traffic_source: inferTrafficSource(currentCampaign),
+    landing_page: `${window.location.pathname}${window.location.search}`,
+    referrer: document.referrer || '',
+    captured_at: new Date().toISOString()
+  };
+  const storedFirstTouch = readStorage(storageKeys.firstTouch);
+  if (!Object.keys(storedFirstTouch).length) writeStorage(storageKeys.firstTouch, touch);
+  if (Object.keys(currentCampaign).length || !Object.keys(readStorage(storageKeys.lastTouch)).length) {
+    writeStorage(storageKeys.lastTouch, touch);
+  }
+  if (Object.keys(currentCampaign).length) writeStorage(storageKeys.legacyUtm, currentCampaign);
+
+  function getAttribution() {
+    const first = Object.keys(storedFirstTouch).length ? storedFirstTouch : touch;
+    const last = { ...readStorage(storageKeys.lastTouch), ...currentCampaign };
+    return {
+      ...Object.fromEntries(campaignKeys.map(key => [key, last[key]]).filter(([, value]) => value)),
+      traffic_source: last.traffic_source || inferTrafficSource(last),
+      traffic_medium: last.utm_medium || (last.gclid || last.yclid || last.fbclid || last.msclkid ? 'paid' : 'unknown'),
+      first_traffic_source: first.traffic_source || inferTrafficSource(first),
+      first_landing_page: first.landing_page || '',
+      landing_page: last.landing_page || first.landing_page || '',
+      referrer: last.referrer || first.referrer || ''
+    };
   }
 
   function getUtm() {
-    try { return { ...JSON.parse(localStorage.getItem('prime_glass_utm') || '{}'), ...currentUtm }; }
-    catch (_) { return currentUtm; }
+    return Object.fromEntries(Object.entries(getAttribution()).filter(([key]) => campaignKeys.includes(key)));
   }
 
-  const trackedEvents = new Set();
-  function track(name, details = {}, uniqueKey = '') {
-    const key = `${name}:${uniqueKey}`;
-    if (uniqueKey && trackedEvents.has(key)) return;
-    if (uniqueKey) trackedEvents.add(key);
+  function appendAnalyticsScript(id, src) {
+    if (!id || document.getElementById(id)) return;
+    const script = document.createElement('script');
+    script.id = id;
+    script.async = true;
+    script.src = src;
+    document.head.appendChild(script);
+  }
+
+  function initAnalyticsProviders() {
+    window.dataLayer = window.dataLayer || [];
+    const gtmId = /^GTM-[A-Z0-9]+$/i.test(analyticsConfig.googleTagManagerId || '') ? analyticsConfig.googleTagManagerId : '';
+    const ga4Id = /^G-[A-Z0-9]+$/i.test(analyticsConfig.googleAnalyticsId || '') ? analyticsConfig.googleAnalyticsId : '';
+    const metrikaId = /^\d+$/.test(String(analyticsConfig.yandexMetrikaId || '')) ? String(analyticsConfig.yandexMetrikaId) : '';
+    const pixelId = /^\d+$/.test(String(analyticsConfig.metaPixelId || '')) ? String(analyticsConfig.metaPixelId) : '';
+
+    if (gtmId) {
+      window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+      appendAnalyticsScript('prime-glass-gtm', `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`);
+    } else if (ga4Id) {
+      window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', ga4Id, { anonymize_ip: true });
+      appendAnalyticsScript('prime-glass-ga4', `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(ga4Id)}`);
+    }
+
+    if (metrikaId) {
+      window.ym = window.ym || function () { (window.ym.a = window.ym.a || []).push(arguments); };
+      window.ym.l = Date.now();
+      window.ym(metrikaId, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true });
+      appendAnalyticsScript('prime-glass-metrika', 'https://mc.yandex.ru/metrika/tag.js');
+    }
+
+    if (pixelId) {
+      window.fbq = window.fbq || function () { (window.fbq.queue = window.fbq.queue || []).push(arguments); };
+      window.fbq.loaded = true;
+      window.fbq.version = '2.0';
+      window.fbq('init', pixelId);
+      window.fbq('track', 'PageView');
+      appendAnalyticsScript('prime-glass-meta-pixel', 'https://connect.facebook.net/en_US/fbevents.js');
+    }
+
+    return { gtmId, ga4Id: gtmId ? '' : ga4Id, metrikaId, pixelId };
+  }
+
+  const activeProviders = initAnalyticsProviders();
+  const recentEvents = new Map();
+  function track(name, details = {}, options = {}) {
+    const normalizedOptions = typeof options === 'string' ? { dedupeKey: options } : options;
+    const dedupeKey = normalizedOptions.dedupeKey || '';
+    const dedupeMs = Number.isFinite(normalizedOptions.dedupeMs) ? normalizedOptions.dedupeMs : 1200;
+    const key = dedupeKey ? `${name}:${dedupeKey}` : '';
+    const now = Date.now();
+    if (key && recentEvents.has(key) && now - recentEvents.get(key) < dedupeMs) return false;
+    if (key) recentEvents.set(key, now);
+    if (recentEvents.size > 100) {
+      for (const [eventKey, timestamp] of recentEvents) if (now - timestamp > 60000) recentEvents.delete(eventKey);
+    }
+
+    const pageService = document.querySelector('[data-service-page]')?.dataset.servicePage || '';
+    const selectedService = details.selected_service || pageService;
     const payload = {
       event: name,
+      event_id: `${name}-${now}-${Math.random().toString(36).slice(2, 9)}`,
+      event_time: new Date(now).toISOString(),
       page: window.location.pathname,
-      service: document.querySelector('[data-service-page]')?.dataset.servicePage || '',
-      ...getUtm(),
+      page_path: window.location.pathname,
+      page_url: window.location.href,
+      page_title: document.title,
+      service: selectedService,
+      ...getAttribution(),
       ...details
     };
-    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(payload);
+
+    const vendorPayload = { ...payload };
+    delete vendorPayload.event;
+    if (activeProviders.ga4Id && typeof window.gtag === 'function') window.gtag('event', name, vendorPayload);
+    if (activeProviders.metrikaId && typeof window.ym === 'function') window.ym(activeProviders.metrikaId, 'reachGoal', name, vendorPayload);
+    if (activeProviders.pixelId && typeof window.fbq === 'function') window.fbq('trackCustom', name, vendorPayload);
     window.dispatchEvent(new CustomEvent('primeglass:analytics', { detail: payload }));
+    return true;
   }
   const analyticsEvents = Object.freeze([
     'click_phone', 'click_whatsapp', 'click_telegram', 'open_calculator',
     'submit_calculation', 'submit_callback', 'submit_measurement', 'submit_project',
     'request_commercial_offer', 'download_catalog', 'view_service', 'view_case'
   ]);
-  window.PrimeGlassAnalytics = { track, events: analyticsEvents };
+  window.PrimeGlassAnalytics = { track, events: analyticsEvents, getAttribution, providers: activeProviders };
 
   const header = document.querySelector('[data-header]');
   const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 16);
@@ -225,6 +344,8 @@
     }
     const files = form.querySelector('input[type="file"]')?.files;
     if (files?.length) lines.push(`Выбрано файлов: ${files.length}. Прикреплю их в этом чате вручную.`);
+    const attribution = getAttribution();
+    lines.push(`Источник: ${attribution.traffic_source}${attribution.traffic_medium ? ` / ${attribution.traffic_medium}` : ''}`);
     const utm = getUtm();
     if (Object.keys(utm).length) lines.push(`UTM: ${Object.entries(utm).map(([key,value]) => `${key}=${value}`).join(', ')}`);
     lines.push(`Страница: ${window.location.href.split('?')[0]}`);

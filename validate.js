@@ -54,6 +54,26 @@ const script = fs.readFileSync(path.join(__dirname, 'script.js'), 'utf8');
 for (const eventName of ['click_phone','click_whatsapp','click_telegram','open_calculator','submit_calculation','submit_callback','submit_measurement','submit_project','request_commercial_offer','download_catalog','view_service','view_case']) {
   assert(script.includes(`'${eventName}'`), `Missing analytics event ${eventName}`);
 }
+for (const attributionField of ['traffic_source','traffic_medium','first_traffic_source','first_landing_page','landing_page','page_url','page_title','event_id','event_time']) {
+  assert(script.includes(attributionField), `Missing analytics attribution field ${attributionField}`);
+}
+for (const campaignKey of ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','gclid','yclid','fbclid','msclkid']) {
+  assert(script.includes(`'${campaignKey}'`), `Missing campaign parameter ${campaignKey}`);
+}
+for (const storageKey of ['prime_glass_first_touch','prime_glass_last_touch']) {
+  assert(script.includes(storageKey), `Missing persistent attribution storage ${storageKey}`);
+}
+for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.facebook.net']) {
+  assert(script.includes(providerHost), `Missing conditional analytics provider ${providerHost}`);
+}
+assert.match(script, /recentEvents = new Map\(\)/, 'Analytics events need duplicate protection');
+assert.match(script, /activeProviders\.ga4Id/, 'GA4 events need direct forwarding when GTM is absent');
+assert.match(script, /reachGoal/, 'Yandex Metrika goals need forwarding');
+assert.match(script, /trackCustom/, 'Meta Pixel custom events need forwarding');
+const server = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
+for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.facebook.net','www.google-analytics.com']) {
+  assert(server.includes(providerHost), `CSP must allow analytics provider ${providerHost}`);
+}
 const combinedHtml = pages.join('\n');
 for (const formKind of ['calculation','project','measurement','commercial']) {
   assert(combinedHtml.includes(`data-open-form="${formKind}"`) || combinedHtml.includes(`data-form-kind="${formKind}"`), `Missing form flow ${formKind}`);
