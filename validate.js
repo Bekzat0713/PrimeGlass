@@ -82,10 +82,12 @@ assert.match(stylesheet, /\.mobile-menu,.site-header\.is-scrolled \.mobile-menu\
 assert.match(stylesheet, /\.gallery-grid\{[^}]*grid-auto-flow:column/, 'Mobile gallery needs a horizontal touch layout');
 assert.match(stylesheet, /\.spec-table,.spec-table tbody[^\n]*display:block/, 'Mobile specification table needs a stacked layout');
 assert.match(stylesheet, /\.field input,[^\n]*font-size:16px/, 'Mobile form controls need a zoom-safe font size');
+assert.match(stylesheet, /\.benefit-card\{[^}]*grid-template-columns:32px minmax\(0,1fr\)/, 'Mobile benefit cards need aligned index and content columns');
 const combinedHtml = pages.join('\n');
 assert.doesNotMatch(combinedHtml, /Актау/i, 'Old city name must not remain in generated pages');
 assert.match(renderHome(), /Алматы/, 'Home page must use the current city');
 assert.match(renderContacts(), /Алматы, Казахстан/, 'Contacts page must show the configured address');
+assert.match(combinedHtml, /Решение для объекта/, 'Service benefit heading must stay concise on mobile');
 for (const formKind of ['calculation','project','measurement','commercial']) {
   assert(combinedHtml.includes(`data-open-form="${formKind}"`) || combinedHtml.includes(`data-form-kind="${formKind}"`), `Missing form flow ${formKind}`);
 }
