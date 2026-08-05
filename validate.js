@@ -85,12 +85,16 @@ assert.match(stylesheet, /\.field input,[^\n]*font-size:16px/, 'Mobile form cont
 assert.match(stylesheet, /\.benefit-card\{[^}]*grid-template-columns:32px minmax\(0,1fr\)/, 'Mobile benefit cards need aligned index and content columns');
 assert.match(stylesheet, /@media \(max-width:900px\)[\s\S]*?\.reveal\{opacity:1;transform:none;transition:none\}/, 'Mobile text must not float in with scroll animations');
 assert.match(stylesheet, /@media \(hover:none\)/, 'Touch devices need stable non-hover positioning');
+assert.match(stylesheet, /\.home-hero\{position:relative;min-height:100svh/, 'Home page needs a full-viewport architectural hero');
+assert.match(stylesheet, /\.page-home \.site-header\{position:fixed/, 'Home page navigation must overlay the hero');
 const combinedHtml = pages.join('\n');
 assert.doesNotMatch(combinedHtml, /Актау/i, 'Old city name must not remain in generated pages');
 assert.match(renderHome(), /Алматы/, 'Home page must use the current city');
 assert.match(renderHome(), /Завод-изготовитель/, 'Home page must present Prime Glass as the manufacturer');
 assert.match(renderHome(), /4 000 м²/, 'Home page must prominently state the factory area');
 assert.match(renderHome(), /class="factory-proof"/, 'Home page needs a prominent factory proof block');
+assert.match(renderHome(), /<body class="page-home">/, 'Home page needs a visual theme hook');
+assert.match(renderHome(), /Архитектура стекла/, 'Home page needs the premium architectural positioning');
 for (const html of servicePages) {
   assert.match(html, /Завод-изготовитель · 4 000 м²/, 'Service pages must reinforce the manufacturing position');
 }

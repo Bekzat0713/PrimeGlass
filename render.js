@@ -89,8 +89,8 @@ function homePage() {
       <section class="home-hero">
         <div class="container home-hero-grid">
           <div class="hero-copy reveal">
-            <p class="eyebrow">Завод-изготовитель · Алматы · Казахстан</p>
-            <h1>Завод стеклянных<br><span>конструкций</span></h1>
+            <p class="eyebrow">Prime Glass · Завод-изготовитель</p>
+            <h1>Архитектура стекла<br><span>начинается здесь</span></h1>
             <div class="factory-proof" aria-label="Площадь завода Prime Glass — 4 000 квадратных метров"><strong>4 000 м²</strong><span>площадь собственного<br>завода-изготовителя</span></div>
             <p class="hero-lead">Производим стеклопакеты, фасады, перегородки, ограждения и изделия из закалённого стекла для частных и коммерческих объектов.</p>
             ${heroActions()}
@@ -283,7 +283,7 @@ function documentTemplate(page) {
   <link rel="preload" href="/style.css" as="style"><link rel="stylesheet" href="/style.css">
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
 </head>
-<body>
+<body class="page-${page.kind}">
   ${header(page.path)}
   ${page.content}
   ${footer()}
