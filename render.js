@@ -98,6 +98,7 @@ function homePage() {
           </div>
           <div class="hero-media reveal">
             ${picture(primary, 'hero-picture', true)}
+            <video class="hero-video" muted loop playsinline preload="none" poster="/photos/image4.jpg" data-hero-video aria-hidden="true" tabindex="-1"><source data-src="/photos/prime-glass-intro.mp4" type="video/mp4"></video>
             <div class="hero-media-caption"><span>01</span><p>Стеклянные конструкции<br>по индивидуальному проекту</p></div>
           </div>
         </div>
@@ -107,6 +108,7 @@ function homePage() {
           <div><strong>B2C + B2B</strong><span>частные и коммерческие объекты</span></div>
           <div><strong>Полный цикл</strong><span>от консультации до монтажа</span></div>
         </div>
+        <button class="hero-video-toggle" type="button" data-video-toggle aria-label="Поставить фоновое видео на паузу" hidden><span aria-hidden="true">Ⅱ</span></button>
         <a class="hero-scroll-cue" href="#services" aria-label="Смотреть дальше"><span>Смотреть дальше</span><i aria-hidden="true">↓</i></a>
       </section>
 

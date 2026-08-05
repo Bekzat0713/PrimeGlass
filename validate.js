@@ -51,6 +51,7 @@ servicePages.forEach((html, index) => {
   assert.doesNotMatch(html, /data-disabled-channel="telegram"/, 'Unconfirmed Telegram must not be shown');
 });
 const script = fs.readFileSync(path.join(__dirname, 'script.js'), 'utf8');
+const buildScript = fs.readFileSync(path.join(__dirname, 'build.js'), 'utf8');
 for (const eventName of ['click_phone','click_whatsapp','click_telegram','open_calculator','submit_calculation','submit_callback','submit_measurement','submit_project','request_commercial_offer','download_catalog','view_service','view_case']) {
   assert(script.includes(`'${eventName}'`), `Missing analytics event ${eventName}`);
 }
@@ -72,6 +73,9 @@ assert.match(script, /reachGoal/, 'Yandex Metrika goals need forwarding');
 assert.match(script, /trackCustom/, 'Meta Pixel custom events need forwarding');
 assert.match(script, /function initDepthScroll\(\)/, 'Home page needs the requested 3D scroll system');
 assert.match(script, /requestAnimationFrame\(renderDepth\)/, '3D scroll updates must be animation-frame throttled');
+assert.match(script, /function initHeroVideo\(\)/, 'Home page needs responsive background-video loading');
+assert.match(script, /connection\?\.saveData/, 'Background video must respect reduced-data connections');
+assert.match(buildScript, /webp\|mp4/, 'Build must copy the MP4 hero asset');
 const server = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
 for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.facebook.net','www.google-analytics.com']) {
   assert(server.includes(providerHost), `CSP must allow analytics provider ${providerHost}`);
@@ -101,6 +105,9 @@ assert.match(renderHome(), /Архитектура стекла/, 'Home page nee
 assert.match(renderHome(), /\/photos\/image4\.webp/, 'Home hero must use a single uninterrupted architectural image');
 assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/image2\.webp/, 'Composite image must not be used in the hero');
 assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть дальше<\/span>/, 'Home page needs a visible centered scroll cue');
+assert.match(renderHome(), /data-hero-video/, 'Home page needs the animated hero video');
+assert.match(renderHome(), /data-src="\/photos\/prime-glass-intro\.mp4"/, 'Hero video must load from the prepared web asset');
+assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-intro.mp4')), 'Hero video asset is missing');
 for (const html of servicePages) {
   assert.match(html, /Завод-изготовитель · 4 000 м²/, 'Service pages must reinforce the manufacturing position');
 }

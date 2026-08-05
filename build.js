@@ -19,7 +19,7 @@ fs.mkdirSync(output, { recursive: true });
 for (const asset of ['style.css', 'script.js', 'favicon.png', 'og.png']) copyFile(asset);
 fs.mkdirSync(path.join(output, 'photos'), { recursive: true });
 for (const file of fs.readdirSync(path.join(root, 'photos'))) {
-  if (!/\.(?:jpe?g|webp)$/i.test(file)) continue;
+  if (!/\.(?:jpe?g|webp|mp4)$/i.test(file)) continue;
   fs.copyFileSync(path.join(root, 'photos', file), path.join(output, 'photos', file));
 }
 fs.cpSync(path.join(root, 'icons'), path.join(output, 'icons'), { recursive: true });

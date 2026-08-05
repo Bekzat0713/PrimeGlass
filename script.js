@@ -231,14 +231,14 @@
       item.classList.add('depth-layer');
       if (!item.dataset.depth) item.dataset.depth = String(14 + (index % 3) * 7);
     });
-    const heroImage = document.querySelector('.page-home .hero-picture img');
+    const heroVisuals = document.querySelectorAll('.page-home .hero-picture img, .page-home .hero-video');
     const tiltButtons = document.querySelectorAll('.page-home .hero-actions .button');
     let frame = 0;
     const renderDepth = () => {
       frame = 0;
       const viewportHeight = window.innerHeight || 1;
       const scrollTop = window.scrollY;
-      if (heroImage) heroImage.style.setProperty('--hero-parallax', `${Math.min(scrollTop * 0.12, 90).toFixed(2)}px`);
+      heroVisuals.forEach(visual => visual.style.setProperty('--hero-parallax', `${Math.min(scrollTop * 0.12, 90).toFixed(2)}px`));
       depthItems.forEach(item => {
         const rect = item.getBoundingClientRect();
         const relative = Math.max(-1.15, Math.min(1.15, (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight));
@@ -265,6 +265,46 @@
       button.addEventListener('pointerleave', () => ['--button-x','--button-y','--button-rx','--button-ry'].forEach(property => button.style.removeProperty(property)));
     });
   }
+  function initHeroVideo() {
+    const video = document.querySelector('[data-hero-video]');
+    const toggle = document.querySelector('[data-video-toggle]');
+    const source = video?.querySelector('source[data-src]');
+    if (!video || !toggle || !source) return;
+    const clientNavigator = window.navigator || {};
+    const connection = clientNavigator.connection || clientNavigator.mozConnection || clientNavigator.webkitConnection;
+    const constrainedNetwork = connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '');
+    if (window.innerWidth < 768 || constrainedNetwork || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    source.src = source.dataset.src;
+    video.load();
+    let userPaused = false;
+    video.addEventListener('loadeddata', () => {
+      video.classList.add('is-ready');
+      toggle.hidden = false;
+      video.play().catch(() => {
+        toggle.querySelector('span').textContent = '▶';
+        toggle.setAttribute('aria-label', 'Запустить фоновое видео');
+      });
+    }, { once: true });
+    toggle.addEventListener('click', () => {
+      if (video.paused) {
+        userPaused = false;
+        video.play().then(() => {
+          toggle.querySelector('span').textContent = 'Ⅱ';
+          toggle.setAttribute('aria-label', 'Поставить фоновое видео на паузу');
+        }).catch(() => {});
+      } else {
+        userPaused = true;
+        video.pause();
+        toggle.querySelector('span').textContent = '▶';
+        toggle.setAttribute('aria-label', 'Запустить фоновое видео');
+      }
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && !video.paused) video.pause();
+      else if (!document.hidden && !userPaused) video.play().catch(() => {});
+    });
+  }
+  initHeroVideo();
   initDepthScroll();
 
   const filterButtons = document.querySelectorAll('[data-gallery-filter]');
