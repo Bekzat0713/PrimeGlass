@@ -100,6 +100,7 @@ assert.match(renderHome(), /<body class="page-home">/, 'Home page needs a visual
 assert.match(renderHome(), /Архитектура стекла/, 'Home page needs the premium architectural positioning');
 assert.match(renderHome(), /\/photos\/image4\.webp/, 'Home hero must use a single uninterrupted architectural image');
 assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/image2\.webp/, 'Composite image must not be used in the hero');
+assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть дальше<\/span>/, 'Home page needs a visible centered scroll cue');
 for (const html of servicePages) {
   assert.match(html, /Завод-изготовитель · 4 000 м²/, 'Service pages must reinforce the manufacturing position');
 }
