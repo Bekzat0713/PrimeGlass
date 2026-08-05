@@ -18,6 +18,7 @@ fs.mkdirSync(output, { recursive: true });
 
 for (const asset of ['style.css', 'script.js', 'favicon.png', 'og.png']) copyFile(asset);
 fs.cpSync(path.join(root, 'photos'), path.join(output, 'photos'), { recursive: true });
+fs.cpSync(path.join(root, 'icons'), path.join(output, 'icons'), { recursive: true });
 
 writeRoute('/', renderHome());
 for (const service of services) writeRoute(`/${service.slug}`, renderService(service));

@@ -70,7 +70,7 @@ function contactActions(service = '') {
   const waText = encodeURIComponent(`Здравствуйте! Нужна консультация Prime Glass${service ? ` по услуге «${service}»` : ''}.`);
   return `<div class="contact-actions">
     ${trackedLink(`tel:${config.phoneHref}`, `<span class="action-icon">↗</span><span><small>Позвонить</small>${config.phoneDisplay}</span>`, 'click_phone', 'contact-action')}
-    ${trackedLink(`https://wa.me/${config.whatsapp}?text=${waText}`, '<span class="action-icon">W</span><span><small>Написать</small>WhatsApp</span>', 'click_whatsapp', 'contact-action')}
+    ${trackedLink(`https://wa.me/${config.whatsapp}?text=${waText}`, '<span class="action-icon action-icon-whatsapp"><img src="/icons/whatsapp.svg" alt="" width="20" height="20"></span><span><small>Написать</small>WhatsApp</span>', 'click_whatsapp', 'contact-action')}
   </div>`;
 }
 
@@ -217,10 +217,10 @@ function footer() {
 function modalAndFloating() {
   return `
     <div class="floating-actions" aria-label="Быстрые способы связи">
-      <a class="floating-button whatsapp" href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp" aria-label="Написать в WhatsApp">W</a>
-      <button class="floating-button telegram is-disabled" type="button" data-disabled-channel="telegram" aria-label="Telegram ожидает подтверждения">T</button>
+      <a class="floating-button whatsapp" href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp" aria-label="Написать в WhatsApp"><span class="floating-logo"><img src="/icons/whatsapp.svg" alt="" width="24" height="24"></span><span class="floating-label"><strong>WhatsApp</strong><small>Написать сейчас</small></span></a>
+      <button class="floating-button telegram is-disabled" type="button" data-disabled-channel="telegram" aria-label="Telegram ожидает подтверждения"><span class="floating-logo"><img src="/icons/telegram.svg" alt="" width="24" height="24"></span><span class="floating-label"><strong>Telegram</strong><small>Ссылка уточняется</small></span></button>
     </div>
-    <div class="mobile-cta"><a href="tel:${config.phoneHref}" data-track="click_phone">Позвонить</a><button type="button" data-open-form="calculation">Получить расчёт</button></div>
+    <div class="mobile-cta"><a href="tel:${config.phoneHref}" data-track="click_phone"><span class="mobile-action-symbol">↗</span><span>Позвонить</span></a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp"><img src="/icons/whatsapp.svg" alt="" width="19" height="19"><span>WhatsApp</span></a><button type="button" data-open-form="calculation"><span class="mobile-action-symbol">+</span><span>Расчёт</span></button></div>
     <dialog class="form-dialog" data-form-dialog>
       <div class="dialog-shell">
         <button class="dialog-close" type="button" data-dialog-close aria-label="Закрыть">×</button>
