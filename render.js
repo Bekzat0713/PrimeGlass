@@ -75,25 +75,25 @@ function contactActions(service = '') {
   </div>`;
 }
 
-function heroActions(service = '') {
-  return `<div class="hero-actions">
+function heroActions(service = '', withDepth = false) {
+  return `<div class="hero-actions${withDepth ? ' depth-layer' : ''}"${withDepth ? ' data-depth="34"' : ''}>
     <button class="button button-primary" type="button" data-open-form="calculation" data-service="${escapeHtml(service)}">Получить расчёт <span aria-hidden="true">↗</span></button>
     <button class="button button-secondary" type="button" data-open-form="project" data-service="${escapeHtml(service)}">Отправить проект</button>
   </div>`;
 }
 
 function homePage() {
-  const primary = { src: '/photos/image2.webp', fallback: '/photos/image2.jpg', alt: 'Архитектурное здание со стеклянным фасадом' };
+  const primary = { src: '/photos/image4.webp', fallback: '/photos/image4.jpg', alt: 'Современная архитектура с панорамным стеклянным фасадом' };
   return `
     <main id="content">
       <section class="home-hero">
         <div class="container home-hero-grid">
-          <div class="hero-copy reveal">
+          <div class="hero-copy depth-layer" data-depth="22">
             <p class="eyebrow">Prime Glass · Завод-изготовитель</p>
             <h1>Архитектура стекла<br><span>начинается здесь</span></h1>
-            <div class="factory-proof" aria-label="Площадь завода Prime Glass — 4 000 квадратных метров"><strong>4 000 м²</strong><span>площадь собственного<br>завода-изготовителя</span></div>
+            <div class="factory-proof depth-layer" data-depth="44" aria-label="Площадь завода Prime Glass — 4 000 квадратных метров"><strong>4 000 м²</strong><span>площадь собственного<br>завода-изготовителя</span></div>
             <p class="hero-lead">Производим стеклопакеты, фасады, перегородки, ограждения и изделия из закалённого стекла для частных и коммерческих объектов.</p>
-            ${heroActions()}
+            ${heroActions('', true)}
             ${contactActions()}
           </div>
           <div class="hero-media reveal">
@@ -101,12 +101,13 @@ function homePage() {
             <div class="hero-media-caption"><span>01</span><p>Стеклянные конструкции<br>по индивидуальному проекту</p></div>
           </div>
         </div>
-        <div class="container fact-strip" aria-label="Ключевые преимущества">
+        <div class="container fact-strip depth-layer" data-depth="28" aria-label="Ключевые преимущества">
           <div><strong>4 000 м²</strong><span>площадь завода-изготовителя в Алматы</span></div>
           <div><strong>Казахстан</strong><span>география проектных задач</span></div>
           <div><strong>B2C + B2B</strong><span>частные и коммерческие объекты</span></div>
           <div><strong>Полный цикл</strong><span>от консультации до монтажа</span></div>
         </div>
+        <a class="hero-scroll-cue" href="#services" aria-label="Перейти к направлениям"><span>Смотреть решения</span><i aria-hidden="true">↓</i></a>
       </section>
 
       <section class="section" id="services">

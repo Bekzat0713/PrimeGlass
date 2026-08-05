@@ -221,6 +221,52 @@
     revealItems.forEach(item => item.classList.add('is-visible'));
   }
 
+  function initDepthScroll() {
+    if (!document.body.classList.contains('page-home') || window.innerWidth <= 620 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const depthItems = [
+      ...document.querySelectorAll('[data-depth]'),
+      ...document.querySelectorAll('.page-home .service-grid, .page-home .production-grid, .page-home .home-gallery, .page-home .process-list, .page-home .cta-panel')
+    ];
+    depthItems.forEach((item, index) => {
+      item.classList.add('depth-layer');
+      if (!item.dataset.depth) item.dataset.depth = String(14 + (index % 3) * 7);
+    });
+    const heroImage = document.querySelector('.page-home .hero-picture img');
+    const tiltButtons = document.querySelectorAll('.page-home .hero-actions .button');
+    let frame = 0;
+    const renderDepth = () => {
+      frame = 0;
+      const viewportHeight = window.innerHeight || 1;
+      const scrollTop = window.scrollY;
+      if (heroImage) heroImage.style.setProperty('--hero-parallax', `${Math.min(scrollTop * 0.12, 90).toFixed(2)}px`);
+      depthItems.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const relative = Math.max(-1.15, Math.min(1.15, (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight));
+        const strength = Number(item.dataset.depth || 18);
+        item.style.setProperty('--depth-y', `${(relative * strength).toFixed(2)}px`);
+        item.style.setProperty('--depth-z', `${((1 - Math.abs(relative)) * strength * 0.32).toFixed(2)}px`);
+        item.style.setProperty('--depth-rx', `${(-relative * Math.min(strength / 12, 2.8)).toFixed(2)}deg`);
+      });
+    };
+    const requestDepth = () => { if (!frame) frame = window.requestAnimationFrame(renderDepth); };
+    renderDepth();
+    window.addEventListener('scroll', requestDepth, { passive: true });
+    window.addEventListener('resize', requestDepth, { passive: true });
+    tiltButtons.forEach(button => {
+      button.addEventListener('pointermove', event => {
+        const rect = button.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        button.style.setProperty('--button-x', `${(x * 5).toFixed(1)}px`);
+        button.style.setProperty('--button-y', `${(y * 4).toFixed(1)}px`);
+        button.style.setProperty('--button-rx', `${(-y * 7).toFixed(1)}deg`);
+        button.style.setProperty('--button-ry', `${(x * 9).toFixed(1)}deg`);
+      });
+      button.addEventListener('pointerleave', () => ['--button-x','--button-y','--button-rx','--button-ry'].forEach(property => button.style.removeProperty(property)));
+    });
+  }
+  initDepthScroll();
+
   const filterButtons = document.querySelectorAll('[data-gallery-filter]');
   const galleryItems = document.querySelectorAll('[data-gallery] [data-category]');
   filterButtons.forEach(button => button.addEventListener('click', () => {

@@ -70,6 +70,8 @@ assert.match(script, /recentEvents = new Map\(\)/, 'Analytics events need duplic
 assert.match(script, /activeProviders\.ga4Id/, 'GA4 events need direct forwarding when GTM is absent');
 assert.match(script, /reachGoal/, 'Yandex Metrika goals need forwarding');
 assert.match(script, /trackCustom/, 'Meta Pixel custom events need forwarding');
+assert.match(script, /function initDepthScroll\(\)/, 'Home page needs the requested 3D scroll system');
+assert.match(script, /requestAnimationFrame\(renderDepth\)/, '3D scroll updates must be animation-frame throttled');
 const server = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
 for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.facebook.net','www.google-analytics.com']) {
   assert(server.includes(providerHost), `CSP must allow analytics provider ${providerHost}`);
@@ -93,9 +95,11 @@ assert.doesNotMatch(combinedHtml, /Актау/i, 'Old city name must not remain 
 assert.match(renderHome(), /Алматы/, 'Home page must use the current city');
 assert.match(renderHome(), /Завод-изготовитель/, 'Home page must present Prime Glass as the manufacturer');
 assert.match(renderHome(), /4 000 м²/, 'Home page must prominently state the factory area');
-assert.match(renderHome(), /class="factory-proof"/, 'Home page needs a prominent factory proof block');
+assert.match(renderHome(), /class="factory-proof[^\"]*"/, 'Home page needs a prominent factory proof block');
 assert.match(renderHome(), /<body class="page-home">/, 'Home page needs a visual theme hook');
 assert.match(renderHome(), /Архитектура стекла/, 'Home page needs the premium architectural positioning');
+assert.match(renderHome(), /\/photos\/image4\.webp/, 'Home hero must use a single uninterrupted architectural image');
+assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/image2\.webp/, 'Composite image must not be used in the hero');
 for (const html of servicePages) {
   assert.match(html, /Завод-изготовитель · 4 000 м²/, 'Service pages must reinforce the manufacturing position');
 }
