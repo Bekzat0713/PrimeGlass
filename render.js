@@ -89,7 +89,7 @@ function homePage() {
       <section class="home-hero">
         <div class="container home-hero-grid">
           <div class="hero-copy reveal">
-            <p class="eyebrow">Производство · Актау · Казахстан</p>
+            <p class="eyebrow">Производство · Алматы · Казахстан</p>
             <h1>Стекло, которое<br><span>формирует архитектуру</span></h1>
             <p class="hero-lead">Производство, доставка и монтаж стеклопакетов, фасадов, перегородок и ограждений для частных и коммерческих объектов.</p>
             ${heroActions()}
@@ -101,7 +101,7 @@ function homePage() {
           </div>
         </div>
         <div class="container fact-strip" aria-label="Ключевые преимущества">
-          <div><strong>Актау</strong><span>собственное направление производства</span></div>
+          <div><strong>Алматы</strong><span>собственное направление производства</span></div>
           <div><strong>Казахстан</strong><span>география проектных задач</span></div>
           <div><strong>B2C + B2B</strong><span>частные и коммерческие объекты</span></div>
           <div><strong>Полный цикл</strong><span>от консультации до монтажа</span></div>
@@ -204,11 +204,11 @@ function ctaSection(title, copy, service = '') {
 }
 
 function contactSection() {
-  return `<section class="section contact-section" id="contacts"><div class="container contact-grid"><div class="reveal"><p class="eyebrow">Контакты</p><h2>Prime Glass<br>Technologies</h2><p>Актау · работаем с проектами по Казахстану</p></div><div class="contact-list reveal"><a href="tel:${config.phoneHref}" data-track="click_phone"><small>Телефон</small><strong>${config.phoneDisplay}</strong></a><a href="mailto:${config.email}"><small>Email</small><strong>${config.email}</strong></a><div><small>График</small><strong>${config.schedule}</strong></div><div><small>Адрес</small><strong>Уточняется — требуется подтверждение</strong></div></div></div></section>`;
+  return `<section class="section contact-section" id="contacts"><div class="container contact-grid"><div class="reveal"><p class="eyebrow">Контакты</p><h2>Prime Glass<br>Technologies</h2><p>Алматы · работаем с проектами по Казахстану</p></div><div class="contact-list reveal"><a href="tel:${config.phoneHref}" data-track="click_phone"><small>Телефон</small><strong>${config.phoneDisplay}</strong></a><a href="mailto:${config.email}"><small>Email</small><strong>${config.email}</strong></a><div><small>График</small><strong>${config.schedule}</strong></div><div><small>Адрес</small><strong>${config.address}</strong></div></div></div></section>`;
 }
 
 function contactsPage() {
-  return `<main id="content">${breadcrumbs([{href:'/',label:'Главная'},{label:'Контакты'}])}<section class="contacts-hero"><div class="container contacts-hero-grid"><div class="reveal"><p class="eyebrow">Связаться с нами</p><h1>Обсудим задачу<br>на языке проекта</h1><p class="hero-lead">Позвоните, напишите в WhatsApp или отправьте исходные данные для индивидуального расчёта.</p>${heroActions()}</div><div class="contact-card reveal"><a href="tel:${config.phoneHref}" data-track="click_phone"><small>Телефон</small><strong>${config.phoneDisplay}</strong></a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp"><small>WhatsApp</small><strong>${config.phoneDisplay}</strong></a><a href="mailto:${config.email}"><small>Email</small><strong>${config.email}</strong></a><div><small>Город</small><strong>${config.city}</strong></div><div><small>График</small><strong>${config.schedule}</strong></div><div class="pending-contact"><small>Адрес и карта</small><strong>Ожидают подтверждения</strong></div></div></div><div class="container map-placeholder reveal" role="note"><div><span>Место для карты</span><strong>Карта будет подключена после подтверждения точного адреса и координат</strong></div></div></section><section class="section section-soft"><div class="container contacts-form-grid"><div class="section-intro reveal"><p class="eyebrow">Оставить запрос</p><h2>Как вам удобнее?</h2><p>Форма сформирует сообщение и откроет WhatsApp. Данные не будут скрытно отправлены в сторонний сервис.</p></div>${inlineLeadForm()}</div></section>${contactSection()}</main>`;
+  return `<main id="content">${breadcrumbs([{href:'/',label:'Главная'},{label:'Контакты'}])}<section class="contacts-hero"><div class="container contacts-hero-grid"><div class="reveal"><p class="eyebrow">Связаться с нами</p><h1>Обсудим задачу<br>на языке проекта</h1><p class="hero-lead">Позвоните, напишите в WhatsApp или отправьте исходные данные для индивидуального расчёта.</p>${heroActions()}</div><div class="contact-card reveal"><a href="tel:${config.phoneHref}" data-track="click_phone"><small>Телефон</small><strong>${config.phoneDisplay}</strong></a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp"><small>WhatsApp</small><strong>${config.phoneDisplay}</strong></a><a href="mailto:${config.email}"><small>Email</small><strong>${config.email}</strong></a><div><small>Город</small><strong>${config.city}</strong></div><div><small>Адрес</small><strong>${config.address}</strong></div><div><small>График</small><strong>${config.schedule}</strong></div></div></div><div class="container map-placeholder reveal" role="note"><div><span>Место для карты</span><strong>Карта будет подключена после подтверждения улицы и точных координат в Алматы</strong></div></div></section><section class="section section-soft"><div class="container contacts-form-grid"><div class="section-intro reveal"><p class="eyebrow">Оставить запрос</p><h2>Как вам удобнее?</h2><p>Форма сформирует сообщение и откроет WhatsApp. Данные не будут скрытно отправлены в сторонний сервис.</p></div>${inlineLeadForm()}</div></section>${contactSection()}</main>`;
 }
 
 function inlineLeadForm() {
@@ -217,7 +217,7 @@ function inlineLeadForm() {
 
 function footer() {
   const year = new Date().getFullYear();
-  return `<footer class="site-footer"><div class="container footer-top"><a class="brand brand-footer" href="/"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Prime Glass</strong><small>Technologies</small></span></a><p>Производство и монтаж стеклянных конструкций в Актау и по Казахстану.</p><div class="footer-links"><a href="/#services">Услуги</a><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/contacts">Контакты</a></div></div><div class="container footer-bottom"><span>© ${year} Prime Glass Technologies</span><span>Информация на сайте не является публичной офертой</span></div></footer>`;
+  return `<footer class="site-footer"><div class="container footer-top"><a class="brand brand-footer" href="/"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Prime Glass</strong><small>Technologies</small></span></a><p>Производство и монтаж стеклянных конструкций в Алматы и по Казахстану.</p><div class="footer-links"><a href="/#services">Услуги</a><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/contacts">Контакты</a></div></div><div class="container footer-bottom"><span>© ${year} Prime Glass Technologies</span><span>Информация на сайте не является публичной офертой</span></div></footer>`;
 }
 
 function modalAndFloating() {
@@ -294,7 +294,7 @@ function documentTemplate(page) {
 }
 
 function renderHome() {
-  return documentTemplate({kind:'home',path:'/',metaTitle:'Prime Glass — стекло и стеклянные конструкции в Актау',metaDescription:'Производство, доставка и монтаж стеклопакетов, фасадов, перегородок, ограждений и изделий из закалённого стекла в Актау и по Казахстану.',content:homePage()});
+  return documentTemplate({kind:'home',path:'/',metaTitle:'Prime Glass — стекло и стеклянные конструкции в Алматы',metaDescription:'Производство, доставка и монтаж стеклопакетов, фасадов, перегородок, ограждений и изделий из закалённого стекла в Алматы и по Казахстану.',content:homePage()});
 }
 
 function renderService(service) {
@@ -302,7 +302,7 @@ function renderService(service) {
 }
 
 function renderContacts() {
-  return documentTemplate({kind:'contacts',path:'/contacts',metaTitle:'Контакты Prime Glass Technologies в Актау',metaDescription:`Связаться с Prime Glass Technologies: ${config.phoneDisplay}, WhatsApp и email. Расчёт стеклянных конструкций в Актау и по Казахстану.`,content:contactsPage()});
+  return documentTemplate({kind:'contacts',path:'/contacts',metaTitle:'Контакты Prime Glass Technologies в Алматы',metaDescription:`Связаться с Prime Glass Technologies: ${config.phoneDisplay}, WhatsApp и email. Расчёт стеклянных конструкций в Алматы и по Казахстану.`,content:contactsPage()});
 }
 
 function render404() {

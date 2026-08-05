@@ -75,6 +75,9 @@ for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.f
   assert(server.includes(providerHost), `CSP must allow analytics provider ${providerHost}`);
 }
 const combinedHtml = pages.join('\n');
+assert.doesNotMatch(combinedHtml, /Актау/i, 'Old city name must not remain in generated pages');
+assert.match(renderHome(), /Алматы/, 'Home page must use the current city');
+assert.match(renderContacts(), /Алматы, Казахстан/, 'Contacts page must show the configured address');
 for (const formKind of ['calculation','project','measurement','commercial']) {
   assert(combinedHtml.includes(`data-open-form="${formKind}"`) || combinedHtml.includes(`data-form-kind="${formKind}"`), `Missing form flow ${formKind}`);
 }

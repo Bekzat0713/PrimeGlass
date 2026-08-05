@@ -6,10 +6,10 @@ const siteConfig = {
   phoneHref: '+77770910888',
   whatsapp: '77770910888',
   email: 'primeglasstech@outlook.com',
-  city: 'Актау',
+  city: 'Алматы',
   region: 'Казахстан',
   schedule: 'Понедельник–пятница, 09:00–18:00',
-  address: null, // TODO: подтвердить точный адрес
+  address: 'Алматы, Казахстан',
   telegram: null, // TODO: подтвердить публичный Telegram
   mapCoordinates: null, // TODO: подтвердить координаты
   catalogUrl: null, // TODO: добавить утверждённый каталог
