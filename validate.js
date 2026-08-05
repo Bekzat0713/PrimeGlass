@@ -74,6 +74,12 @@ const server = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
 for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.facebook.net','www.google-analytics.com']) {
   assert(server.includes(providerHost), `CSP must allow analytics provider ${providerHost}`);
 }
+const stylesheet = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
+assert(stylesheet.includes('@media (max-width:390px)'), 'Small mobile breakpoint is required');
+assert(stylesheet.includes('env(safe-area-inset-bottom)'), 'Mobile fixed actions need safe-area spacing');
+assert.match(stylesheet, /\.gallery-grid\{[^}]*grid-auto-flow:column/, 'Mobile gallery needs a horizontal touch layout');
+assert.match(stylesheet, /\.spec-table,.spec-table tbody[^\n]*display:block/, 'Mobile specification table needs a stacked layout');
+assert.match(stylesheet, /\.field input,[^\n]*font-size:16px/, 'Mobile form controls need a zoom-safe font size');
 const combinedHtml = pages.join('\n');
 assert.doesNotMatch(combinedHtml, /Актау/i, 'Old city name must not remain in generated pages');
 assert.match(renderHome(), /Алматы/, 'Home page must use the current city');

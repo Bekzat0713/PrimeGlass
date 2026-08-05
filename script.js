@@ -176,6 +176,7 @@
     document.body.classList.toggle('menu-open', open);
   });
   mobileMenu?.addEventListener('click', event => { if (event.target.closest('a,button')) closeMenu(); });
+  window.addEventListener('resize', () => { if (window.innerWidth > 1180) closeMenu(); }, { passive: true });
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
     closeMenu();
