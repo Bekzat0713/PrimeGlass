@@ -88,6 +88,12 @@ assert.match(stylesheet, /@media \(hover:none\)/, 'Touch devices need stable non
 const combinedHtml = pages.join('\n');
 assert.doesNotMatch(combinedHtml, /Актау/i, 'Old city name must not remain in generated pages');
 assert.match(renderHome(), /Алматы/, 'Home page must use the current city');
+assert.match(renderHome(), /Завод-изготовитель/, 'Home page must present Prime Glass as the manufacturer');
+assert.match(renderHome(), /4 000 м²/, 'Home page must prominently state the factory area');
+assert.match(renderHome(), /class="factory-proof"/, 'Home page needs a prominent factory proof block');
+for (const html of servicePages) {
+  assert.match(html, /Завод-изготовитель · 4 000 м²/, 'Service pages must reinforce the manufacturing position');
+}
 assert.match(renderContacts(), /Алматы, Казахстан/, 'Contacts page must show the configured address');
 assert.match(combinedHtml, /Решение для объекта/, 'Service benefit heading must stay concise on mobile');
 for (const formKind of ['calculation','project','measurement','commercial']) {

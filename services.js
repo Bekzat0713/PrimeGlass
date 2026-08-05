@@ -164,7 +164,7 @@ const services = serviceDefs.map((service, index) => ({
   ...service,
   titleShort: service.title,
   metaTitle: `${service.title} в Алматы — изготовление и монтаж | Prime Glass`,
-  metaDescription: `${service.lead} Индивидуальный расчёт Prime Glass для частных и коммерческих объектов в Алматы и Казахстане.`,
+  metaDescription: `${service.lead} Изготовление на заводе Prime Glass площадью 4 000 м² в Алматы. Индивидуальный расчёт для объектов по Казахстану.`,
   benefits: buildBenefits(service),
   faq: buildFaq(service),
   calculator: [...commonCalculator, ...service.calculator],

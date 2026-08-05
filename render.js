@@ -89,9 +89,10 @@ function homePage() {
       <section class="home-hero">
         <div class="container home-hero-grid">
           <div class="hero-copy reveal">
-            <p class="eyebrow">Производство · Алматы · Казахстан</p>
-            <h1>Стекло, которое<br><span>формирует архитектуру</span></h1>
-            <p class="hero-lead">Производство, доставка и монтаж стеклопакетов, фасадов, перегородок и ограждений для частных и коммерческих объектов.</p>
+            <p class="eyebrow">Завод-изготовитель · Алматы · Казахстан</p>
+            <h1>Завод стеклянных<br><span>конструкций</span></h1>
+            <div class="factory-proof" aria-label="Площадь завода Prime Glass — 4 000 квадратных метров"><strong>4 000 м²</strong><span>площадь собственного<br>завода-изготовителя</span></div>
+            <p class="hero-lead">Производим стеклопакеты, фасады, перегородки, ограждения и изделия из закалённого стекла для частных и коммерческих объектов.</p>
             ${heroActions()}
             ${contactActions()}
           </div>
@@ -101,7 +102,7 @@ function homePage() {
           </div>
         </div>
         <div class="container fact-strip" aria-label="Ключевые преимущества">
-          <div><strong>Алматы</strong><span>собственное направление производства</span></div>
+          <div><strong>4 000 м²</strong><span>площадь завода-изготовителя в Алматы</span></div>
           <div><strong>Казахстан</strong><span>география проектных задач</span></div>
           <div><strong>B2C + B2B</strong><span>частные и коммерческие объекты</span></div>
           <div><strong>Полный цикл</strong><span>от консультации до монтажа</span></div>
@@ -130,7 +131,7 @@ function homePage() {
       <section class="section production-section" id="production">
         <div class="container production-grid">
           <div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:'Производственная линия обработки листового стекла'},'production-picture')}<p class="media-disclaimer">Изображение из текущих материалов сайта; статус как фото производства Prime Glass требует подтверждения.</p></div>
-          <div class="production-copy reveal"><p class="eyebrow">Производство</p><h2>Точность начинается<br>до запуска в работу</h2><p>Размеры, отверстия, вырезы и обработка кромки должны быть согласованы до закалки. Поэтому мы просим чертёж или помогаем собрать техническое задание.</p><ul class="line-list"><li><span>01</span>Проверка исходных данных</li><li><span>02</span>Подбор стекла и обработки</li><li><span>03</span>Согласование комплектации</li><li><span>04</span>Изготовление и контроль</li></ul><a class="button button-secondary" href="/zakalka-stekla">Закалка и обработка</a></div>
+          <div class="production-copy reveal"><p class="eyebrow">Завод-изготовитель · 4 000 м²</p><h2>Собственное производство<br>полного цикла</h2><p>Изготавливаем стеклянные конструкции на заводе Prime Glass площадью 4 000 м² в Алматы. До запуска проверяем размеры, отверстия, вырезы, обработку кромки и комплектацию по техническому заданию.</p><ul class="line-list"><li><span>01</span>Проверка исходных данных</li><li><span>02</span>Подбор стекла и обработки</li><li><span>03</span>Согласование комплектации</li><li><span>04</span>Изготовление и контроль</li></ul><a class="button button-secondary" href="/zakalka-stekla">Закалка и обработка</a></div>
         </div>
       </section>
 
@@ -196,7 +197,7 @@ function faqSection(service) {
 }
 
 function serviceProductionSection(service) {
-  return `<section class="section service-production"><div class="container production-grid"><div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:`Производственная обработка стекла для направления «${service.title}»`},'production-picture')}<p class="media-disclaimer">Фото взято из исходных материалов сайта; принадлежность производству Prime Glass требует подтверждения.</p></div><div class="production-copy reveal"><p class="eyebrow">Производственный контур</p><h2>От чертежа<br>к готовому изделию</h2><p>Для направления «${service.title}» до запуска проверяются размеры, выбранные материалы, обработка, крепления и условия монтажа. Перечень оборудования и подтверждённые технологические возможности будут добавлены после получения данных производства.</p><ul class="line-list"><li><span>01</span>Проверка размеров и чертежей</li><li><span>02</span>Согласование материалов и обработки</li><li><span>03</span>Изготовление по утверждённому заданию</li><li><span>04</span>Комплектация к доставке и монтажу</li></ul></div></div></section>`;
+  return `<section class="section service-production"><div class="container production-grid"><div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:`Производственная обработка стекла для направления «${service.title}»`},'production-picture')}<p class="media-disclaimer">Фото взято из исходных материалов сайта; принадлежность производству Prime Glass требует подтверждения.</p></div><div class="production-copy reveal"><p class="eyebrow">Завод-изготовитель · 4 000 м²</p><h2>От чертежа<br>к готовому изделию</h2><p>Изделия для направления «${service.title}» изготавливаются на заводе Prime Glass площадью 4 000 м² в Алматы. До запуска проверяются размеры, материалы, обработка, крепления и условия монтажа. Перечень оборудования будет опубликован после подтверждения технических данных.</p><ul class="line-list"><li><span>01</span>Проверка размеров и чертежей</li><li><span>02</span>Согласование материалов и обработки</li><li><span>03</span>Изготовление по утверждённому заданию</li><li><span>04</span>Комплектация к доставке и монтажу</li></ul></div></div></section>`;
 }
 
 function ctaSection(title, copy, service = '') {
@@ -217,7 +218,7 @@ function inlineLeadForm() {
 
 function footer() {
   const year = new Date().getFullYear();
-  return `<footer class="site-footer"><div class="container footer-top"><a class="brand brand-footer" href="/"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Prime Glass</strong><small>Technologies</small></span></a><p>Производство и монтаж стеклянных конструкций в Алматы и по Казахстану.</p><div class="footer-links"><a href="/#services">Услуги</a><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/contacts">Контакты</a></div></div><div class="container footer-bottom"><span>© ${year} Prime Glass Technologies</span><span>Информация на сайте не является публичной офертой</span></div></footer>`;
+  return `<footer class="site-footer"><div class="container footer-top"><a class="brand brand-footer" href="/"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Prime Glass</strong><small>Technologies</small></span></a><p>Завод-изготовитель стеклянных конструкций площадью 4 000 м² в Алматы. Работаем по Казахстану.</p><div class="footer-links"><a href="/#services">Услуги</a><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/contacts">Контакты</a></div></div><div class="container footer-bottom"><span>© ${year} Prime Glass Technologies</span><span>Информация на сайте не является публичной офертой</span></div></footer>`;
 }
 
 function modalAndFloating() {
@@ -294,7 +295,7 @@ function documentTemplate(page) {
 }
 
 function renderHome() {
-  return documentTemplate({kind:'home',path:'/',metaTitle:'Prime Glass — стекло и стеклянные конструкции в Алматы',metaDescription:'Производство, доставка и монтаж стеклопакетов, фасадов, перегородок, ограждений и изделий из закалённого стекла в Алматы и по Казахстану.',content:homePage()});
+  return documentTemplate({kind:'home',path:'/',metaTitle:'Prime Glass — завод стеклянных конструкций 4 000 м² в Алматы',metaDescription:'Prime Glass — завод-изготовитель площадью 4 000 м² в Алматы. Производство, доставка и монтаж стеклопакетов, фасадов, перегородок, ограждений и закалённого стекла по Казахстану.',content:homePage()});
 }
 
 function renderService(service) {
