@@ -18,7 +18,6 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", 'data:', 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://mc.yandex.ru', 'https://www.facebook.com'],
       connectSrc: ["'self'", 'https://www.google-analytics.com', 'https://*.google-analytics.com', 'https://region1.google-analytics.com', 'https://mc.yandex.ru', 'https://www.facebook.com'],
-      frameSrc: ["'self'", 'https://www.instagram.com'],
       frameAncestors: ["'none'"]
     }
   },

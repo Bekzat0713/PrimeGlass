@@ -118,10 +118,11 @@ function homePage() {
           <div><strong>B2C + B2B</strong><span>частные и коммерческие объекты</span></div>
           <div><strong>Полный цикл</strong><span>от консультации до монтажа</span></div>
           </div>
-          <a class="hero-scroll-cue" href="#services" aria-label="Смотреть дальше"><span>Смотреть дальше</span><i aria-hidden="true">↓</i></a>
+          <a class="hero-scroll-cue" href="#reels" aria-label="Смотреть дальше"><span>Смотреть дальше</span><i aria-hidden="true">↓</i></a>
         </div>
       </section>
 
+      ${instagramReelsSection()}
       <section class="section" id="services">
         <div class="container">
           <div class="section-intro reveal"><p class="eyebrow">Направления</p><h2>Инженерные решения<br>из стекла</h2><p>От отдельного стеклопакета до комплексного фасадного или интерьерного решения.</p></div>
@@ -156,7 +157,6 @@ function homePage() {
         </div>
       </section>
 
-      ${instagramReelsSection()}
       ${processSection()}
       ${ctaSection('Обсудим ваш проект?', 'Пришлите размеры, чертёж или описание задачи. Мы соберём исходные данные и подготовим индивидуальный расчёт.')}
       ${contactSection()}
@@ -164,20 +164,20 @@ function homePage() {
 }
 
 function instagramReelsSection() {
-  const cards = instagramReels.map((id, index) => {
+  const cards = duplicate => instagramReels.map((id, index) => {
     const reelUrl = `https://www.instagram.com/reel/${id}/`;
-    return `<article class="reel-card" data-reel-card>
-      <div class="reel-card-top"><span>Reels</span><a href="${reelUrl}" target="_blank" rel="noopener noreferrer" data-track="view_reel" data-reel-id="${id}" aria-label="Открыть Reel ${index + 1} в Instagram">↗</a></div>
-      <iframe src="${reelUrl}embed/" title="Prime Glass Reel ${index + 1}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
-    </article>`;
+    return `<a class="reel-card" href="${reelUrl}" target="_blank" rel="noopener noreferrer" data-track="view_reel" data-reel-id="${id}" aria-label="Открыть Reel ${index + 1} в Instagram"${duplicate ? ' tabindex="-1"' : ''}>
+      <img src="/photos/reel-${id}.jpg" alt="" width="360" height="640" loading="lazy" decoding="async">
+      <span class="reel-badge">Reels</span><span class="reel-open">Смотреть в Instagram <b>↗</b></span>
+    </a>`;
   }).join('');
   return `<section class="section reels-section" id="reels">
     <div class="container reels-heading reveal">
       <div><p class="eyebrow">Prime Glass · Instagram</p><h2>Стекло<br>в движении</h2><p>Производство, монтаж и готовые решения — в коротких видео команды Prime Glass.</p></div>
-      <div class="reels-actions"><div class="reels-controls" aria-label="Управление каруселью"><button type="button" data-reels-prev aria-label="Предыдущие Reels">←</button><button type="button" data-reels-next aria-label="Следующие Reels">→</button></div><a class="button button-primary" href="${instagramProfile}" target="_blank" rel="noopener noreferrer" data-track="click_instagram">Смотреть Instagram <span aria-hidden="true">↗</span></a></div>
+      <div class="reels-actions"><a class="button button-primary" href="${instagramProfile}" target="_blank" rel="noopener noreferrer" data-track="click_instagram">Смотреть Instagram <span aria-hidden="true">↗</span></a></div>
     </div>
     <div class="reels-carousel reveal" data-reels-carousel>
-      <div class="reels-viewport" data-reels-viewport tabindex="0" aria-label="Reels Prime Glass. Используйте горизонтальную прокрутку для просмотра."><div class="reels-track">${cards}</div></div>
+      <div class="reels-viewport" aria-label="Reels Prime Glass"><div class="reels-track">${cards(false)}<div class="reels-copy" aria-hidden="true">${cards(true)}</div></div></div>
     </div>
   </section>`;
 }

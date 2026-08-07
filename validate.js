@@ -77,8 +77,9 @@ assert.match(script, /trackCustom/, 'Meta Pixel custom events need forwarding');
 assert.match(script, /function initDepthScroll\(\)/, 'Home page needs the requested 3D scroll system');
 assert.match(script, /requestAnimationFrame\(renderDepth\)/, '3D scroll updates must be animation-frame throttled');
 assert.match(script, /function initHeroVideo\(\)/, 'Home page needs responsive background-video loading');
-assert.match(script, /function initReelsCarousel\(\)/, 'Home page needs an automatic Reels carousel');
-assert.match(script, /mouseenter[\s\S]*paused = true[\s\S]*mouseleave[\s\S]*paused = false/, 'Reels carousel must pause while hovered');
+const stylesheet = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
+assert.match(stylesheet, /@keyframes reelsMarquee/, 'Home page needs an infinite Reels marquee');
+assert.match(stylesheet, /\.reels-carousel:hover \.reels-track,[^\n]*animation-play-state:paused/, 'Reels marquee must pause while hovered');
 assert.match(script, /connection\?\.saveData/, 'Background video must respect reduced-data connections');
 assert.match(script, /window\.matchMedia\('\(max-width: 767px\)'\)/, 'Mobile screens must select the portrait hero video');
 assert.match(buildScript, /webp\|mp4/, 'Build must copy the MP4 hero asset');
@@ -86,8 +87,6 @@ const server = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
 for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.facebook.net','www.google-analytics.com']) {
   assert(server.includes(providerHost), `CSP must allow analytics provider ${providerHost}`);
 }
-assert(server.includes("frameSrc: [\"'self'\", 'https://www.instagram.com']"), 'CSP must allow official Instagram Reel embeds');
-const stylesheet = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
 assert(stylesheet.includes('@media (max-width:390px)'), 'Small mobile breakpoint is required');
 assert(stylesheet.includes('env(safe-area-inset-bottom)'), 'Mobile fixed actions need safe-area spacing');
 assert.match(stylesheet, /\.mobile-menu\{position:absolute;top:82px[^}]*height:calc\(100dvh - 82px\)/, 'Tablet navigation must have an explicit viewport height');
@@ -119,9 +118,15 @@ assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть 
 assert.match(renderHome(), /data-hero-video/, 'Home page needs the animated hero video');
 assert.match(renderHome(), /class="home-hero-stage"/, 'Home page needs an extended sticky hero stage');
 assert.match(renderHome(), /class="section reels-section" id="reels"/, 'Home page needs a dedicated Instagram Reels section');
-assert.strictEqual((renderHome().match(/instagram\.com\/reel\/[^/]+\/embed\//g) || []).length, 6, 'Home page needs all six supplied Instagram Reels');
+assert.match(renderHome(), /id="reels"[\s\S]*id="services"/, 'Reels section must appear directly after the home hero');
+assert.strictEqual((renderHome().match(/class="reel-card"/g) || []).length, 12, 'Infinite marquee needs two copies of all six supplied Reels');
 assert.match(renderHome(), /instagram\.com\/prime\.glass\.technologies\//, 'Reels section must link to the supplied Instagram account');
 assert.doesNotMatch(renderHome(), /reel-views|data-view-count/i, 'Reels cards must not show view counts');
+assert.doesNotMatch(renderHome(), /data-reels-(?:prev|next)|<iframe[^>]+instagram/i, 'Reels section must not contain arrows or Instagram like panels');
+for (const reelId of ['DYyxI4BMI1N','DYhoi6XMRh8','DYo6attsTGQ','DYoZ-c5MDJn','DX6Gi51MHz_','DbTPeuCoXTS']) {
+  assert.match(renderHome(), new RegExp(`/photos/reel-${reelId}\\.jpg`), `Missing Reel card ${reelId}`);
+  assert(fs.existsSync(path.join(__dirname, 'photos', `reel-${reelId}.jpg`)), `Missing Reel cover ${reelId}`);
+}
 assert.match(renderHome(), /data-desktop-src="\/photos\/prime-glass-intro\.mp4"/, 'Desktop hero video must load from the prepared landscape asset');
 assert.match(renderHome(), /data-mobile-src="\/photos\/prime-glass-mobile\.mp4"/, 'Mobile hero video must load from the prepared portrait asset');
 assert.match(renderHome(), /<video[^>]*\bloop\b/, 'Hero video must loop continuously');
