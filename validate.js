@@ -1,6 +1,7 @@
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
+const config = require('./site-config');
 const { services } = require('./services');
 const { renderHome, renderService, renderContacts, render404 } = require('./render');
 
@@ -51,6 +52,7 @@ servicePages.forEach((html, index) => {
   assert.doesNotMatch(html, /data-disabled-channel="telegram"/, 'Unconfirmed Telegram must not be shown');
 });
 const script = fs.readFileSync(path.join(__dirname, 'script.js'), 'utf8');
+assert.strictEqual(config.analytics.googleAnalyticsId, 'G-LH761EGRGM', 'Approved GA4 measurement ID must be configured');
 const buildScript = fs.readFileSync(path.join(__dirname, 'build.js'), 'utf8');
 for (const eventName of ['click_phone','click_whatsapp','click_telegram','open_calculator','submit_calculation','submit_callback','submit_measurement','submit_project','request_commercial_offer','download_catalog','view_service','view_case']) {
   assert(script.includes(`'${eventName}'`), `Missing analytics event ${eventName}`);
