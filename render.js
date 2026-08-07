@@ -4,6 +4,15 @@ const imageDimensions = {
   1: [1280, 853], 2: [853, 1280], 3: [853, 1280], 4: [1280, 853], 5: [853, 1280],
   6: [1280, 853], 7: [853, 1280], 8: [1280, 853], 9: [853, 1280], 10: [853, 1280]
 };
+const instagramProfile = 'https://www.instagram.com/prime.glass.technologies/';
+const instagramReels = [
+  'DYyxI4BMI1N',
+  'DYhoi6XMRh8',
+  'DYo6attsTGQ',
+  'DYoZ-c5MDJn',
+  'DX6Gi51MHz_',
+  'DbTPeuCoXTS'
+];
 
 const escapeHtml = (value = '') => String(value)
   .replaceAll('&', '&amp;')
@@ -147,10 +156,30 @@ function homePage() {
         </div>
       </section>
 
+      ${instagramReelsSection()}
       ${processSection()}
       ${ctaSection('Обсудим ваш проект?', 'Пришлите размеры, чертёж или описание задачи. Мы соберём исходные данные и подготовим индивидуальный расчёт.')}
       ${contactSection()}
     </main>`;
+}
+
+function instagramReelsSection() {
+  const cards = instagramReels.map((id, index) => {
+    const reelUrl = `https://www.instagram.com/reel/${id}/`;
+    return `<article class="reel-card" data-reel-card>
+      <div class="reel-card-top"><span>Reels</span><a href="${reelUrl}" target="_blank" rel="noopener noreferrer" data-track="view_reel" data-reel-id="${id}" aria-label="Открыть Reel ${index + 1} в Instagram">↗</a></div>
+      <iframe src="${reelUrl}embed/" title="Prime Glass Reel ${index + 1}" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+    </article>`;
+  }).join('');
+  return `<section class="section reels-section" id="reels">
+    <div class="container reels-heading reveal">
+      <div><p class="eyebrow">Prime Glass · Instagram</p><h2>Стекло<br>в движении</h2><p>Производство, монтаж и готовые решения — в коротких видео команды Prime Glass.</p></div>
+      <div class="reels-actions"><div class="reels-controls" aria-label="Управление каруселью"><button type="button" data-reels-prev aria-label="Предыдущие Reels">←</button><button type="button" data-reels-next aria-label="Следующие Reels">→</button></div><a class="button button-primary" href="${instagramProfile}" target="_blank" rel="noopener noreferrer" data-track="click_instagram">Смотреть Instagram <span aria-hidden="true">↗</span></a></div>
+    </div>
+    <div class="reels-carousel reveal" data-reels-carousel>
+      <div class="reels-viewport" data-reels-viewport tabindex="0" aria-label="Reels Prime Glass. Используйте горизонтальную прокрутку для просмотра."><div class="reels-track">${cards}</div></div>
+    </div>
+  </section>`;
 }
 
 function processSection() {

@@ -55,7 +55,7 @@ const script = fs.readFileSync(path.join(__dirname, 'script.js'), 'utf8');
 assert.strictEqual(config.analytics.googleAnalyticsId, 'G-LH761EGRGM', 'Approved GA4 measurement ID must be configured');
 assert.strictEqual(config.analytics.yandexMetrikaId, '110987197', 'Approved Yandex Metrika counter ID must be configured');
 const buildScript = fs.readFileSync(path.join(__dirname, 'build.js'), 'utf8');
-for (const eventName of ['click_phone','click_whatsapp','click_telegram','open_calculator','submit_calculation','submit_callback','submit_measurement','submit_project','request_commercial_offer','download_catalog','view_service','view_case']) {
+for (const eventName of ['click_phone','click_whatsapp','click_telegram','open_calculator','submit_calculation','submit_callback','submit_measurement','submit_project','request_commercial_offer','download_catalog','view_service','view_case','click_instagram','view_reel']) {
   assert(script.includes(`'${eventName}'`), `Missing analytics event ${eventName}`);
 }
 for (const attributionField of ['traffic_source','traffic_medium','first_traffic_source','first_landing_page','landing_page','page_url','page_title','event_id','event_time']) {
@@ -77,6 +77,8 @@ assert.match(script, /trackCustom/, 'Meta Pixel custom events need forwarding');
 assert.match(script, /function initDepthScroll\(\)/, 'Home page needs the requested 3D scroll system');
 assert.match(script, /requestAnimationFrame\(renderDepth\)/, '3D scroll updates must be animation-frame throttled');
 assert.match(script, /function initHeroVideo\(\)/, 'Home page needs responsive background-video loading');
+assert.match(script, /function initReelsCarousel\(\)/, 'Home page needs an automatic Reels carousel');
+assert.match(script, /mouseenter[\s\S]*paused = true[\s\S]*mouseleave[\s\S]*paused = false/, 'Reels carousel must pause while hovered');
 assert.match(script, /connection\?\.saveData/, 'Background video must respect reduced-data connections');
 assert.match(script, /window\.matchMedia\('\(max-width: 767px\)'\)/, 'Mobile screens must select the portrait hero video');
 assert.match(buildScript, /webp\|mp4/, 'Build must copy the MP4 hero asset');
@@ -84,6 +86,7 @@ const server = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
 for (const providerHost of ['www.googletagmanager.com','mc.yandex.ru','connect.facebook.net','www.google-analytics.com']) {
   assert(server.includes(providerHost), `CSP must allow analytics provider ${providerHost}`);
 }
+assert(server.includes("frameSrc: [\"'self'\", 'https://www.instagram.com']"), 'CSP must allow official Instagram Reel embeds');
 const stylesheet = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
 assert(stylesheet.includes('@media (max-width:390px)'), 'Small mobile breakpoint is required');
 assert(stylesheet.includes('env(safe-area-inset-bottom)'), 'Mobile fixed actions need safe-area spacing');
@@ -115,6 +118,10 @@ assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/
 assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть дальше<\/span>/, 'Home page needs a visible centered scroll cue');
 assert.match(renderHome(), /data-hero-video/, 'Home page needs the animated hero video');
 assert.match(renderHome(), /class="home-hero-stage"/, 'Home page needs an extended sticky hero stage');
+assert.match(renderHome(), /class="section reels-section" id="reels"/, 'Home page needs a dedicated Instagram Reels section');
+assert.strictEqual((renderHome().match(/instagram\.com\/reel\/[^/]+\/embed\//g) || []).length, 6, 'Home page needs all six supplied Instagram Reels');
+assert.match(renderHome(), /instagram\.com\/prime\.glass\.technologies\//, 'Reels section must link to the supplied Instagram account');
+assert.doesNotMatch(renderHome(), /reel-views|data-view-count/i, 'Reels cards must not show view counts');
 assert.match(renderHome(), /data-desktop-src="\/photos\/prime-glass-intro\.mp4"/, 'Desktop hero video must load from the prepared landscape asset');
 assert.match(renderHome(), /data-mobile-src="\/photos\/prime-glass-mobile\.mp4"/, 'Mobile hero video must load from the prepared portrait asset');
 assert.match(renderHome(), /<video[^>]*\bloop\b/, 'Hero video must loop continuously');

@@ -153,7 +153,8 @@
   const analyticsEvents = Object.freeze([
     'click_phone', 'click_whatsapp', 'click_telegram', 'open_calculator',
     'submit_calculation', 'submit_callback', 'submit_measurement', 'submit_project',
-    'request_commercial_offer', 'download_catalog', 'view_service', 'view_case'
+    'request_commercial_offer', 'download_catalog', 'view_service', 'view_case',
+    'click_instagram', 'view_reel'
   ]);
   window.PrimeGlassAnalytics = { track, events: analyticsEvents, getAttribution, providers: activeProviders };
 
@@ -203,7 +204,7 @@
   document.addEventListener('click', event => {
     const tracked = event.target.closest('[data-track]');
     if (tracked) {
-      track(tracked.dataset.track, { link_url: tracked.href || '', selected_service: tracked.dataset.service || '' }, `${tracked.dataset.track}:${tracked.href || tracked.dataset.service || ''}`);
+      track(tracked.dataset.track, { link_url: tracked.href || '', selected_service: tracked.dataset.service || '', reel_id: tracked.dataset.reelId || '' }, `${tracked.dataset.track}:${tracked.href || tracked.dataset.service || ''}`);
     }
   });
 
@@ -310,6 +311,32 @@
   }
   initHeroVideo();
   initDepthScroll();
+
+  function initReelsCarousel() {
+    const carousel = document.querySelector('[data-reels-carousel]');
+    const viewport = carousel?.querySelector('[data-reels-viewport]');
+    const cards = viewport ? [...viewport.querySelectorAll('[data-reel-card]')] : [];
+    if (!carousel || !viewport || cards.length < 2) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const desktopPointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    let paused = reducedMotion || !desktopPointer;
+    const step = direction => {
+      const gap = Number.parseFloat(getComputedStyle(viewport.querySelector('.reels-track')).gap) || 18;
+      const distance = cards[0].getBoundingClientRect().width + gap;
+      const end = viewport.scrollWidth - viewport.clientWidth;
+      if (direction > 0 && viewport.scrollLeft >= end - distance * 0.5) viewport.scrollTo({ left: 0, behavior: 'smooth' });
+      else if (direction < 0 && viewport.scrollLeft <= distance * 0.5) viewport.scrollTo({ left: end, behavior: 'smooth' });
+      else viewport.scrollBy({ left: distance * direction, behavior: 'smooth' });
+    };
+    carousel.addEventListener('mouseenter', () => { paused = true; });
+    carousel.addEventListener('mouseleave', () => { paused = false; });
+    carousel.addEventListener('focusin', () => { paused = true; });
+    carousel.addEventListener('focusout', event => { if (!carousel.contains(event.relatedTarget)) paused = false; });
+    carousel.querySelector('[data-reels-prev]')?.addEventListener('click', () => step(-1));
+    carousel.querySelector('[data-reels-next]')?.addEventListener('click', () => step(1));
+    window.setInterval(() => { if (!paused && !document.hidden) step(1); }, 3600);
+  }
+  initReelsCarousel();
 
   const filterButtons = document.querySelectorAll('[data-gallery-filter]');
   const galleryItems = document.querySelectorAll('[data-gallery] [data-category]');
