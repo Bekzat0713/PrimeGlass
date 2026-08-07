@@ -53,6 +53,7 @@ servicePages.forEach((html, index) => {
 });
 const script = fs.readFileSync(path.join(__dirname, 'script.js'), 'utf8');
 assert.strictEqual(config.analytics.googleAnalyticsId, 'G-LH761EGRGM', 'Approved GA4 measurement ID must be configured');
+assert.strictEqual(config.analytics.yandexMetrikaId, '110987197', 'Approved Yandex Metrika counter ID must be configured');
 const buildScript = fs.readFileSync(path.join(__dirname, 'build.js'), 'utf8');
 for (const eventName of ['click_phone','click_whatsapp','click_telegram','open_calculator','submit_calculation','submit_callback','submit_measurement','submit_project','request_commercial_offer','download_catalog','view_service','view_case']) {
   assert(script.includes(`'${eventName}'`), `Missing analytics event ${eventName}`);

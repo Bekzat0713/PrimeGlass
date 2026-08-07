@@ -16,7 +16,7 @@ const siteConfig = {
   analytics: {
     googleTagManagerId: process.env.GTM_ID || '',
     googleAnalyticsId: process.env.GA4_ID || 'G-LH761EGRGM',
-    yandexMetrikaId: process.env.YM_ID || '',
+    yandexMetrikaId: process.env.YM_ID || '110987197',
     metaPixelId: process.env.META_PIXEL_ID || ''
   }
 };
