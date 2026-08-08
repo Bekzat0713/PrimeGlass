@@ -123,7 +123,7 @@ function homePage() {
       </section>
 
       ${instagramReelsSection()}
-      <section class="section" id="services">
+      <section class="section glass-section" id="services" data-section-number="02">
         <div class="container">
           <div class="section-intro reveal"><p class="eyebrow">Направления</p><h2>Инженерные решения<br>из стекла</h2><p>От отдельного стеклопакета до комплексного фасадного или интерьерного решения.</p></div>
           <div class="service-grid">
@@ -132,32 +132,32 @@ function homePage() {
         </div>
       </section>
 
-      <section class="section section-dark" id="about">
+      <section class="section section-dark glass-section" id="about" data-section-number="03">
         <div class="container split-intro">
           <div class="reveal"><p class="eyebrow eyebrow-light">Подход Prime Glass</p><h2>Сначала задача.<br>Затем конструкция.</h2></div>
-          <div class="large-copy reveal"><p>Мы строим работу вокруг объекта: уточняем геометрию, условия эксплуатации, требования к безопасности, внешний вид и монтаж.</p><p class="muted-light">Точные показатели компании, сертификаты и портфолио будут опубликованы после предоставления подтверждающих материалов.</p></div>
+          <div class="large-copy reveal"><p>Мы строим работу вокруг объекта: уточняем геометрию, условия эксплуатации, требования к безопасности, внешний вид и монтаж.</p><p class="muted-light">Каждое решение проходит техническую проработку: от выбора стекла и обработки кромки до комплектации, доставки и установки на объекте.</p></div>
         </div>
         <div class="container capability-grid">
           ${[['01','Частным клиентам','Окна, душевые, перегородки, козырьки и ограждения по индивидуальным размерам.'],['02','Архитекторам','Помощь в подборе стекла, профильной системы, обработки и узлов реализации.'],['03','Подрядчикам','Производственная проработка и комплектация для строительных и интерьерных проектов.'],['04','Корпоративным заказчикам','Коммерческое предложение, техническая коммуникация и планирование реализации.']].map(item => `<article class="capability-card reveal"><span>${item[0]}</span><h3>${item[1]}</h3><p>${item[2]}</p></article>`).join('')}
         </div>
       </section>
 
-      <section class="section production-section" id="production">
+      <section class="section production-section glass-section" id="production" data-section-number="04">
         <div class="container production-grid">
-          <div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:'Производственная линия обработки листового стекла'},'production-picture')}<p class="media-disclaimer">Изображение из текущих материалов сайта; статус как фото производства Prime Glass требует подтверждения.</p></div>
+          <div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:'Производственная обработка листового стекла'},'production-picture')}<p class="media-caption">Обработка стекла по техническому заданию проекта</p></div>
           <div class="production-copy reveal"><p class="eyebrow">Завод-изготовитель · 4 000 м²</p><h2>Собственное производство<br>полного цикла</h2><p>Изготавливаем стеклянные конструкции на заводе Prime Glass площадью 4 000 м² в Алматы. До запуска проверяем размеры, отверстия, вырезы, обработку кромки и комплектацию по техническому заданию.</p><ul class="line-list"><li><span>01</span>Проверка исходных данных</li><li><span>02</span>Подбор стекла и обработки</li><li><span>03</span>Согласование комплектации</li><li><span>04</span>Изготовление и контроль</li></ul><a class="button button-secondary" href="/zakalka-stekla">Закалка и обработка</a></div>
         </div>
       </section>
 
-      <section class="section gallery-section" id="gallery">
-        <div class="container"><div class="section-intro reveal"><p class="eyebrow">Визуальные примеры</p><h2>Архитектура стекла</h2><p>Эти изображения показывают типы решений и не заявлены как выполненные объекты Prime Glass.</p></div>
+      <section class="section gallery-section glass-section" id="gallery" data-section-number="05">
+        <div class="container"><div class="section-intro reveal"><p class="eyebrow">Решения для объектов</p><h2>Архитектура стекла</h2><p>Фасады, ограждения, перегородки и интерьерные конструкции — ориентиры для обсуждения вашего проекта.</p></div>
           <div class="home-gallery">
             ${[4,10,9,7].map((n,index) => `<button class="gallery-tile tile-${index+1} reveal" type="button" data-lightbox="/photos/image${n}.webp" data-alt="Визуальный пример решения из стекла">${picture({src:`/photos/image${n}.webp`,fallback:`/photos/image${n}.jpg`,alt:'Визуальный пример решения из стекла'},'',false)}<span>Смотреть <b>↗</b></span></button>`).join('')}
           </div>
         </div>
       </section>
 
-      ${processSection()}
+      ${processSection('06')}
       ${ctaSection('Обсудим ваш проект?', 'Пришлите размеры, чертёж или описание задачи. Мы соберём исходные данные и подготовим индивидуальный расчёт.')}
       ${contactSection()}
     </main>`;
@@ -171,7 +171,7 @@ function instagramReelsSection() {
       <span class="reel-badge">Reels</span><span class="reel-open">Смотреть в Instagram <b>↗</b></span>
     </a>`;
   }).join('');
-  return `<section class="section reels-section" id="reels">
+  return `<section class="section reels-section glass-section" id="reels" data-section-number="01">
     <div class="container reels-heading reveal">
       <div><p class="eyebrow">Prime Glass · Instagram</p><h2>Стекло<br>в движении</h2><p>Производство, монтаж и готовые решения — в коротких видео команды Prime Glass.</p></div>
       <div class="reels-actions"><a class="button button-primary" href="${instagramProfile}" target="_blank" rel="noopener noreferrer" data-track="click_instagram">Смотреть Instagram <span aria-hidden="true">↗</span></a></div>
@@ -182,9 +182,9 @@ function instagramReelsSection() {
   </section>`;
 }
 
-function processSection() {
+function processSection(sectionNumber = '') {
   const steps = [['01','Заявка или чертёж','Получаем размеры, фото, файл проекта и требования.'],['02','Уточнение и замер','Проверяем исходные данные, при необходимости согласуем выезд.'],['03','Коммерческое предложение','Фиксируем решение, комплектацию и условия.'],['04','Производство','Изготавливаем после согласования технических параметров.'],['05','Доставка и монтаж','Организуем логистику, установку и сдачу работ.']];
-  return `<section class="section process-section" id="process"><div class="container"><div class="section-intro reveal"><p class="eyebrow">Как мы работаем</p><h2>Понятный маршрут<br>от идеи до монтажа</h2></div><ol class="process-list">${steps.map(step => `<li class="reveal"><span>${step[0]}</span><div><h3>${step[1]}</h3><p>${step[2]}</p></div></li>`).join('')}</ol></div></section>`;
+  return `<section class="section process-section${sectionNumber ? ' glass-section' : ''}" id="process"${sectionNumber ? ` data-section-number="${sectionNumber}"` : ''}><div class="container"><div class="section-intro reveal"><p class="eyebrow">Как мы работаем</p><h2>Понятный маршрут<br>от идеи до монтажа</h2></div><ol class="process-list">${steps.map(step => `<li class="reveal"><span>${step[0]}</span><div><h3>${step[1]}</h3><p>${step[2]}</p></div></li>`).join('')}</ol></div></section>`;
 }
 
 function calculatorField(field) {
@@ -206,19 +206,19 @@ function servicePage(service) {
 
       <section class="section benefits-section"><div class="container"><div class="section-intro reveal"><p class="eyebrow">Преимущества</p><h2>Решение для объекта</h2></div><div class="benefit-grid">${service.benefits.map((item,index) => `<article class="benefit-card reveal"><span>${String(index+1).padStart(2,'0')}</span><h3>${item[0]}</h3><p>${item[1]}</p></article>`).join('')}</div></div></section>
 
-      <section class="section section-soft gallery-section"><div class="container"><div class="section-intro reveal"><p class="eyebrow">Визуальные примеры</p><h2>${service.title}: варианты решений</h2><p>Галерея иллюстрирует типы конструкций. Изображения не заявлены как портфолио Prime Glass до подтверждения происхождения.</p></div><div class="filter-row" role="group" aria-label="Фильтр галереи"><button class="filter-button is-active" type="button" data-gallery-filter="Все">Все</button>${['Производство','Архитектура','Интерьер'].map(item => `<button class="filter-button" type="button" data-gallery-filter="${item}">${item}</button>`).join('')}</div><div class="gallery-grid" data-gallery>${service.gallery.map((image,index) => `<button class="gallery-item reveal" type="button" data-category="${image.category}" data-lightbox="${image.src}" data-alt="${escapeHtml(image.alt)}">${picture(image)}<span>${String(index+1).padStart(2,'0')} <b>↗</b></span></button>`).join('')}</div></div></section>
+      <section class="section section-soft gallery-section"><div class="container"><div class="section-intro reveal"><p class="eyebrow">Варианты решений</p><h2>${service.title}: варианты исполнения</h2><p>Подборка помогает определить желаемую геометрию, стиль и тип конструкции перед технической проработкой.</p></div><div class="filter-row" role="group" aria-label="Фильтр галереи"><button class="filter-button is-active" type="button" data-gallery-filter="Все">Все</button>${['Производство','Архитектура','Интерьер'].map(item => `<button class="filter-button" type="button" data-gallery-filter="${item}">${item}</button>`).join('')}</div><div class="gallery-grid" data-gallery>${service.gallery.map((image,index) => `<button class="gallery-item reveal" type="button" data-category="${image.category}" data-lightbox="${image.src}" data-alt="${escapeHtml(image.alt)}">${picture(image)}<span>${String(index+1).padStart(2,'0')} <b>↗</b></span></button>`).join('')}</div></div></section>
 
       <section class="section calculator-section" id="calculator"><div class="container calculator-shell reveal"><div class="calculator-copy"><p class="eyebrow eyebrow-light">Индивидуальный расчёт</p><h2>Соберите параметры</h2><p>Калькулятор не показывает вымышленную цену. Он сформирует понятное техническое сообщение для расчёта.</p><div class="calculator-progress"><span></span></div><p class="small-note">Стоимость определит специалист после проверки исходных данных.</p></div><form class="calculator-form" data-calculator data-service="${service.title}" novalidate><div class="form-grid">${service.calculator.map(calculatorField).join('')}<label class="field field-wide"><span>Комментарий</span><textarea name="comment" rows="3" placeholder="Особенности объекта, цвет, сроки или другие требования"></textarea></label><label class="field"><span>Ваше имя</span><input name="name" autocomplete="name" required></label><label class="field"><span>Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required data-phone></label></div><label class="consent"><input type="checkbox" name="consent" required><span>Согласен на обработку данных для ответа на обращение</span></label><button class="button button-primary" type="submit">Отправить параметры в WhatsApp</button><p class="form-status" role="status" aria-live="polite"></p></form></div></section>
 
       <section class="section applications-section"><div class="container"><div class="section-intro reveal"><p class="eyebrow">Применение</p><h2>Где используется</h2></div><div class="application-grid">${service.applications.map((item,index)=>`<article class="application-card reveal"><span>${String(index+1).padStart(2,'0')}</span><h3>${item}</h3><p>Конфигурация и материалы подбираются под геометрию, условия эксплуатации и требования объекта.</p></article>`).join('')}</div></div></section>
 
-      <section class="section section-dark variants-section"><div class="container"><div class="section-intro reveal"><p class="eyebrow eyebrow-light">Конструкции</p><h2>Варианты исполнения</h2></div><div class="variant-grid">${service.types.map((item,index)=>`<article class="variant-card reveal"><span>${String(index+1).padStart(2,'0')}</span><h3>${item}</h3><p>Точная применимость подтверждается после проверки размеров и условий монтажа.</p></article>`).join('')}</div></div></section>
+      <section class="section section-dark variants-section"><div class="container"><div class="section-intro reveal"><p class="eyebrow eyebrow-light">Конструкции</p><h2>Варианты исполнения</h2></div><div class="variant-grid">${service.types.map((item,index)=>`<article class="variant-card reveal"><span>${String(index+1).padStart(2,'0')}</span><h3>${item}</h3><p>Конфигурацию адаптируем под размеры, нагрузки, условия эксплуатации и выбранный способ монтажа.</p></article>`).join('')}</div></div></section>
 
-      <section class="section specs-section"><div class="container specs-grid"><div class="reveal"><p class="eyebrow">Комплектация</p><h2>Что учитываем<br>в предложении</h2><ol class="package-list">${service.extras.map((item,index)=>`<li><span>${String(index+1).padStart(2,'0')}</span>${item}</li>`).join('')}</ol></div><div class="spec-table-wrap reveal"><table class="spec-table"><caption>Ориентиры для подбора решения</caption><tbody>${service.specs.map(row=>`<tr><th scope="row">${row[0]}</th><td>${row[1]}</td></tr>`).join('')}</tbody></table><p class="table-note">Допустимые размеры, толщины и нагрузки не публикуются без подтверждённых технических данных. Их проверяет специалист по проекту.</p></div></div></section>
+      <section class="section specs-section"><div class="container specs-grid"><div class="reveal"><p class="eyebrow">Комплектация</p><h2>Что учитываем<br>в предложении</h2><ol class="package-list">${service.extras.map((item,index)=>`<li><span>${String(index+1).padStart(2,'0')}</span>${item}</li>`).join('')}</ol></div><div class="spec-table-wrap reveal"><table class="spec-table"><caption>Параметры для подбора решения</caption><tbody>${service.specs.map(row=>`<tr><th scope="row">${row[0]}</th><td>${row[1]}</td></tr>`).join('')}</tbody></table><p class="table-note">Итоговые размеры, толщина стекла, крепления и обработка определяются специалистом по геометрии и условиям конкретного объекта.</p></div></div></section>
 
       ${serviceProductionSection(service)}
       ${processSection()}
-      <section class="section trust-placeholder"><div class="container trust-panel reveal"><div><p class="eyebrow">Материалы к публикации</p><h2>Доверие должно подтверждаться</h2></div><div><p>Реальные кейсы, отзывы, сертификаты, мощности, годы работы и показатели команды будут размещены после получения подтверждающих материалов от Prime Glass.</p><p class="placeholder-tag">Не опубликовано — данные ожидают подтверждения</p><button class="button button-secondary" type="button" data-open-form="commercial" data-service="${service.title}">Получить коммерческое предложение</button></div></div></section>
+      <section class="section project-support"><div class="container trust-panel reveal"><div><p class="eyebrow">Инженерная проработка</p><h2>Решение под ваш объект</h2></div><div><p>Перед изготовлением команда Prime Glass уточнит размеры, условия эксплуатации, комплектацию и монтаж. Вы получите предложение, собранное под конкретную задачу.</p><p class="placeholder-tag">Чертёж · спецификация · расчёт</p><button class="button button-secondary" type="button" data-open-form="commercial" data-service="${service.title}">Получить коммерческое предложение</button></div></div></section>
       ${faqSection(service)}
       ${ctaSection(`Нужен расчёт: ${service.title.toLowerCase()}?`, 'Оставьте контакт — подготовим индивидуальное предложение без вымышленных цен.', service.title)}
       ${contactSection()}
@@ -230,7 +230,7 @@ function faqSection(service) {
 }
 
 function serviceProductionSection(service) {
-  return `<section class="section service-production"><div class="container production-grid"><div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:`Производственная обработка стекла для направления «${service.title}»`},'production-picture')}<p class="media-disclaimer">Фото взято из исходных материалов сайта; принадлежность производству Prime Glass требует подтверждения.</p></div><div class="production-copy reveal"><p class="eyebrow">Завод-изготовитель · 4 000 м²</p><h2>От чертежа<br>к готовому изделию</h2><p>Изделия для направления «${service.title}» изготавливаются на заводе Prime Glass площадью 4 000 м² в Алматы. До запуска проверяются размеры, материалы, обработка, крепления и условия монтажа. Перечень оборудования будет опубликован после подтверждения технических данных.</p><ul class="line-list"><li><span>01</span>Проверка размеров и чертежей</li><li><span>02</span>Согласование материалов и обработки</li><li><span>03</span>Изготовление по утверждённому заданию</li><li><span>04</span>Комплектация к доставке и монтажу</li></ul></div></div></section>`;
+  return `<section class="section service-production"><div class="container production-grid"><div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:`Производственная обработка стекла для направления «${service.title}»`},'production-picture')}<p class="media-caption">Подготовка стекла и комплектации к реализации проекта</p></div><div class="production-copy reveal"><p class="eyebrow">Завод-изготовитель · 4 000 м²</p><h2>От чертежа<br>к готовому изделию</h2><p>Изделия для направления «${service.title}» изготавливаются на заводе Prime Glass площадью 4 000 м² в Алматы. До запуска проверяем размеры, материалы, обработку, крепления и условия монтажа, затем комплектуем заказ для доставки на объект.</p><ul class="line-list"><li><span>01</span>Проверка размеров и чертежей</li><li><span>02</span>Согласование материалов и обработки</li><li><span>03</span>Изготовление по утверждённому заданию</li><li><span>04</span>Комплектация к доставке и монтажу</li></ul></div></div></section>`;
 }
 
 function ctaSection(title, copy, service = '') {
@@ -242,7 +242,7 @@ function contactSection() {
 }
 
 function contactsPage() {
-  return `<main id="content">${breadcrumbs([{href:'/',label:'Главная'},{label:'Контакты'}])}<section class="contacts-hero"><div class="container contacts-hero-grid"><div class="reveal"><p class="eyebrow">Связаться с нами</p><h1>Обсудим задачу<br>на языке проекта</h1><p class="hero-lead">Позвоните, напишите в WhatsApp или отправьте исходные данные для индивидуального расчёта.</p>${heroActions()}</div><div class="contact-card reveal"><a href="tel:${config.phoneHref}" data-track="click_phone"><small>Телефон</small><strong>${config.phoneDisplay}</strong></a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp"><small>WhatsApp</small><strong>${config.phoneDisplay}</strong></a><a href="mailto:${config.email}"><small>Email</small><strong>${config.email}</strong></a><div><small>Город</small><strong>${config.city}</strong></div><div><small>Адрес</small><strong>${config.address}</strong></div><div><small>График</small><strong>${config.schedule}</strong></div></div></div><div class="container map-placeholder reveal" role="note"><div><span>Место для карты</span><strong>Карта будет подключена после подтверждения улицы и точных координат в Алматы</strong></div></div></section><section class="section section-soft"><div class="container contacts-form-grid"><div class="section-intro reveal"><p class="eyebrow">Оставить запрос</p><h2>Как вам удобнее?</h2><p>Форма сформирует сообщение и откроет WhatsApp. Данные не будут скрытно отправлены в сторонний сервис.</p></div>${inlineLeadForm()}</div></section>${contactSection()}</main>`;
+  return `<main id="content">${breadcrumbs([{href:'/',label:'Главная'},{label:'Контакты'}])}<section class="contacts-hero"><div class="container contacts-hero-grid"><div class="reveal"><p class="eyebrow">Связаться с нами</p><h1>Обсудим задачу<br>на языке проекта</h1><p class="hero-lead">Позвоните, напишите в WhatsApp или отправьте исходные данные для индивидуального расчёта.</p>${heroActions()}</div><div class="contact-card reveal"><a href="tel:${config.phoneHref}" data-track="click_phone"><small>Телефон</small><strong>${config.phoneDisplay}</strong></a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp"><small>WhatsApp</small><strong>${config.phoneDisplay}</strong></a><a href="mailto:${config.email}"><small>Email</small><strong>${config.email}</strong></a><div><small>Город</small><strong>${config.city}</strong></div><div><small>Адрес</small><strong>${config.address}</strong></div><div><small>График</small><strong>${config.schedule}</strong></div></div></div><div class="container map-placeholder location-panel reveal"><div><span>Алматы · Казахстан</span><strong>Производство, консультации и выезд на объекты по согласованию с командой Prime Glass</strong></div></div></section><section class="section section-soft"><div class="container contacts-form-grid"><div class="section-intro reveal"><p class="eyebrow">Оставить запрос</p><h2>Как вам удобнее?</h2><p>Форма сформирует готовое сообщение и откроет WhatsApp — останется проверить данные и отправить его менеджеру.</p></div>${inlineLeadForm()}</div></section>${contactSection()}</main>`;
 }
 
 function inlineLeadForm() {
@@ -251,7 +251,20 @@ function inlineLeadForm() {
 
 function footer() {
   const year = new Date().getFullYear();
-  return `<footer class="site-footer"><div class="container footer-top"><a class="brand brand-footer" href="/"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Prime Glass</strong><small>Technologies</small></span></a><p>Завод-изготовитель стеклянных конструкций площадью 4 000 м² в Алматы. Работаем по Казахстану.</p><div class="footer-links"><a href="/#services">Услуги</a><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/contacts">Контакты</a></div></div><div class="container footer-bottom"><span>© ${year} Prime Glass Technologies</span><span>Информация на сайте не является публичной офертой</span></div></footer>`;
+  const serviceLinks = services.map(service => `<a href="${routeFor(service)}">${service.title}</a>`).join('');
+  return `<footer class="site-footer">
+    <div class="container footer-lead">
+      <div><p class="eyebrow eyebrow-light">Prime Glass · Завод 4 000 м²</p><h2>Стекло. Точно.<br>Для архитектуры.</h2></div>
+      <div><p>Производим стеклянные конструкции в Алматы и реализуем проекты для частных и коммерческих объектов по Казахстану.</p><button class="button button-light" type="button" data-open-form="calculation">Получить расчёт <span aria-hidden="true">↗</span></button></div>
+    </div>
+    <div class="container footer-directory">
+      <div class="footer-brand-block"><a class="brand brand-footer" href="/"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span><strong>Prime Glass</strong><small>Technologies</small></span></a><p>Завод-изготовитель стеклянных конструкций полного цикла.</p></div>
+      <div class="footer-column footer-services"><h3>Услуги</h3><div class="footer-service-links">${serviceLinks}</div></div>
+      <div class="footer-column"><h3>Связаться</h3><a href="tel:${config.phoneHref}" data-track="click_phone">${config.phoneDisplay}</a><a href="https://wa.me/${config.whatsapp}" data-track="click_whatsapp">WhatsApp ↗</a><a href="${instagramProfile}" target="_blank" rel="noopener noreferrer" data-track="click_instagram">Instagram ↗</a><a href="mailto:${config.email}">${config.email}</a></div>
+      <div class="footer-column"><h3>Адрес и график</h3><p>${config.address}</p><p>${config.schedule}</p><a href="/contacts">Все контакты ↗</a></div>
+    </div>
+    <div class="container footer-bottom"><span>© ${year} Prime Glass Technologies</span><span>Алматы · Казахстан</span><span>Информация на сайте не является публичной офертой</span></div>
+  </footer>`;
 }
 
 function modalAndFloating() {

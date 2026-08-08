@@ -10,9 +10,9 @@ const siteConfig = {
   region: 'Казахстан',
   schedule: 'Понедельник–пятница, 09:00–18:00',
   address: 'Алматы, Казахстан',
-  telegram: null, // TODO: подтвердить публичный Telegram
-  mapCoordinates: null, // TODO: подтвердить координаты
-  catalogUrl: null, // TODO: добавить утверждённый каталог
+  telegram: null,
+  mapCoordinates: null,
+  catalogUrl: null,
   analytics: {
     googleTagManagerId: process.env.GTM_ID || '',
     googleAnalyticsId: process.env.GA4_ID || 'G-LH761EGRGM',

@@ -80,6 +80,8 @@ assert.match(script, /function initHeroVideo\(\)/, 'Home page needs responsive b
 const stylesheet = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
 assert.match(stylesheet, /@keyframes reelsMarquee/, 'Home page needs an infinite Reels marquee');
 assert.match(stylesheet, /\.reels-carousel:hover \.reels-track,[^\n]*animation-play-state:paused/, 'Reels marquee must pause while hovered');
+assert.match(stylesheet, /animation:reelsMarquee 84s linear infinite/, 'Reels marquee must move at a calm viewing speed');
+assert.match(stylesheet, /mask-image:linear-gradient\(90deg,transparent/, 'Reels marquee needs soft edge fading');
 assert.match(script, /connection\?\.saveData/, 'Background video must respect reduced-data connections');
 assert.match(script, /window\.matchMedia\('\(max-width: 767px\)'\)/, 'Mobile screens must select the portrait hero video');
 assert.match(buildScript, /webp\|mp4/, 'Build must copy the MP4 hero asset');
@@ -117,7 +119,7 @@ assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/
 assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть дальше<\/span>/, 'Home page needs a visible centered scroll cue');
 assert.match(renderHome(), /data-hero-video/, 'Home page needs the animated hero video');
 assert.match(renderHome(), /class="home-hero-stage"/, 'Home page needs an extended sticky hero stage');
-assert.match(renderHome(), /class="section reels-section" id="reels"/, 'Home page needs a dedicated Instagram Reels section');
+assert.match(renderHome(), /class="section reels-section glass-section" id="reels"/, 'Home page needs a dedicated Instagram Reels section');
 assert.match(renderHome(), /id="reels"[\s\S]*id="services"/, 'Reels section must appear directly after the home hero');
 assert.strictEqual((renderHome().match(/class="reel-card"/g) || []).length, 12, 'Infinite marquee needs two copies of all six supplied Reels');
 assert.match(renderHome(), /instagram\.com\/prime\.glass\.technologies\//, 'Reels section must link to the supplied Instagram account');
@@ -131,6 +133,11 @@ assert.match(renderHome(), /data-desktop-src="\/photos\/prime-glass-intro\.mp4"/
 assert.match(renderHome(), /data-mobile-src="\/photos\/prime-glass-mobile\.mp4"/, 'Mobile hero video must load from the prepared portrait asset');
 assert.match(renderHome(), /<video[^>]*\bloop\b/, 'Hero video must loop continuously');
 assert.doesNotMatch(renderHome(), /data-video-toggle/, 'Hero video must not show pause controls');
+assert.match(renderHome(), /data-section-number="06"/, 'Home page needs numbered glass-edge section transitions');
+assert.match(combinedHtml, /class="container footer-lead"/, 'All pages need the expanded corporate footer');
+assert.match(combinedHtml, /WhatsApp ↗/, 'Footer must include WhatsApp');
+assert.match(combinedHtml, /Instagram ↗/, 'Footer must include Instagram');
+assert.doesNotMatch(combinedHtml, /данные ожидают подтверждения|место для карты|будут опубликованы|требует подтверждения|не заявлены как/i, 'Public pages must not contain temporary readiness disclaimers');
 assert.match(script, /const heroTravel = Math\.max\(\(hero\?\.offsetHeight \|\| viewportHeight\) - viewportHeight, 1\)/, 'Hero zoom must use the full sticky scroll distance');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-intro.mp4')), 'Hero video asset is missing');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-mobile.mp4')), 'Mobile hero video asset is missing');
