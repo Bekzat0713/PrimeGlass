@@ -141,7 +141,9 @@ assert.match(renderHome(), /data-desktop-src="\/photos\/prime-glass-intro\.mp4"/
 assert.match(renderHome(), /data-mobile-src="\/photos\/prime-glass-mobile\.mp4"/, 'Mobile hero video must load from the prepared portrait asset');
 assert.match(renderHome(), /<video[^>]*\bloop\b/, 'Hero video must loop continuously');
 assert.doesNotMatch(renderHome(), /data-video-toggle/, 'Hero video must not show pause controls');
-assert.match(renderHome(), /data-section-number="06"/, 'Home page needs numbered glass-edge section transitions');
+assert.doesNotMatch(renderHome(), /data-section-number/, 'Decorative background section numbers must be removed');
+assert.doesNotMatch(stylesheet, /content:attr\(data-section-number\)/, 'CSS must not render decorative background section numbers');
+assert.match(stylesheet, /\.glass-section::after/, 'Glass-edge section dividers must remain');
 assert.match(combinedHtml, /class="container footer-lead"/, 'All pages need the expanded corporate footer');
 assert.match(combinedHtml, /WhatsApp ↗/, 'Footer must include WhatsApp');
 assert.match(combinedHtml, /Instagram ↗/, 'Footer must include Instagram');

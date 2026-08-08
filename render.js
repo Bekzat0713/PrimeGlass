@@ -123,7 +123,7 @@ function homePage() {
       </section>
 
       ${instagramReelsSection()}
-      <section class="section glass-section" id="services" data-section-number="02">
+      <section class="section glass-section" id="services">
         <div class="container">
           <div class="section-intro reveal"><p class="eyebrow">Направления</p><h2>Инженерные решения<br>из стекла</h2><p>От отдельного стеклопакета до комплексного фасадного или интерьерного решения.</p></div>
           <div class="solutions-film reveal">
@@ -136,7 +136,7 @@ function homePage() {
         </div>
       </section>
 
-      <section class="section section-dark glass-section" id="about" data-section-number="03">
+      <section class="section section-dark glass-section" id="about">
         <div class="container split-intro">
           <div class="reveal"><p class="eyebrow eyebrow-light">Подход Prime Glass</p><h2>Сначала задача.<br>Затем конструкция.</h2></div>
           <div class="large-copy reveal"><p>Мы строим работу вокруг объекта: уточняем геометрию, условия эксплуатации, требования к безопасности, внешний вид и монтаж.</p><p class="muted-light">Каждое решение проходит техническую проработку: от выбора стекла и обработки кромки до комплектации, доставки и установки на объекте.</p></div>
@@ -146,14 +146,14 @@ function homePage() {
         </div>
       </section>
 
-      <section class="section production-section glass-section" id="production" data-section-number="04">
+      <section class="section production-section glass-section" id="production">
         <div class="container production-grid">
           <div class="production-media reveal">${picture({src:'/photos/image6.webp',fallback:'/photos/image6.jpg',alt:'Производственная обработка листового стекла'},'production-picture')}<p class="media-caption">Обработка стекла по техническому заданию проекта</p></div>
           <div class="production-copy reveal"><p class="eyebrow">Завод-изготовитель · 4 000 м²</p><h2>Собственное производство<br>полного цикла</h2><p>Изготавливаем стеклянные конструкции на заводе Prime Glass площадью 4 000 м² в Алматы. До запуска проверяем размеры, отверстия, вырезы, обработку кромки и комплектацию по техническому заданию.</p><ul class="line-list"><li><span>01</span>Проверка исходных данных</li><li><span>02</span>Подбор стекла и обработки</li><li><span>03</span>Согласование комплектации</li><li><span>04</span>Изготовление и контроль</li></ul><a class="button button-secondary" href="/zakalka-stekla">Закалка и обработка</a></div>
         </div>
       </section>
 
-      <section class="section gallery-section glass-section" id="gallery" data-section-number="05">
+      <section class="section gallery-section glass-section" id="gallery">
         <div class="container"><div class="section-intro reveal"><p class="eyebrow">Решения для объектов</p><h2>Архитектура стекла</h2><p>Фасады, ограждения, перегородки и интерьерные конструкции — ориентиры для обсуждения вашего проекта.</p></div>
           <div class="home-gallery">
             ${[4,10,9,7].map((n,index) => `<button class="gallery-tile tile-${index+1} reveal" type="button" data-lightbox="/photos/image${n}.webp" data-alt="Визуальный пример решения из стекла">${picture({src:`/photos/image${n}.webp`,fallback:`/photos/image${n}.jpg`,alt:'Визуальный пример решения из стекла'},'',false)}<span>Смотреть <b>↗</b></span></button>`).join('')}
@@ -161,7 +161,7 @@ function homePage() {
         </div>
       </section>
 
-      ${processSection('06')}
+      ${processSection(true)}
       ${ctaSection('Обсудим ваш проект?', 'Пришлите размеры, чертёж или описание задачи. Мы соберём исходные данные и подготовим индивидуальный расчёт.')}
       ${contactSection()}
     </main>`;
@@ -175,7 +175,7 @@ function instagramReelsSection() {
       <span class="reel-badge">Reels</span><span class="reel-open">Смотреть в Instagram <b>↗</b></span>
     </a>`;
   }).join('');
-  return `<section class="section reels-section glass-section" id="reels" data-section-number="01">
+  return `<section class="section reels-section glass-section" id="reels">
     <div class="container reels-heading reveal">
       <div><p class="eyebrow">Prime Glass · Instagram</p><h2>Стекло<br>в движении</h2><p>Производство, монтаж и готовые решения — в коротких видео команды Prime Glass.</p></div>
       <div class="reels-actions"><a class="button button-primary" href="${instagramProfile}" target="_blank" rel="noopener noreferrer" data-track="click_instagram">Смотреть Instagram <span aria-hidden="true">↗</span></a></div>
@@ -186,9 +186,9 @@ function instagramReelsSection() {
   </section>`;
 }
 
-function processSection(sectionNumber = '') {
+function processSection(withGlassEdge = false) {
   const steps = [['01','Заявка или чертёж','Получаем размеры, фото, файл проекта и требования.'],['02','Уточнение и замер','Проверяем исходные данные, при необходимости согласуем выезд.'],['03','Коммерческое предложение','Фиксируем решение, комплектацию и условия.'],['04','Производство','Изготавливаем после согласования технических параметров.'],['05','Доставка и монтаж','Организуем логистику, установку и сдачу работ.']];
-  return `<section class="section process-section${sectionNumber ? ' glass-section' : ''}" id="process"${sectionNumber ? ` data-section-number="${sectionNumber}"` : ''}><div class="container"><div class="section-intro reveal"><p class="eyebrow">Как мы работаем</p><h2>Понятный маршрут<br>от идеи до монтажа</h2></div><ol class="process-list">${steps.map(step => `<li class="reveal"><span>${step[0]}</span><div><h3>${step[1]}</h3><p>${step[2]}</p></div></li>`).join('')}</ol></div></section>`;
+  return `<section class="section process-section${withGlassEdge ? ' glass-section' : ''}" id="process"><div class="container"><div class="section-intro reveal"><p class="eyebrow">Как мы работаем</p><h2>Понятный маршрут<br>от идеи до монтажа</h2></div><ol class="process-list">${steps.map(step => `<li class="reveal"><span>${step[0]}</span><div><h3>${step[1]}</h3><p>${step[2]}</p></div></li>`).join('')}</ol></div></section>`;
 }
 
 function calculatorField(field) {
@@ -330,7 +330,7 @@ function documentTemplate(page) {
   <meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><meta property="og:site_name" content="Prime Glass Technologies"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${socialImage}">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${socialImage}">
   <meta name="theme-color" content="#0b2534"><link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="preload" href="/style.css?v=20260808-service-covers" as="style"><link rel="stylesheet" href="/style.css?v=20260808-service-covers">
+  <link rel="preload" href="/style.css?v=20260808-no-section-numbers" as="style"><link rel="stylesheet" href="/style.css?v=20260808-no-section-numbers">
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
 </head>
 <body class="page-${page.kind}">
