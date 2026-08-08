@@ -309,7 +309,27 @@
       else if (!document.hidden) video.play().catch(() => {});
     });
   }
+
+  function initSectionVideos() {
+    const videos = document.querySelectorAll('[data-section-video]');
+    if (!videos.length) return;
+    const sectionConnection = window.navigator?.connection || window.navigator?.mozConnection || window.navigator?.webkitConnection;
+    if (sectionConnection?.saveData || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const playVideo = video => video.play().catch(() => {});
+    if (!('IntersectionObserver' in window)) {
+      videos.forEach(playVideo);
+      return;
+    }
+    const videoObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) playVideo(entry.target);
+        else entry.target.pause();
+      });
+    }, { threshold: 0.22, rootMargin: '120px 0px' });
+    videos.forEach(video => videoObserver.observe(video));
+  }
   initHeroVideo();
+  initSectionVideos();
   initDepthScroll();
 
   const filterButtons = document.querySelectorAll('[data-gallery-filter]');

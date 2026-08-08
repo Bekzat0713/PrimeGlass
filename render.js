@@ -126,6 +126,10 @@ function homePage() {
       <section class="section glass-section" id="services" data-section-number="02">
         <div class="container">
           <div class="section-intro reveal"><p class="eyebrow">Направления</p><h2>Инженерные решения<br>из стекла</h2><p>От отдельного стеклопакета до комплексного фасадного или интерьерного решения.</p></div>
+          <div class="solutions-film reveal">
+            <video muted loop playsinline preload="metadata" poster="/photos/image6.jpg" data-section-video aria-label="Инженерные решения Prime Glass из стекла"><source src="/photos/prime-glass-solutions.mp4" type="video/mp4"></video>
+            <div class="solutions-film-caption"><span>Завод-изготовитель · Алматы</span><strong>4 000 м²</strong><p>собственное производство стеклянных конструкций</p></div>
+          </div>
           <div class="service-grid">
             ${services.map((service, index) => `<a class="service-card reveal" href="${routeFor(service)}"><span class="service-index">${String(index + 1).padStart(2, '0')}</span><h3>${service.title}</h3><p>${service.lead}</p><span class="text-link">Подробнее <b>↗</b></span></a>`).join('')}
           </div>
@@ -326,7 +330,7 @@ function documentTemplate(page) {
   <meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><meta property="og:site_name" content="Prime Glass Technologies"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${socialImage}">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${socialImage}">
   <meta name="theme-color" content="#0b2534"><link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="preload" href="/style.css?v=20260808-visibility-fix" as="style"><link rel="stylesheet" href="/style.css?v=20260808-visibility-fix">
+  <link rel="preload" href="/style.css?v=20260808-solutions-film" as="style"><link rel="stylesheet" href="/style.css?v=20260808-solutions-film">
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
 </head>
 <body class="page-${page.kind}">
@@ -335,7 +339,7 @@ function documentTemplate(page) {
   ${footer()}
   ${modalAndFloating()}
   <script>window.PRIME_GLASS=${JSON.stringify({ whatsapp: config.whatsapp, phone: config.phoneHref, analytics: config.analytics }).replaceAll('<','\\u003c')};</script>
-  <script src="/script.js" defer></script>
+  <script src="/script.js?v=20260808-solutions-film" defer></script>
 </body>
 </html>`;
 }

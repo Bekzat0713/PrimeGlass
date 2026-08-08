@@ -124,6 +124,7 @@ h3{font-size:1.4rem;line-height:1.12}
 .section-intro .eyebrow{grid-column:1/-1}
 .section-intro>p:last-child{margin:0;color:var(--muted);font-size:17px}
 .section-dark .section-intro>p:last-child{color:#a9bac2}
+.solutions-film{position:relative;aspect-ratio:2.16/1;border:1px solid rgba(9,28,39,.12);border-radius:28px;background:#102b38;box-shadow:0 28px 75px rgba(10,34,49,.14);overflow:hidden}.solutions-film::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,27,37,.03) 42%,rgba(7,27,37,.72) 100%);pointer-events:none}.solutions-film video{width:100%;height:100%;display:block;object-fit:cover;object-position:center}.solutions-film-caption{position:absolute;z-index:2;right:24px;bottom:24px;left:24px;display:grid;grid-template-columns:auto 1fr;gap:3px 18px;align-items:end;width:max-content;max-width:calc(100% - 48px);padding:16px 20px;border:1px solid rgba(255,255,255,.28);border-radius:18px;background:rgba(8,30,40,.55);backdrop-filter:blur(16px);color:#fff}.solutions-film-caption span{grid-column:1/-1;color:rgba(255,255,255,.75);font-size:9px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.solutions-film-caption strong{font-family:var(--display);font-size:2rem;font-weight:600;line-height:1}.solutions-film-caption p{margin:0;color:rgba(255,255,255,.82);font-size:11px;line-height:1.25}.solutions-film+.service-grid{margin-top:24px}
 .service-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line)}
 .service-card{position:relative;min-height:265px;padding:36px 90px 36px 36px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background .3s,color .3s,box-shadow .3s}
 .service-card:nth-child(odd){border-left:1px solid var(--line)}
@@ -435,6 +436,7 @@ h3{line-height:1.12}
   .home-hero .fact-strip strong{font-size:16px}
   .home-hero .fact-strip span{font-size:9px}
   .section-intro{gap:16px;margin-bottom:32px}
+  .solutions-film{aspect-ratio:16/10;border-radius:20px}.solutions-film-caption{right:12px;bottom:12px;left:12px;max-width:calc(100% - 24px);padding:12px 14px;border-radius:14px}.solutions-film-caption strong{font-size:1.45rem}.solutions-film-caption p{max-width:170px;font-size:9px}.solutions-film+.service-grid{margin-top:16px}
   .service-card,.service-card:nth-child(odd){min-height:210px;padding:26px 24px;border-radius:18px}
   .service-card::after{right:20px;top:20px;width:36px;height:36px}
   .service-index{margin-bottom:38px}

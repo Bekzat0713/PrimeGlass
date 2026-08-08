@@ -77,6 +77,8 @@ assert.match(script, /trackCustom/, 'Meta Pixel custom events need forwarding');
 assert.match(script, /function initDepthScroll\(\)/, 'Home page needs the requested 3D scroll system');
 assert.match(script, /requestAnimationFrame\(renderDepth\)/, '3D scroll updates must be animation-frame throttled');
 assert.match(script, /function initHeroVideo\(\)/, 'Home page needs responsive background-video loading');
+assert.match(script, /function initSectionVideos\(\)/, 'Services film needs viewport-aware playback');
+assert.match(script, /sectionConnection\?\.saveData/, 'Services film must respect reduced-data connections');
 const stylesheet = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8');
 assert.match(stylesheet, /@keyframes reelsMarquee/, 'Home page needs an infinite Reels marquee');
 assert.match(stylesheet, /\.reels-carousel:hover \.reels-track,[^\n]*animation-play-state:paused/, 'Reels marquee must pause while hovered');
@@ -113,6 +115,9 @@ assert.match(renderHome(), /Алматы/, 'Home page must use the current city'
 assert.match(renderHome(), /Завод-изготовитель/, 'Home page must present Prime Glass as the manufacturer');
 assert.match(renderHome(), /4 000 м²/, 'Home page must prominently state the factory area');
 assert.match(renderHome(), /class="factory-proof[^\"]*"/, 'Home page needs a prominent factory proof block');
+assert.match(renderHome(), /class="solutions-film reveal"/, 'Services section needs the supplied cinematic film');
+assert.match(renderHome(), /\/photos\/prime-glass-solutions\.mp4/, 'Services section must use the supplied video');
+assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-solutions.mp4')), 'Services video asset is missing');
 assert.match(renderHome(), /<body class="page-home">/, 'Home page needs a visual theme hook');
 assert.match(renderHome(), /Архитектура стекла/, 'Home page needs the premium architectural positioning');
 assert.match(renderHome(), /\/photos\/image4\.webp/, 'Home hero must use a single uninterrupted architectural image');
