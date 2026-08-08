@@ -118,10 +118,12 @@ assert.match(renderHome(), /class="factory-proof[^\"]*"/, 'Home page needs a pro
 assert.match(renderHome(), /class="solutions-film reveal"/, 'Services section needs the supplied cinematic film');
 assert.match(renderHome(), /\/photos\/prime-glass-solutions\.mp4/, 'Services section must use the supplied video');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-solutions.mp4')), 'Services video asset is missing');
+assert.strictEqual((renderHome().match(/class="service-card-media"/g) || []).length, 10, 'Every service card needs a calm image cover');
+assert.doesNotMatch(renderHome(), /service-index/, 'Service cards must not show numeric indexes');
 assert.match(renderHome(), /<body class="page-home">/, 'Home page needs a visual theme hook');
 assert.match(renderHome(), /Архитектура стекла/, 'Home page needs the premium architectural positioning');
 assert.match(renderHome(), /\/photos\/image4\.webp/, 'Home hero must use a single uninterrupted architectural image');
-assert.doesNotMatch(renderHome(), /<section class="home-hero">[\s\S]*?\/photos\/image2\.webp/, 'Composite image must not be used in the hero');
+assert.doesNotMatch(renderHome().match(/<section class="home-hero">[\s\S]*?<\/section>/)?.[0] || '', /\/photos\/image2\.webp/, 'Composite image must not be used in the hero');
 assert.match(renderHome(), /class="hero-scroll-cue"[^>]*><span>Смотреть дальше<\/span>/, 'Home page needs a visible centered scroll cue');
 assert.match(renderHome(), /data-hero-video/, 'Home page needs the animated hero video');
 assert.match(renderHome(), /class="home-hero-stage"/, 'Home page needs an extended sticky hero stage');
