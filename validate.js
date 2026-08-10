@@ -106,6 +106,7 @@ assert.match(stylesheet, /@media \(max-width:900px\)[\s\S]*?\.reveal\{opacity:1;
 assert.match(stylesheet, /@media \(hover:none\)/, 'Touch devices need stable non-hover positioning');
 assert.match(stylesheet, /\.home-hero\{position:relative;height:230svh/, 'Home page needs an extended video-first scroll scene');
 assert.match(stylesheet, /\.home-hero-stage\{position:sticky;top:0;height:100svh/, 'Home page needs a sticky full-viewport hero stage');
+assert.match(stylesheet, /\.home-hero \.hero-copy\{[^}]*backdrop-filter:blur\(18px\)/, 'Hero copy needs a branded glass card for readability');
 assert.match(stylesheet, /\.home-hero \.hero-media\{[^}]*height:100%;min-height:100%/, 'Hero media must cover the complete mobile hero');
 assert.doesNotMatch(stylesheet, /\.home-hero \.hero-video\{display:none!important\}/, 'Mobile hero video must remain visible');
 assert.doesNotMatch(stylesheet, /\.page-home\{perspective:/, 'Page perspective must not break the fixed navigation header');

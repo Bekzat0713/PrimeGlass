@@ -307,7 +307,8 @@ h3{line-height:1.12}
 .home-hero-stage::before{content:"";position:absolute;z-index:1;inset:0;background:radial-gradient(circle at 72% 28%,rgba(112,215,232,.2),transparent 32%),linear-gradient(90deg,rgba(6,28,39,.42),rgba(6,28,39,.05) 58%,rgba(6,28,39,.26));opacity:var(--hero-shade-opacity,1);pointer-events:none}
 .home-hero-stage::after{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(180deg,rgba(8,34,45,.35) 0%,rgba(8,34,45,.02) 46%,rgba(8,34,45,.6) 100%);opacity:var(--hero-shade-opacity,1);pointer-events:none}
 .home-hero-grid{position:relative;z-index:2;width:100%;max-width:none;margin-inline:0;min-height:100svh;display:flex;align-items:flex-start;justify-content:center;padding:clamp(145px,16vh,210px) max(28px,calc((100vw - 1380px)/2)) 210px;text-align:center}
-.home-hero .hero-copy{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;width:min(950px,100%)}
+.home-hero .hero-copy{position:relative;z-index:3;isolation:isolate;display:flex;flex-direction:column;align-items:center;width:min(1080px,100%);padding:42px clamp(28px,4vw,58px) 46px;border:1px solid rgba(255,255,255,.38);border-radius:30px;background:linear-gradient(145deg,rgba(7,28,39,.76),rgba(13,62,76,.48));box-shadow:0 30px 90px rgba(3,19,27,.3),inset 0 1px 0 rgba(255,255,255,.16);backdrop-filter:blur(18px) saturate(1.15)}
+.home-hero .hero-copy::before{content:"";position:absolute;z-index:-1;top:-1px;left:8%;width:42%;height:1px;background:linear-gradient(90deg,transparent,rgba(126,224,234,.95),transparent);box-shadow:0 0 18px rgba(126,224,234,.55);pointer-events:none}
 .home-hero .eyebrow{justify-content:center;color:rgba(255,255,255,.9)}
 .home-hero h1{max-width:1120px;text-transform:none;font-size:clamp(4rem,7.4vw,8rem);font-weight:500;line-height:.94;text-shadow:0 3px 24px rgba(8,34,45,.18)}
 .home-hero h1 span{color:#fff}
@@ -423,6 +424,7 @@ h3{line-height:1.12}
   .home-hero{height:220svh;min-height:1320px}
   .home-hero-stage{height:100svh;min-height:0}
   .home-hero-grid{width:100%;height:100%;min-height:0;display:flex;align-items:center;gap:0;padding:92px 18px 118px}
+  .home-hero .hero-copy{width:100%;padding:27px 16px 30px;border-radius:22px;background:linear-gradient(145deg,rgba(7,28,39,.8),rgba(13,62,76,.58));box-shadow:0 22px 60px rgba(3,19,27,.32);backdrop-filter:blur(14px) saturate(1.1)}
   .home-hero h1{max-width:520px;font-size:clamp(2.45rem,11.5vw,3.65rem);line-height:1.02}
   .home-hero .eyebrow{font-size:9px;letter-spacing:.11em}
   .home-hero .hero-lead{max-width:360px;margin-top:28px;font-size:.93rem;line-height:1.65}
