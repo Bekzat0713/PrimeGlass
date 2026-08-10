@@ -223,7 +223,7 @@
   }
 
   function initDepthScroll() {
-    if (!document.body.classList.contains('page-home') || window.innerWidth <= 900 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!document.body.classList.contains('page-home') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const depthItems = [
       ...document.querySelectorAll('[data-depth]'),
       ...document.querySelectorAll('.page-home .service-grid, .page-home .production-grid, .page-home .home-gallery, .page-home .process-list, .page-home .cta-panel')
@@ -234,10 +234,13 @@
     });
     const heroVisuals = document.querySelectorAll('.page-home .hero-picture img, .page-home .hero-video');
     const hero = document.querySelector('.page-home .home-hero');
+    const heroStage = document.querySelector('.page-home .home-hero-stage');
     const heroCopy = document.querySelector('.page-home .hero-copy');
     const heroFacts = document.querySelector('.page-home .fact-strip');
     const heroCue = document.querySelector('.page-home .hero-scroll-cue');
     const tiltButtons = document.querySelectorAll('.page-home .hero-actions .button');
+    const clamp = value => Math.max(0, Math.min(1, value));
+    document.body.classList.add('hero-scroll-active');
     let frame = 0;
     const renderDepth = () => {
       frame = 0;
@@ -245,17 +248,25 @@
       const scrollTop = window.scrollY;
       const heroTop = hero?.offsetTop || 0;
       const heroTravel = Math.max((hero?.offsetHeight || viewportHeight) - viewportHeight, 1);
-      const heroProgress = Math.max(0, Math.min(1, (scrollTop - heroTop) / heroTravel));
+      const heroProgress = clamp((scrollTop - heroTop) / heroTravel);
       const easedHeroProgress = heroProgress * heroProgress * (3 - 2 * heroProgress);
-      const contentFade = Math.max(0, Math.min(1, (heroProgress - 0.62) / 0.32));
+      const compactHero = window.innerWidth <= 900;
+      const contentProgress = clamp((heroProgress - 0.1) / 0.34);
+      const easedContent = contentProgress * contentProgress * (3 - 2 * contentProgress);
+      const contentExit = compactHero ? clamp((heroProgress - 0.7) / 0.18) : 0;
+      const factsProgress = clamp((heroProgress - (compactHero ? 0.68 : 0.46)) / (compactHero ? 0.2 : 0.26));
+      const easedFacts = factsProgress * factsProgress * (3 - 2 * factsProgress);
       heroVisuals.forEach(visual => {
         visual.style.setProperty('--hero-parallax', `${(easedHeroProgress * 24).toFixed(2)}px`);
         visual.style.setProperty('--hero-zoom', (1.08 + easedHeroProgress * 0.48).toFixed(3));
       });
-      heroCopy?.style.setProperty('--hero-content-zoom', (1 + easedHeroProgress * 0.12).toFixed(3));
-      heroCopy?.style.setProperty('--hero-content-opacity', (1 - contentFade).toFixed(3));
-      heroFacts?.style.setProperty('--hero-facts-opacity', (1 - contentFade).toFixed(3));
-      heroCue?.style.setProperty('--hero-cue-opacity', Math.max(0, 1 - heroProgress * 2.1).toFixed(3));
+      heroStage?.style.setProperty('--hero-shade-opacity', (0.34 + easedContent * 0.66).toFixed(3));
+      heroCopy?.style.setProperty('--hero-content-y', `${((1 - easedContent) * 110 - contentExit * 64).toFixed(2)}px`);
+      heroCopy?.style.setProperty('--hero-content-zoom', (0.96 + easedContent * 0.04).toFixed(3));
+      heroCopy?.style.setProperty('--hero-content-opacity', (easedContent * (1 - contentExit)).toFixed(3));
+      heroFacts?.style.setProperty('--hero-facts-y', `${((1 - easedFacts) * 76).toFixed(2)}px`);
+      heroFacts?.style.setProperty('--hero-facts-opacity', easedFacts.toFixed(3));
+      heroCue?.style.setProperty('--hero-cue-opacity', (1 - clamp(heroProgress / 0.14)).toFixed(3));
       depthItems.forEach(item => {
         const rect = item.getBoundingClientRect();
         const relative = Math.max(-1.15, Math.min(1.15, (rect.top + rect.height / 2 - viewportHeight / 2) / viewportHeight));
