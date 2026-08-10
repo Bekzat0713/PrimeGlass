@@ -37,6 +37,7 @@ const trackedLink = (href, label, event, className = '') => `<a class="${classNa
 function header(currentPath = '/') {
   const active = path => currentPath === path ? ' class="is-current" aria-current="page"' : '';
   const serviceLinks = services.map(item => `<a href="${routeFor(item)}"${active(routeFor(item))}>${item.title}</a>`).join('');
+  const catalogLinks = services.map(item => `<a class="catalog-item${currentPath === routeFor(item) ? ' is-current' : ''}" href="${routeFor(item)}"${currentPath === routeFor(item) ? ' aria-current="page"' : ''}><span><strong>${item.title}</strong><small>${item.eyebrow}</small></span><i aria-hidden="true">↗</i></a>`).join('');
   return `
     <a class="skip-link" href="#content">К содержанию</a>
     <header class="site-header" data-header>
@@ -47,8 +48,11 @@ function header(currentPath = '/') {
         </a>
         <nav class="desktop-nav" aria-label="Основная навигация">
           <div class="nav-dropdown">
-            <button type="button" aria-expanded="false" aria-controls="services-menu" data-services-toggle>Услуги <span aria-hidden="true">⌄</span></button>
-            <div class="services-menu" id="services-menu">${serviceLinks}</div>
+            <button type="button" aria-expanded="false" aria-controls="services-menu" data-services-toggle>Каталог продукции <span aria-hidden="true">⌄</span></button>
+            <div class="services-menu" id="services-menu">
+              <div class="services-menu-intro"><p>Каталог Prime Glass</p><strong>10 направлений<br>для частных и коммерческих объектов</strong><span>Изготовление на собственном заводе площадью 4 000 м² в Алматы.</span><a class="catalog-all" href="/#services">Смотреть весь каталог <i aria-hidden="true">↓</i></a></div>
+              <div class="catalog-link-grid">${catalogLinks}</div>
+            </div>
           </div>
           <a href="/#production">Производство</a>
           <a href="/#gallery">Проекты</a>
@@ -63,7 +67,7 @@ function header(currentPath = '/') {
       </div>
       <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
         <div class="container">
-          <p class="menu-label">Направления</p>
+          <p class="menu-label">Каталог продукции · 10 направлений</p>
           <div class="mobile-service-links">${serviceLinks}</div>
           <div class="mobile-main-links"><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/#about">О компании</a><a href="/contacts"${active('/contacts')}>Контакты</a></div>
           <div class="mobile-menu-actions">${trackedLink(`tel:${config.phoneHref}`, 'Позвонить', 'click_phone', 'button button-secondary')}<button class="button button-primary" type="button" data-open-form="calculation">Получить расчёт</button></div>
@@ -125,7 +129,7 @@ function homePage() {
       ${instagramReelsSection()}
       <section class="section glass-section" id="services">
         <div class="container">
-          <div class="section-intro reveal"><p class="eyebrow">Направления</p><h2>Инженерные решения<br>из стекла</h2><p>От отдельного стеклопакета до комплексного фасадного или интерьерного решения.</p></div>
+          <div class="section-intro catalog-intro reveal"><p class="eyebrow">Каталог продукции · 10 направлений</p><h2>Каталог решений<br>из стекла</h2><p>Стеклопакеты, фасадное и интерьерное остекление, окна, перегородки, ограждения и обработка стекла — от изготовления до монтажа.</p></div>
           <div class="solutions-film reveal">
             <video muted loop playsinline preload="metadata" poster="/photos/image6.jpg" data-section-video aria-label="Инженерные решения Prime Glass из стекла"><source src="/photos/prime-glass-solutions.mp4" type="video/mp4"></video>
             <div class="solutions-film-caption"><span>Завод-изготовитель · Алматы</span><strong>4 000 м²</strong><p>собственное производство стеклянных конструкций</p></div>
@@ -330,7 +334,7 @@ function documentTemplate(page) {
   <meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><meta property="og:site_name" content="Prime Glass Technologies"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${socialImage}">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${socialImage}">
   <meta name="theme-color" content="#0b2534"><link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="preload" href="/style.css?v=20260808-no-section-numbers" as="style"><link rel="stylesheet" href="/style.css?v=20260808-no-section-numbers">
+  <link rel="preload" href="/style.css?v=20260810-large-catalog" as="style"><link rel="stylesheet" href="/style.css?v=20260810-large-catalog">
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
 </head>
 <body class="page-${page.kind}">
