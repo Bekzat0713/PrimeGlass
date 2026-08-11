@@ -122,6 +122,8 @@ assert.match(renderHome(), /class="solutions-film reveal"/, 'Services section ne
 assert.match(renderHome(), /\/photos\/prime-glass-solutions\.mp4/, 'Services section must use the supplied video');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-solutions.mp4')), 'Services video asset is missing');
 assert.strictEqual((renderHome().match(/class="service-card-media"/g) || []).length, 10, 'Every service card needs a calm image cover');
+assert.match(renderHome(), /services-catalog-section/, 'Home page needs a prominent services catalog section');
+assert.match(renderHome(), /Каталог услуг Prime Glass/, 'Services catalog needs a clear visible label');
 assert.doesNotMatch(renderHome(), /service-index/, 'Service cards must not show numeric indexes');
 assert.match(renderHome(), /<body class="page-home">/, 'Home page needs a visual theme hook');
 assert.match(renderHome(), /Архитектура стекла/, 'Home page needs the premium architectural positioning');

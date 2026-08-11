@@ -123,9 +123,9 @@ function homePage() {
       </section>
 
       ${instagramReelsSection()}
-      <section class="section glass-section" id="services">
+      <section class="section glass-section services-catalog-section" id="services">
         <div class="container">
-          <div class="section-intro reveal"><p class="eyebrow">Направления</p><h2>Инженерные решения<br>из стекла</h2><p>От отдельного стеклопакета до комплексного фасадного или интерьерного решения.</p></div>
+          <div class="section-intro reveal"><p class="eyebrow">Каталог услуг Prime Glass</p><h2>Инженерные решения<br>из стекла</h2><p>Полный каталог решений завода: от отдельного стеклопакета до комплексного фасадного или интерьерного остекления с монтажом.</p></div>
           <div class="solutions-film reveal">
             <video muted loop playsinline preload="metadata" poster="/photos/image6.jpg" data-section-video aria-label="Инженерные решения Prime Glass из стекла"><source src="/photos/prime-glass-solutions.mp4" type="video/mp4"></video>
             <div class="solutions-film-caption"><span>Завод-изготовитель · Алматы</span><strong>4 000 м²</strong><p>собственное производство стеклянных конструкций</p></div>
@@ -330,7 +330,7 @@ function documentTemplate(page) {
   <meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><meta property="og:site_name" content="Prime Glass Technologies"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${socialImage}">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${socialImage}">
   <meta name="theme-color" content="#0b2534"><link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="preload" href="/style.css?v=20260811-hero-glass-card" as="style"><link rel="stylesheet" href="/style.css?v=20260811-hero-glass-card">
+  <link rel="preload" href="/style.css?v=20260811-prominent-services-catalog" as="style"><link rel="stylesheet" href="/style.css?v=20260811-prominent-services-catalog">
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
 </head>
 <body class="page-${page.kind}">
