@@ -47,7 +47,7 @@ function header(currentPath = '/') {
         </a>
         <nav class="desktop-nav" aria-label="Основная навигация">
           <div class="nav-dropdown">
-            <button type="button" aria-expanded="false" aria-controls="services-menu" data-services-toggle>Услуги <span aria-hidden="true">⌄</span></button>
+            <button type="button" aria-expanded="false" aria-controls="services-menu" data-services-toggle>Каталог услуг <span aria-hidden="true">⌄</span></button>
             <div class="services-menu" id="services-menu">${serviceLinks}</div>
           </div>
           <a href="/#production">Производство</a>
@@ -63,7 +63,7 @@ function header(currentPath = '/') {
       </div>
       <div class="mobile-menu" id="mobile-menu" data-mobile-menu aria-hidden="true">
         <div class="container">
-          <p class="menu-label">Направления</p>
+          <p class="menu-label">Каталог услуг</p>
           <div class="mobile-service-links">${serviceLinks}</div>
           <div class="mobile-main-links"><a href="/#production">Производство</a><a href="/#gallery">Проекты</a><a href="/#about">О компании</a><a href="/contacts"${active('/contacts')}>Контакты</a></div>
           <div class="mobile-menu-actions">${trackedLink(`tel:${config.phoneHref}`, 'Позвонить', 'click_phone', 'button button-secondary')}<button class="button button-primary" type="button" data-open-form="calculation">Получить расчёт</button></div>
@@ -93,6 +93,7 @@ function heroActions(service = '', withDepth = false) {
 
 function homePage() {
   const primary = { src: '/photos/image4.webp', fallback: '/photos/image4.jpg', alt: 'Современная архитектура с панорамным стеклянным фасадом' };
+  const homeServices = [services[1], services[0], ...services.slice(2)];
   return `
     <main id="content">
       <section class="home-hero">
@@ -118,23 +119,24 @@ function homePage() {
           <div><strong>B2C + B2B</strong><span>частные и коммерческие объекты</span></div>
           <div><strong>Полный цикл</strong><span>от консультации до монтажа</span></div>
           </div>
-          <a class="hero-scroll-cue" href="#reels" aria-label="Смотреть дальше"><span>Смотреть дальше</span><i aria-hidden="true">↓</i></a>
+          <a class="hero-scroll-cue" href="#services" aria-label="Перейти к каталогу услуг"><span>Смотреть услуги</span><i aria-hidden="true">↓</i></a>
         </div>
       </section>
 
-      ${instagramReelsSection()}
       <section class="section glass-section services-catalog-section" id="services">
         <div class="container">
-          <div class="section-intro reveal"><p class="eyebrow">Каталог услуг Prime Glass</p><h2>Инженерные решения<br>из стекла</h2><p>Полный каталог решений завода: от отдельного стеклопакета до комплексного фасадного или интерьерного остекления с монтажом.</p></div>
+          <div class="section-intro reveal"><p class="eyebrow">Prime Glass · Завод-изготовитель</p><h2>Каталог услуг<br>для вашего объекта</h2><div class="catalog-intro-action"><p>Выберите готовое направление или отправьте проект — инженеры предложат конструкцию, комплектацию и вариант монтажа.</p><button class="button button-primary" type="button" data-open-form="calculation">Рассчитать проект <span aria-hidden="true">↗</span></button></div></div>
           <div class="solutions-film reveal">
             <video muted loop playsinline preload="metadata" poster="/photos/image6.jpg" data-section-video aria-label="Инженерные решения Prime Glass из стекла"><source src="/photos/prime-glass-solutions.mp4" type="video/mp4"></video>
             <div class="solutions-film-caption"><span>Завод-изготовитель · Алматы</span><strong>4 000 м²</strong><p>собственное производство стеклянных конструкций</p></div>
           </div>
           <div class="service-grid">
-            ${services.map(service => `<a class="service-card reveal" href="${routeFor(service)}"><div class="service-card-media">${picture({src:`/photos/image${service.image}.webp`,fallback:`/photos/image${service.image}.jpg`,alt:service.title})}</div><div class="service-card-content"><h3>${service.title}</h3><p>${service.lead}</p></div></a>`).join('')}
+            ${homeServices.map(service => `<a class="service-card reveal" href="${routeFor(service)}"><div class="service-card-media">${picture({src:`/photos/image${service.image}.webp`,fallback:`/photos/image${service.image}.jpg`,alt:service.title})}</div><div class="service-card-content"><h3>${service.title}</h3><p>${service.lead}</p></div></a>`).join('')}
           </div>
         </div>
       </section>
+
+      ${instagramReelsSection()}
 
       <section class="section section-dark glass-section" id="about">
         <div class="container split-intro">
@@ -330,7 +332,7 @@ function documentTemplate(page) {
   <meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><meta property="og:site_name" content="Prime Glass Technologies"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${socialImage}">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${socialImage}">
   <meta name="theme-color" content="#0b2534"><link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="preload" href="/style.css?v=20260811-prominent-services-catalog" as="style"><link rel="stylesheet" href="/style.css?v=20260811-prominent-services-catalog">
+  <link rel="preload" href="/style.css?v=20260811-services-sales-focus" as="style"><link rel="stylesheet" href="/style.css?v=20260811-services-sales-focus">
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
 </head>
 <body class="page-${page.kind}">
