@@ -74,10 +74,7 @@ assert.match(script, /recentEvents = new Map\(\)/, 'Analytics events need duplic
 assert.match(script, /activeProviders\.ga4Id/, 'GA4 events need direct forwarding when GTM is absent');
 assert.match(script, /reachGoal/, 'Yandex Metrika goals need forwarding');
 assert.match(script, /trackCustom/, 'Meta Pixel custom events need forwarding');
-assert.match(script, /function initDepthScroll\(\)/, 'Home page needs the requested 3D scroll system');
-assert.match(script, /requestAnimationFrame\(renderDepth\)/, '3D scroll updates must be animation-frame throttled');
-assert.match(script, /contentProgress = clamp/, 'Hero copy must enter progressively after the video-first opening');
-assert.match(script, /factsProgress = clamp/, 'Hero facts must enter as a separate scroll layer');
+assert.doesNotMatch(script, /function initDepthScroll\(\)/, 'Home page must use simple scrolling without a custom depth scene');
 assert.match(script, /function initHeroVideo\(\)/, 'Home page needs responsive background-video loading');
 assert.match(script, /function initSectionVideos\(\)/, 'Services film needs viewport-aware playback');
 assert.match(script, /sectionConnection\?\.saveData/, 'Services film must respect reduced-data connections');
@@ -104,8 +101,8 @@ assert.match(stylesheet, /\.field input,[^\n]*font-size:16px/, 'Mobile form cont
 assert.match(stylesheet, /\.benefit-card\{[^}]*grid-template-columns:32px minmax\(0,1fr\)/, 'Mobile benefit cards need aligned index and content columns');
 assert.match(stylesheet, /@media \(max-width:900px\)[\s\S]*?\.reveal\{opacity:1;transform:none;transition:none\}/, 'Mobile text must not float in with scroll animations');
 assert.match(stylesheet, /@media \(hover:none\)/, 'Touch devices need stable non-hover positioning');
-assert.match(stylesheet, /\.home-hero\{position:relative;height:230svh/, 'Home page needs an extended video-first scroll scene');
-assert.match(stylesheet, /\.home-hero-stage\{position:sticky;top:0;height:100svh/, 'Home page needs a sticky full-viewport hero stage');
+assert.match(stylesheet, /\.home-hero\{position:relative;min-height:100svh/, 'Home page needs a normal full-height hero');
+assert.match(stylesheet, /\.home-hero-stage\{position:relative;min-height:100svh/, 'Home hero must scroll normally without a sticky stage');
 assert.match(stylesheet, /\.home-hero \.hero-copy\{[^}]*backdrop-filter:blur\(18px\)/, 'Hero copy needs a branded glass card for readability');
 assert.match(stylesheet, /\.home-hero \.hero-media\{[^}]*height:100%;min-height:100%/, 'Hero media must cover the complete mobile hero');
 assert.doesNotMatch(stylesheet, /\.home-hero \.hero-video\{display:none!important\}/, 'Mobile hero video must remain visible');
@@ -155,7 +152,7 @@ assert.match(combinedHtml, /class="container footer-lead"/, 'All pages need the 
 assert.match(combinedHtml, /WhatsApp ↗/, 'Footer must include WhatsApp');
 assert.match(combinedHtml, /Instagram ↗/, 'Footer must include Instagram');
 assert.doesNotMatch(combinedHtml, /данные ожидают подтверждения|место для карты|будут опубликованы|требует подтверждения|не заявлены как/i, 'Public pages must not contain temporary readiness disclaimers');
-assert.match(script, /const heroTravel = Math\.max\(\(hero\?\.offsetHeight \|\| viewportHeight\) - viewportHeight, 1\)/, 'Hero zoom must use the full sticky scroll distance');
+assert.doesNotMatch(script, /heroTravel|--hero-zoom|--hero-parallax/, 'Hero must not use scroll-driven zoom or parallax');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-intro.mp4')), 'Hero video asset is missing');
 assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-mobile.mp4')), 'Mobile hero video asset is missing');
 for (const html of servicePages) {
