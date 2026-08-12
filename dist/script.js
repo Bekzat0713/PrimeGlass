@@ -222,59 +222,6 @@
     revealItems.forEach(item => item.classList.add('is-visible'));
   }
 
-  function initSmoothWheelScroll() {
-    const finePointer = window.matchMedia('(pointer: fine)');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!finePointer.matches || window.innerWidth <= 900 || reducedMotion.matches) return;
-
-    let targetY = window.scrollY;
-    let currentY = window.scrollY;
-    let frame = 0;
-    let animating = false;
-    const clampTarget = value => Math.max(0, Math.min(value, Math.max(0, document.documentElement.scrollHeight - window.innerHeight)));
-    const hasScrollableParent = (element, delta) => {
-      let node = element instanceof Element ? element : null;
-      while (node && node !== document.body) {
-        const style = window.getComputedStyle(node);
-        const scrollable = /(auto|scroll)/.test(style.overflowY) && node.scrollHeight > node.clientHeight + 1;
-        if (scrollable && ((delta < 0 && node.scrollTop > 0) || (delta > 0 && node.scrollTop + node.clientHeight < node.scrollHeight - 1))) return true;
-        node = node.parentElement;
-      }
-      return false;
-    };
-    const renderSmoothScroll = () => {
-      const distance = targetY - currentY;
-      currentY += distance * 0.16;
-      window.scrollTo(0, currentY);
-      if (Math.abs(distance) > 0.6) {
-        frame = window.requestAnimationFrame(renderSmoothScroll);
-      } else {
-        window.scrollTo(0, targetY);
-        currentY = targetY;
-        frame = 0;
-        animating = false;
-      }
-    };
-    window.addEventListener('wheel', event => {
-      if (event.ctrlKey || event.metaKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) || hasScrollableParent(event.target, event.deltaY)) return;
-      const openDialog = event.target instanceof Element && event.target.closest('dialog[open]');
-      if (openDialog) return;
-      event.preventDefault();
-      const unit = event.deltaMode === 1 ? 18 : event.deltaMode === 2 ? window.innerHeight : 1;
-      const delta = Math.max(-220, Math.min(220, event.deltaY * unit));
-      if (!animating) {
-        currentY = window.scrollY;
-        targetY = window.scrollY;
-      }
-      targetY = clampTarget(targetY + delta);
-      animating = true;
-      if (!frame) frame = window.requestAnimationFrame(renderSmoothScroll);
-    }, { passive: false });
-    window.addEventListener('scroll', () => {
-      if (!animating) targetY = currentY = window.scrollY;
-    }, { passive: true });
-  }
-
   function initHeroVideo() {
     const video = document.querySelector('[data-hero-video]');
     const source = video?.querySelector('source[data-desktop-src][data-mobile-src]');
@@ -323,7 +270,6 @@
   }
   initHeroVideo();
   initSectionVideos();
-  initSmoothWheelScroll();
 
   const filterButtons = document.querySelectorAll('[data-gallery-filter]');
   const galleryItems = document.querySelectorAll('[data-gallery] [data-category]');

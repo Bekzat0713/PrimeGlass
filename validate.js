@@ -75,9 +75,7 @@ assert.match(script, /activeProviders\.ga4Id/, 'GA4 events need direct forwardin
 assert.match(script, /reachGoal/, 'Yandex Metrika goals need forwarding');
 assert.match(script, /trackCustom/, 'Meta Pixel custom events need forwarding');
 assert.doesNotMatch(script, /function initDepthScroll\(\)/, 'Home page must use simple scrolling without a custom depth scene');
-assert.match(script, /function initSmoothWheelScroll\(\)/, 'Desktop pages need gentle inertial wheel scrolling');
-assert.match(script, /addEventListener\('wheel',[\s\S]*?passive: false/, 'Smooth wheel scrolling must be able to replace stepped wheel movement');
-assert.match(script, /prefers-reduced-motion: reduce/, 'Smooth wheel scrolling must respect reduced-motion preferences');
+assert.doesNotMatch(script, /function initSmoothWheelScroll\(\)/, 'Pages must keep the browser-native wheel scrolling');
 assert.match(script, /function initHeroVideo\(\)/, 'Home page needs responsive background-video loading');
 assert.match(script, /function initSectionVideos\(\)/, 'Services film needs viewport-aware playback');
 assert.match(script, /sectionConnection\?\.saveData/, 'Services film must respect reduced-data connections');
