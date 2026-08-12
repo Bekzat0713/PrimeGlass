@@ -124,6 +124,7 @@ assert(fs.existsSync(path.join(__dirname, 'photos', 'prime-glass-solutions.mp4')
 assert.strictEqual((renderHome().match(/class="service-card-media"/g) || []).length, 10, 'Every service card needs a calm image cover');
 assert.match(renderHome(), /services-catalog-section/, 'Home page needs a prominent services catalog section');
 assert.match(renderHome(), /Каталог услуг<br>для вашего объекта/, 'Services catalog needs a strong sales headline');
+assert.match(renderHome(), /class="nav-service-copy"><strong>Каталог услуг<\/strong><small>10 направлений<\/small>/, 'Services navigation needs a prominent two-line catalog CTA');
 assert(renderHome().indexOf('services-catalog-section') < renderHome().indexOf('reels-section'), 'Services catalog must appear before Reels');
 assert.doesNotMatch(renderHome(), /service-index/, 'Service cards must not show numeric indexes');
 assert.match(renderHome(), /<body class="page-home">/, 'Home page needs a visual theme hook');

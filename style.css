@@ -52,9 +52,10 @@ button:disabled{cursor:not-allowed}
 .desktop-nav>a::after,.nav-dropdown>button::after{content:"";position:absolute;left:0;right:100%;bottom:20px;height:1px;background:var(--teal);transition:right .25s}
 .desktop-nav>a:hover::after,.nav-dropdown>button:hover::after{right:0}
 .desktop-nav>a.is-current{color:var(--teal-dark)}.desktop-nav>a.is-current::after{right:0}
-.nav-dropdown{position:relative;padding:19px 0}
-.nav-dropdown>button{padding:10px 15px;border:1px solid rgba(9,28,39,.22);border-radius:999px;background:rgba(34,184,182,.08);transition:background .2s,border-color .2s,color .2s}
-.nav-dropdown>button::after{display:none}.nav-dropdown>button:hover{border-color:var(--teal);background:rgba(34,184,182,.14)}
+.nav-dropdown{position:relative;padding:14px 0}
+.nav-dropdown>button{min-width:190px;min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 9px 8px 19px;border:1px solid rgba(255,255,255,.4);border-radius:999px;background:linear-gradient(135deg,#22b8b6,#087f84);box-shadow:0 12px 30px rgba(8,127,132,.28);color:#fff;text-align:left;transition:transform .22s var(--ease),box-shadow .22s var(--ease),filter .22s}
+.nav-dropdown>button::after{display:none}.nav-dropdown>button:hover{transform:translateY(-2px);box-shadow:0 17px 38px rgba(8,127,132,.36);filter:saturate(1.08)}
+.nav-service-copy{display:grid;line-height:1}.nav-service-copy strong{font-size:12px;font-weight:850;letter-spacing:.055em;text-transform:uppercase}.nav-service-copy small{margin-top:6px;color:rgba(255,255,255,.78);font-size:8px;font-weight:750;letter-spacing:.13em;text-transform:uppercase}.nav-dropdown>button>i{width:36px;height:36px;display:grid;place-items:center;flex:none;border-radius:50%;background:rgba(255,255,255,.96);color:var(--teal-dark);font-size:16px;font-style:normal;transition:transform .22s var(--ease)}.nav-dropdown>button:hover>i{transform:rotate(-45deg)}
 .services-menu{position:absolute;top:67px;left:-24px;width:570px;padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(10,34,49,.98);color:#fff;box-shadow:var(--shadow);opacity:0;visibility:hidden;transform:translateY(8px);transition:.2s var(--ease)}
 .nav-dropdown:hover .services-menu,.nav-dropdown.is-open .services-menu{opacity:1;visibility:visible;transform:none}
 .services-menu a{padding:11px 13px;border-left:1px solid transparent;color:#dce8ec;font-size:12px;letter-spacing:.01em;text-transform:none}
@@ -303,7 +304,7 @@ h3{line-height:1.12}
 .page-home.menu-open .site-header .menu-toggle span{background:var(--ink)}
 .page-home .site-header:not(.is-scrolled) .button-primary{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.5);backdrop-filter:blur(10px)}
 .page-home .site-header:not(.is-scrolled) .desktop-nav>a::after,.page-home .site-header:not(.is-scrolled) .nav-dropdown>button::after{background:#fff}
-.page-home .site-header:not(.is-scrolled) .nav-dropdown>button{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;backdrop-filter:blur(10px)}
+.page-home .site-header:not(.is-scrolled) .nav-dropdown>button{border-color:rgba(255,255,255,.65);background:linear-gradient(135deg,rgba(34,184,182,.96),rgba(8,127,132,.96));box-shadow:0 14px 36px rgba(3,25,35,.3);color:#fff;backdrop-filter:blur(10px)}
 
 .home-hero{position:relative;height:230svh;min-height:1400px;padding:0;background:#4d9db1;color:#fff;overflow:clip}
 .home-hero-stage{position:sticky;top:0;height:100svh;min-height:700px;overflow:hidden;background:#4d9db1}

@@ -47,7 +47,7 @@ function header(currentPath = '/') {
         </a>
         <nav class="desktop-nav" aria-label="Основная навигация">
           <div class="nav-dropdown">
-            <button type="button" aria-expanded="false" aria-controls="services-menu" data-services-toggle>Каталог услуг <span aria-hidden="true">⌄</span></button>
+            <button type="button" aria-expanded="false" aria-controls="services-menu" data-services-toggle><span class="nav-service-copy"><strong>Каталог услуг</strong><small>10 направлений</small></span><i aria-hidden="true">↘</i></button>
             <div class="services-menu" id="services-menu">${serviceLinks}</div>
           </div>
           <a href="/#production">Производство</a>
@@ -332,7 +332,7 @@ function documentTemplate(page) {
   <meta property="og:type" content="website"><meta property="og:locale" content="ru_KZ"><meta property="og:site_name" content="Prime Glass Technologies"><meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${socialImage}">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${socialImage}">
   <meta name="theme-color" content="#0b2534"><link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="preload" href="/style.css?v=20260811-services-sales-focus" as="style"><link rel="stylesheet" href="/style.css?v=20260811-services-sales-focus">
+  <link rel="preload" href="/style.css?v=20260812-services-nav-highlight" as="style"><link rel="stylesheet" href="/style.css?v=20260812-services-nav-highlight">
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
 </head>
 <body class="page-${page.kind}">
