@@ -14,7 +14,7 @@ const siteConfig = {
   mapCoordinates: null,
   catalogUrl: null,
   analytics: {
-    googleTagManagerId: process.env.GTM_ID || '',
+    googleTagManagerId: process.env.GTM_ID || 'GTM-5NCQH4VF',
     googleAnalyticsId: process.env.GA4_ID || 'G-LH761EGRGM',
     yandexMetrikaId: process.env.YM_ID || '110987197',
     metaPixelId: process.env.META_PIXEL_ID || ''

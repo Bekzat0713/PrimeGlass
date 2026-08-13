@@ -54,6 +54,7 @@ servicePages.forEach((html, index) => {
 const script = fs.readFileSync(path.join(__dirname, 'script.js'), 'utf8');
 assert.strictEqual(config.analytics.googleAnalyticsId, 'G-LH761EGRGM', 'Approved GA4 measurement ID must be configured');
 assert.strictEqual(config.analytics.yandexMetrikaId, '110987197', 'Approved Yandex Metrika counter ID must be configured');
+assert.strictEqual(config.analytics.googleTagManagerId, 'GTM-5NCQH4VF', 'Approved GTM container ID must be configured');
 const buildScript = fs.readFileSync(path.join(__dirname, 'build.js'), 'utf8');
 for (const eventName of ['click_phone','click_whatsapp','click_telegram','open_calculator','submit_calculation','submit_callback','submit_measurement','submit_project','request_commercial_offer','download_catalog','view_service','view_case','click_instagram','view_reel']) {
   assert(script.includes(`'${eventName}'`), `Missing analytics event ${eventName}`);
@@ -126,6 +127,8 @@ assert.match(renderHome(), /class="nav-service-copy"><strong>Каталог ус
 assert(renderHome().indexOf('services-catalog-section') < renderHome().indexOf('reels-section'), 'Services catalog must appear before Reels');
 assert.doesNotMatch(renderHome(), /service-index/, 'Service cards must not show numeric indexes');
 assert.match(renderHome(), /<body class="page-home">/, 'Home page needs a visual theme hook');
+assert.match(renderHome(), /googletagmanager\.com\/gtm\.js\?id='\+i/, 'GTM must load in the document head');
+assert.match(renderHome(), /ns\.html\?id=GTM-5NCQH4VF/, 'GTM noscript fallback must follow the body opening tag');
 assert.match(renderHome(), /Архитектура стекла/, 'Home page needs the premium architectural positioning');
 assert.match(renderHome(), /\/photos\/image4\.webp/, 'Home hero must use a single uninterrupted architectural image');
 assert.doesNotMatch(renderHome().match(/<section class="home-hero">[\s\S]*?<\/section>/)?.[0] || '', /\/photos\/image2\.webp/, 'Composite image must not be used in the hero');

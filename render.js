@@ -320,6 +320,9 @@ function documentTemplate(page) {
   const description = page.metaDescription;
   const canonical = `${config.domain}${page.path === '/' ? '' : page.path}`;
   const socialImage = `${config.domain}/og.png`;
+  const gtmId = /^GTM-[A-Z0-9]+$/i.test(config.analytics.googleTagManagerId || '') ? config.analytics.googleTagManagerId : '';
+  const gtmHead = gtmId ? `\n  <!-- Google Tag Manager -->\n  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');</script>\n  <!-- End Google Tag Manager -->` : '';
+  const gtmNoScript = gtmId ? `\n  <!-- Google Tag Manager (noscript) -->\n  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${gtmId}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>\n  <!-- End Google Tag Manager (noscript) -->` : '';
   return `<!doctype html>
 <html lang="ru">
 <head>
@@ -334,8 +337,9 @@ function documentTemplate(page) {
   <meta name="theme-color" content="#0b2534"><link rel="icon" type="image/png" href="/favicon.png">
   <link rel="preload" href="/style.css?v=20260812-simple-hero-scroll" as="style"><link rel="stylesheet" href="/style.css?v=20260812-simple-hero-scroll">
   <script type="application/ld+json">${JSON.stringify(pageSchema(page)).replaceAll('<','\\u003c')}</script>
+${gtmHead}
 </head>
-<body class="page-${page.kind}">
+<body class="page-${page.kind}">${gtmNoScript}
   ${header(page.path)}
   ${page.content}
   ${footer()}

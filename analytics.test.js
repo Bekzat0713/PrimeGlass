@@ -117,7 +117,6 @@ const connected = runAnalytics({
   metaPixelId: '1234567890'
 });
 assert.deepStrictEqual(Array.from(connected.appendedScripts, item => item.id).sort(), [
-  'prime-glass-gtm',
   'prime-glass-meta-pixel',
   'prime-glass-metrika'
 ]);

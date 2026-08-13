@@ -84,8 +84,9 @@
     const pixelId = /^\d+$/.test(String(analyticsConfig.metaPixelId || '')) ? String(analyticsConfig.metaPixelId) : '';
 
     if (gtmId) {
-      window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
-      appendAnalyticsScript('prime-glass-gtm', `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`);
+      // GTM is installed directly in the document head so it loads before the application script.
+      // This branch only keeps the analytics layer available for custom site events.
+      window.dataLayer = window.dataLayer || [];
     } else if (ga4Id) {
       window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
       window.gtag('js', new Date());
